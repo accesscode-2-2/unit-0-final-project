@@ -8,62 +8,111 @@
 
 #import <Foundation/Foundation.h>
 
+@interface ToDoListApp : NSObject
 
-@interface ToDoList: NSObject
+@property NSMutableArray *_listMenu;
 
-@property  NSMutableArray *_taskArray;
+@end
 
+@implementation ToDoListApp {
+    
+}
 
--(void)listItems:(NSMutableArray *)listItems;
--(NSMutableArray *)listItems;
+-(void)addList:(NSMutableArray *)addList; {// adds list to ToDoListApp
+}
 
+-(void)removeList:(NSMutableArray *)removeList; {// removes list from ToDoListApp
+}
 
-//-(void)addItems:(NSMutableArray *)addItems;
-//-(NSString *)addItems;
-//
-//-(void)removeItems:(NSMutableArray *)removeItems;
-////removeItems;
-//
-//-(void)markItemDone:(NSMutableArray *)markItemDone;
-//-(NSMutableArray *)listItems;
-//
-//-(void)listCompletedItem:(NSMutableArray *)listCompletedItem;
-//-(NSMutableArray *)listCompletedItem;
+-(void)completedLists:(NSMutableArray *)completedList; {// prints completed list to ToDoListApp
+}
+
+-(void) printList:(NSMutableArray *)printList; {// adds list to ToDoListApp
+}
 
 
 @end
 
 
-@implementation ToDoList
 
--(void)listItems:(NSMutableArray *)listItems {
+@interface list: NSObject
+
+@property NSMutableArray *_listItem;
+@property NSString *_name;
+
+@end
+
+
+@implementation list {
     
-    for(int counter=0; counter<=[listItems count]; counter++){
-        NSLog(@"%c", listItems[counter].name);
+    
+    for(int i=0;i<=[listItem count];i++)
+    {
+        listItem[i]= [[item alloc] init];
+         scanf("%@",&ListItem[i])
+    }
+    
+    
+}
+
+-(void)addItem:(NSMutableArray *)addList {
+    
+
+    char word;
+    scanf("%s", &word);
+    NSString *_newItem = [NSString stringWithUTF8String:&word];
+    
+    [__listItem addObject:_newItem];
+    
+    
+}
+
+-(void)removeItem:(NSMutableArray *)removeListItem; {
+}
+
+-(void)listCompletedItems:(NSMutableArray *)completedListItem; {
+}
+
+-(void)markItemDone :(NSMutableArray *)printListItem; {
+}
+
+-(void)priorityValueForItem :(NSMutableArray *)priorityValueItem; {
+    
+    for (int counter=0; counter<=[__listItem count]; counter++) {
+        scanf("%d",__listItem[counter]);
         
     }
+
+    
+}
+-(void)printAllItems:(NSMutableArray *)entirelist; {
+    
+    for (int counter=0; counter<=[__listItem count]; counter++) {
+        NSLog(@"%@",__listItem[counter]);
+    }
+}
+
+@end
+
+@interface item: NSObject
+
+@property int priority;
+@property NSString *task;
+
+@end
+
+@implementation item {
+    
     
 }
 @end
 
-////////////////////
 
-@interface Item: NSObject
-
-@end
-
-@implementation Item
-
-
-@end
-
-////
 
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+      
         
 
         
