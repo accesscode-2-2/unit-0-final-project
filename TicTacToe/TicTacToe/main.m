@@ -35,6 +35,7 @@
 // Game Manager Class
 @interface GameManager : NSObject
 
+-(void)introScreen;
 -(void)askUserForSpace:(Player *)player;
 -(void)displayBlankBoard;
 -(void)displayBoard:(Player *)player;
@@ -47,8 +48,22 @@
     NSMutableArray *_normalBoard;
     NSString *_stringSpace;
     NSString *spaceChosen;
+    NSString *playerChoice;
+    
+    
 }
 
+
+-(void)introScreen{
+    NSLog(@"Welcome to Tic-Tac-Toe! Will you be playing against a friend or the CPU?\nA. A Friend\nB. CPU");;
+    char choice[256];
+    scanf("%s", choice);
+    playerChoice = [NSString stringWithCString:choice encoding:NSUTF8StringEncoding];
+    
+    
+    
+   
+}
 -(void)askUserForSpace:(Player *)player{
     
     BOOL invalid = YES;
@@ -155,20 +170,21 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
-        Player *umar = [[Player alloc] init];
-        GameManager *simulate = [[GameManager alloc] init];
+//        Player *umar = [[Player alloc] init];
+//        GameManager *simulate = [[GameManager alloc] init];
+//        
+//        
+//        [simulate displayBlankBoard];
+//        [simulate askUserForSpace:umar];
+//        [simulate displayBoard:umar];
+//        [simulate askUserForSpace:umar];
+//        [simulate displayBoard:umar];
+//        [simulate askUserForSpace:umar];
+//        [simulate displayBoard:umar];
+//        [simulate result];
         
         
-        [simulate displayBlankBoard];
-        [simulate askUserForSpace:umar];
-        [simulate displayBoard:umar];
-        [simulate askUserForSpace:umar];
-        [simulate displayBoard:umar];
-        [simulate askUserForSpace:umar];
-        [simulate displayBoard:umar];
-        [simulate result];
-        
-        
+       
         
         
         
