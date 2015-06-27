@@ -22,8 +22,4 @@
     return nil;
 }
 
--(void)changeBool{
-    self.completed = YES;
-}
-
 @end

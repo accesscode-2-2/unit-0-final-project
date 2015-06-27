@@ -46,8 +46,8 @@
         printf("%s",[c UTF8String]);
         return;
     }
-    
-    [[_items objectAtIndex:index-1] changeBool];
+    ListItem *item = [_items objectAtIndex:index-1];
+    item.completed = YES;
 }
 
 @end

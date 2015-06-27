@@ -13,7 +13,7 @@
 
 @interface List : NSObject
 
-@property NSString *listName;
+@property (nonatomic) NSString *listName;
 
 
 -(void) addItem:(ListItem *)item;
