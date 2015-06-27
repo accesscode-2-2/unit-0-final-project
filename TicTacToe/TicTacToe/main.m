@@ -73,8 +73,8 @@
     
     for (int i =0; i<3; i++) {
         if( [[[_board objectAtIndex:i] objectAtIndex:0] isEqualToString: [[_board objectAtIndex:i] objectAtIndex:1]] &&
-            [[[_board objectAtIndex:i] objectAtIndex:1] isEqualToString: [[_board objectAtIndex:i] objectAtIndex:2]] &&
-            ![[[_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "]
+           [[[_board objectAtIndex:i] objectAtIndex:1] isEqualToString: [[_board objectAtIndex:i] objectAtIndex:2]] &&
+           ![[[_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "]
            ){
             
             winner = [[_board objectAtIndex:i] objectAtIndex:0];
@@ -96,7 +96,7 @@
             NSLog(@"%@ won", winner);
             return YES;
             
-        
+            
         }
     }
     
@@ -109,7 +109,7 @@
         NSLog(@"%@ won", winner);
         return YES;
         
-        }
+    }
     //backwards diagnol case
     if ([[[_board objectAtIndex:0] objectAtIndex:2] isEqualToString: [[_board objectAtIndex:1] objectAtIndex:1]] &&
         [[[_board objectAtIndex:1] objectAtIndex:1] isEqualToString: [[_board objectAtIndex:2] objectAtIndex:0]] &&
@@ -127,17 +127,17 @@
 -(BOOL) isFull {
     for (int i = 0; i < 3; i ++) {
         if (    [ [ [_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "] ||
-                [ [ [_board objectAtIndex:i] objectAtIndex:1] isEqualToString: @" "] ||
-                [ [ [_board objectAtIndex:i] objectAtIndex:2] isEqualToString: @" "]
+            [ [ [_board objectAtIndex:i] objectAtIndex:1] isEqualToString: @" "] ||
+            [ [ [_board objectAtIndex:i] objectAtIndex:2] isEqualToString: @" "]
             ){
             
             return NO;
         }
+        
+    }
+    NSLog(@"No more plays, game over :(");
+    return YES;
     
-        }
-        NSLog(@"No more plays, game over :(");
-            return YES;
-
 }
 
 @end
@@ -153,6 +153,28 @@ int main(int argc, const char * argv[]) {
         
         
         char xOrO;
+        int onePlayerChoice;
+        BOOL onePlayer;
+        BOOL computerTurn = NO;
+        
+        while (true) {
+            
+            NSLog(@"Type 1 for a one player game and 2 for two-player game: ");
+            fpurge(stdin);
+            scanf("%d", &onePlayerChoice);
+            
+            if ( onePlayerChoice == 1 ) {
+                onePlayer = YES;
+                break;
+            }
+            else if (onePlayerChoice == 2){
+                onePlayer = NO;
+                break;
+            }
+            else{
+                NSLog(@"Please enter a valid number of players");
+            }
+        }
         
         while (true) {
             
@@ -174,28 +196,27 @@ int main(int argc, const char * argv[]) {
         }
         
         
+        
+        
         [game printBoard];
         
-        BOOL computerTurn = NO;
+        
         
         while (true) {
             
             int hPosition = -1;
             int vPosition = -1;
             
-            
-            if (computerTurn) {
-
-                hPosition = 1 + arc4random_uniform(3);
-                vPosition = 1 + arc4random_uniform(3);
-                
-                NSLog(@"%d %d", hPosition, vPosition );
-                
-                //pick a hposition and vposition for computer
+            if (onePlayer) {
+                if (computerTurn) {
+                    
+                    hPosition = 1 + arc4random_uniform(3);
+                    vPosition = 1 + arc4random_uniform(3);
+                }
             }
             
             else{
-
+                
                 NSLog(@"Choose your horizontal position (1-3): ");
                 fpurge(stdin);
                 scanf("%d", &hPosition);
@@ -219,11 +240,13 @@ int main(int argc, const char * argv[]) {
             // Pass in this position into our class and then check if it's empty and if so place this person's x or o into the board
             
             if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO userType:computerTurn ]){
-                if (computerTurn == YES) {
-                    computerTurn = NO;
-                }
-                else{
-                    computerTurn = YES;
+                if (onePlayer) {
+                    if (computerTurn == YES) {
+                        computerTurn = NO;
+                    }
+                    else{
+                        computerTurn = YES;
+                    }
                 }
                 if (xOrO == 'X') {  //After each iteration we want to change the postion to X or back to O
                     xOrO = 'O';
@@ -234,7 +257,7 @@ int main(int argc, const char * argv[]) {
                 
                 [game printBoard];
             }
-
+            
             BOOL won = [game isWinner];
             BOOL full = [game isFull];
             
