@@ -50,9 +50,15 @@
     return _item;
 }
 
+- (void)setPriority: (int) priority {
+    _priority = priority;
+}
+- (int) priority {
+    return _priority;
+}
 
 - (void)addNameAndPriority {
-    NSLog(@"Enter your To Do List item: ");
+    NSLog(@"Enter item: ");
     char itemName[256];
     scanf("%s", itemName);
     
@@ -62,15 +68,15 @@
     NSString *item1 = [NSString stringWithUTF8String:itemName];
     NSLog(@"string test: %@", item1);
     
-    _item = item1;
+    [self setItem: item1];
     
     NSLog(@"Enter priority 1, 2, 3: ");
     int inputPriority;
     scanf("%d", &inputPriority);
-    _priority = inputPriority;
     
+    [self setPriority: inputPriority];
     
-    NSLog(@"%@, %d",_item, _priority);
+    NSLog(@"%@, %d",item1, inputPriority);
 
 }
 
