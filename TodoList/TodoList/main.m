@@ -38,21 +38,73 @@
 
 @end
 
-@implementation Manager
+@implementation Manager {
+
+    NSMutableArray *_yourList;
+
+
+}
+
 
 
 - (void) ToDoHome {
-    NSLog(@"What would you like to do?\n1-list items\n2-add item\n3-remove item\n4-mark item done\n5-list completed item");
+    NSLog(@"What would you like to do?\n1- list items\n2- add item\n3- remove item\n4- mark item done\n5- list completed item");
+    
+    
+    int i;
+    scanf("%d", &i);
+ 
+    for (int j = 0; j < 5; j++) {
+    
+        if (i == 1) {
+            NSLog(@"You chose to list items");
+            NSLog(@"Your list:");
+            _yourList = [[NSMutableArray alloc] init];
+            NSLog(@"%@", _yourList);
+        }
+        
+        if (i == 2) {
+            NSLog(@"You chose to add an item");
+        }
+        
+        if (i == 3) {
+            NSLog(@"You chose to remove an item");
+        }
+        
+        if (i == 4) {
+            NSLog(@"You chose to mark an item as completed");
+        }
+        
+        if (i == 5 ) {
+            NSLog(@"You chose to list completed item"); }
+
+        }
     
 }
 
 
-- (void) createList{
-    NSMutableArray *list = [[NSMutableArray alloc] init];
+
+
+//
+//- (void) createList{                // creating list if there is none
+//    if (_list == nil) {
+//    _list = [[NSMutableArray alloc] init];
+//    }   else {
+//        [_list addObject:listItem];
+//    }
+//}
+
+
+
+- (void) addItem {
+    
 }
 
 
 @end
+
+
+
 
 // Represent To Do List
 
@@ -63,6 +115,9 @@
 @implementation ToDoList
 
 @end
+
+
+
 
 // Represent To Do Item
 
@@ -75,12 +130,18 @@
 @end
 
 
+// ==============================================================
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
     
         Manager *ListManager = [[Manager alloc]init];
         [ListManager ToDoHome];
-    
+//        [ListManager createList];
+        
+        
+        
+        
     }
     return 0;
 }
