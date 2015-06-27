@@ -14,9 +14,6 @@
 @property (nonatomic) NSInteger priority;
 @property (nonatomic) NSString *itemName;
 @property (nonatomic) BOOL completed;
-<<<<<<< HEAD
 
-=======
->>>>>>> 543d94c73f2970e5554ee72866a69d4cb1984f95
 
 @end

@@ -73,6 +73,48 @@
     li.priority = newValue;
 }
 
+-(void) editItem:(int)index{
+    char newName [256];
+    printf("New description: ");
+    scanf("%255[^\n]%*c",newName);
+    fpurge(stdin);
+    ListItem *li = [_items objectAtIndex:index-1];
+    li.itemName = [NSString stringWithCString:newName encoding:NSASCIIStringEncoding];
+}
+
+-(void) active{
+    int i = 1;
+    printf("\n");
+    for(ListItem * li in _items){
+        if(!li.completed){
+            printf("%d. %s\n",i, [li.itemName UTF8String]);
+        }
+    }
+}
+
+-(void) inActive{
+    int i = 1;
+    printf("\n");
+    for(ListItem * li in _items){
+        if(li.completed){
+            printf("%d. %s\n",i, [li.itemName UTF8String]);
+        }
+    }
+}
+
+-(void) run{
+    while(YES){
+        char holder[256];
+        [self printItems];
+        //[self printCommandActive:..:inactive
+        scanf("%255[^\n]%*c",holder);
+        NSString *checker = [NSString stringWithCString:holder encoding:NSASCIIStringEncoding];
+        if([checker isEqualToString:@"e"] || [checker isEqualToString:@"E"]){
+            
+        }
+    }
+}
+
 -(void) printCommands{
         printf("a|add               e|edit\n");
         printf("d|delete            p|set priority\n");
