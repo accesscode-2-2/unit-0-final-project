@@ -8,10 +8,41 @@
 
 #import <Foundation/Foundation.h>
 
+@interface game:NSObject
+
+-(BOOL)checkWin;
+-(void)startGame;
+-(BOOL)isEmpty;
+-(void)printGame;
+-(void)turn;
+
+
+
+
+
+
+@end
+
+@implementation game{
+
+NSArray *gameBoard[9];
+BOOL *win;
+NSInteger *difficult;
+
+
+}
+
+-(BOOL)checkWin;
+-(void)startGame;
+-(BOOL)isEmpty;
+-(void)printGame;
+-(void)turn;
+
+@end
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+     
     }
     return 0;
 }
