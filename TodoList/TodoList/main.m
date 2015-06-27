@@ -17,9 +17,9 @@
 //
 //Features
 //
-//1. Create lists
-//2. Add an item to a list
-//3. Delete an item from a list
+//1. Create lists *
+//2. Add an item to a list *
+//3. Delete an item from a list *
 //4. Mark an item as "done"
 //5. Edit an item
 //6. Set priority on items (1 - 4; default = 1);
@@ -36,7 +36,9 @@
 - (void) ToDoHome;
 - (void) createList;
 - (void) showList;
-- (void) addItem:(NSString *)newItem;
+- (void) addItem;
+- (void) deleteItem;
+- (void) markComplete;
 
 @end
 
@@ -49,7 +51,7 @@
 
 
 - (void) ToDoHome {
-    NSLog(@"What would you like to do?\n1- list items\n2- add item\n3- remove item\n4- mark item done\n5- list completed item");
+    NSLog(@"What would you like to do?\n1- list items\n2- add item\n3- delete item\n4- mark item done\n5- list completed item");
 
     
     int i;
@@ -69,7 +71,8 @@
         }
         
         if (i == 3) {
-            NSLog(@"You chose to remove an item");
+            NSLog(@"You chose to delete an item");
+            [self deleteItem];
         }
         
         if (i == 4) {
@@ -95,34 +98,64 @@
     _yourList = [[NSMutableArray alloc] init];      // initializing array
     
 }
+- (void) showList{                              //Show our list as it is
+    
+    int j;
+    
+    for (int i = 0; i < [_yourList count]; i++)
+    {
+        int numList;
+        NSLog(@"%d %@",i+1, _yourList[i]);
+    }
+    
+    [self ToDoHome];
+}
 
-
-
-- (void) addItem{
+- (void) addItem{                               //Add item to our list
 
     char word;
     scanf("%s", &word);
     NSString *_newItem = [NSString stringWithUTF8String:&word];     // converting to string
-
-    
     
     [_yourList addObject:_newItem];                                 // add new item to your list
     
     [self ToDoHome];
     
     }
-
-
-
-- (void) showList{
+- (void) deleteItem{                            //Delete item from our list
+    NSLog(@"Which item would you like to delete? ");
+    for (int i = 0; i < [_yourList count]; i++)
+    {
+        int numList;
+        NSLog(@"%d %@",i+1, _yourList[i]);
+    }
     
-        for (int i = 0; i < [_yourList count]; i++)
-        {
-            NSLog(@"%@", _yourList[i]);
-        }
-
+    int k;
+    scanf("%d", &k);
+    [_yourList removeObjectAtIndex:k-1];
+    NSLog(@"Your updated list is:");
+    for (int i = 0; i < [_yourList count]; i++)
+    {
+        int numList;
+        NSLog(@"%d %@",i+1, _yourList[i]);
+    }
     [self ToDoHome];
 }
+- (void) markComplete{
+    NSLog(@"Which item is complete? ");
+    for (int i = 0; i < [_yourList count]; i++)
+    {
+        int numList;
+        NSLog(@"%d %@",i+1, _yourList[i]);
+    }
+    
+    
+    
+    [self ToDoHome];
+}
+
+
+
 
 @end
 
