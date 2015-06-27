@@ -96,8 +96,26 @@
         }
     }
     
-    //diagnol cases
-    
+    //diagnol case
+    if ([[[_board objectAtIndex:0] objectAtIndex:0] isEqualToString: [[_board objectAtIndex:1] objectAtIndex:1]] &&
+        [[[_board objectAtIndex:1] objectAtIndex:1] isEqualToString: [[_board objectAtIndex:2] objectAtIndex:2]] &&
+        ![[[_board objectAtIndex:0] objectAtIndex:0] isEqualToString: @" "]
+        ){
+        winner = [[_board objectAtIndex:0] objectAtIndex:0];
+        NSLog(@"%@ won", winner);
+        return YES;
+        
+        }
+    //backwards diagnol case
+    if ([[[_board objectAtIndex:0] objectAtIndex:2] isEqualToString: [[_board objectAtIndex:1] objectAtIndex:1]] &&
+        [[[_board objectAtIndex:1] objectAtIndex:1] isEqualToString: [[_board objectAtIndex:2] objectAtIndex:0]] &&
+        ![[[_board objectAtIndex:0] objectAtIndex:2] isEqualToString: @" "]
+        ){
+        winner = [[_board objectAtIndex:0] objectAtIndex:2];
+        NSLog(@"%@ won", winner);
+        return YES;
+        
+    }
     
     return NO;
 }
@@ -168,7 +186,8 @@ int main(int argc, const char * argv[]) {
                 scanf("%d", &vPosition);
                 
                 if (vPosition < 1 || vPosition > 3) {
-                    NSLog(@"Please enter a valid position betwwwn 1 and 3");
+                    NSLog(@"Please enter a valid position between 1 and 3");
+                    continue;
                 }
             }
             
