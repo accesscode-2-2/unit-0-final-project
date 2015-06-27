@@ -11,9 +11,8 @@
 @interface ListItem : NSObject
 -(instancetype)initWithDefaultAndName:(NSString *)name;
 
-@property NSInteger priority;
-@property NSString *itemName;
-@property BOOL completed;
+@property (nonatomic) NSInteger priority;
+@property (nonatomic) NSString *itemName;
+@property (nonatomic) BOOL completed;
 
--(void)changeBool;
 @end
