@@ -46,8 +46,18 @@
         printf("%s",[c UTF8String]);
         return;
     }
+
     ListItem *item = [_items objectAtIndex:index-1];
     item.completed = YES;
 }
+
+-(void) printItems{
+        int i =1;
+        for(ListItem *li in _items){
+            printf("%d. %s\n",i,[li.itemName UTF8String]);
+            i++;
+        }
+    }
+
 
 @end
