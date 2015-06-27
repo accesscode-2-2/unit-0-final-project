@@ -26,6 +26,7 @@
     NSArray *_manList;
     NSArray *_repList;
     NSString *_repItem;
+    
 }
 
 -(void) enterUserList: (NSMutableArray *)userList {
@@ -54,15 +55,44 @@ int main(int argc, const char * argv[]) {
         
         toDoList *Charles = [[toDoList alloc]init];
         NSMutableArray *charlesList = [[NSMutableArray alloc]init];
-        NSLog(@"Good Morning, what are you going to do today?");
+        int laundry;
+        int homework;
+        int shopping;
+        int exercise;
+        NSLog(@"Good morning, what are you going to do today?\n 1) Laundry\n 2) Homework\n 3) Shopping\n 4) Exercise\n", laundry, homework, shopping, exercise);
+        scanf("%d", &laundry, &homework, &shopping, &exercise);
         
-        scanf(@"%@, %@, %@, %@\n", &item1, &item2, &item, &item4);
-        *charlesList = [Charles userList:[NSMutableArray arrayWithObjects:@"item1", @"item2", @"item3", @"item4", nil]];
+//        if (laundry == 1) {
+//            NSLog(@"Choose another chore\n");
+//
+//        } else if (homework == 2) {
+//            NSLog(@"You need to do more! Choose another one!");
+//        } else if (shopping == 3) {
+//            NSLog(@"Anything else?");
+//        } else if (exercise == 4) {
+//            NSLog(@"Great, now we're set for the day");
+//        }
         
-        
-        
-        
+        for (int chores; chores <=4 ; chores++) {
+            if (laundry == 1) {
+                NSLog(@"Choose another chore\n");
+            } else if (homework == 2) {
+                NSLog(@"You need to do more! Choose another one!");
+            } else if (shopping == 3) {
+                NSLog(@"Anything else?");
+            } else if (exercise == 4) {
+                NSLog(@"Great, now we're set for the day");
+            }
 
+        
+        
+        
+        
+        
+        
+        
+        
     }
     return 0;
+}
 }
