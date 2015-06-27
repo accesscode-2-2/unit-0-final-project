@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface game:NSObject
-
+//This is all the possible messages for the game class.
 -(BOOL)checkWin;
 -(void)startGame;
 -(BOOL)isEmpty;
--(void)printGame;
+-(void)printBoard;
 -(void)turn;
 
 
@@ -31,18 +31,45 @@ NSInteger *difficult;
 
 
 }
+-(void) printBoard {
+	NSLog(@"Blah");
+}
+-(void)startGame {
+NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
+[self printBoard];
+}
 
--(BOOL)checkWin;
--(void)startGame;
--(BOOL)isEmpty;
--(void)printGame;
--(void)turn;
+
+//-(BOOL)isEmpty;
+//-(void)printGame;
+//-(void)turn;
+//-(BOOL)checkWin;
 
 @end
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-     
+		
+		game *ticTacToe =[[game alloc]init];
+		
+		[ticTacToe startGame];
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
     }
     return 0;
 }
