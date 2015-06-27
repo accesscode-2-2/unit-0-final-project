@@ -31,66 +31,43 @@
 
 @end
 
-//// Board class
-//@interface Board : NSObject
-//
-//-(void)displayBoard;
-//
-//@end
-//
-//@implementation Board{
-//    NSMutableArray *_normalBoard;
-//}
-//
-//-(void)displayBoard{
-//
-//    //If board is not yet created, create it
-//
-//    _normalBoard = [[NSMutableArray alloc] init];
-//
-//    [_normalBoard insertObject:[NSMutableArray arrayWithObjects:@"1", @"2", @"3", nil] atIndex:0];
-//    [_normalBoard insertObject:[NSMutableArray arrayWithObjects:@"4", @"5", @"6", nil] atIndex:1];
-//    [_normalBoard insertObject:[NSMutableArray arrayWithObjects:@"7", @"8", @"9", nil] atIndex:2];
-//
-//
-//
-//
-//    //Display the board
-//    for (int i = 0; i < 3 ; i++) {
-//        int j = 0;
-//        NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
-//        NSLog(@"%@", rowColumn);
-//
-//        if (i < 2){
-//            NSLog(@"---------");
-//        }
-//    }
-//}
-//
-//@end
-
 
 // Game Manager Class
-@interface gameManager : NSObject
+@interface GameManager : NSObject
 
 -(void)askUserForSpace:(Player *)player;
 -(void)displayBlankBoard;
 -(void)displayBoard:(Player *)player;
-
+-(void)result;
 
 @end
 
-@implementation gameManager{
+@implementation GameManager{
     NSString *_space;
     NSMutableArray *_normalBoard;
     NSString *_stringSpace;
+    NSString *spaceChosen;
 }
 
 -(void)askUserForSpace:(Player *)player{
-    NSLog(@"Please enter the space you'd like to occupy.");
-    char space[256];
-    scanf("%s", space);
-    NSString *spaceChosen = [NSString stringWithCString:space encoding:NSUTF8StringEncoding];
+    
+    BOOL invalid = YES;
+    while (invalid) {
+        NSLog(@"Please enter the space you'd like to occupy.");
+        char space[256];
+        scanf("%s", space);
+        spaceChosen = [NSString stringWithCString:space encoding:NSUTF8StringEncoding];
+        
+        
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++) {
+                if ([spaceChosen isEqualToString:_normalBoard[i][j]]) {
+                    invalid = NO;
+                }
+            }
+        }
+        
+    }
     
     [player setSpace:spaceChosen];
     
@@ -120,7 +97,7 @@
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++) {
             if ([[player getSpace] isEqualToString:_normalBoard[i][j]]) {
-               _normalBoard[i][j] = @"X";
+                _normalBoard[i][j] = @"X";
             }
         }
     }
@@ -137,22 +114,59 @@
     
 }
 
+
+-(void)result{
+    
+//    //_normalBoard [i][j]
+//    if ([j] == [j] == [j]) {
+//        win;
+//    }
+//    if ([j] increasing or decreaing order) {
+//        win;
+//    }
+    
+    for (int i = 0; i < 3; i++) {
+        
+        //Check horizantally
+        if ((_normalBoard[i][0] == _normalBoard[i][1]) && (_normalBoard[i][0] == _normalBoard[i][2])) {
+            NSLog(@"You win.");
+        }
+        
+        if ((_normalBoard[0][i] == _normalBoard[1][i]) && (_normalBoard[0][i] == _normalBoard[2][i])){
+            NSLog(@"You win.");
+        }
+    }
+    
+    
+    if ((_normalBoard[0][0] == _normalBoard[1][1]) && (_normalBoard[0][0] == _normalBoard[2][2])) {
+        NSLog(@"You win.");
+    }
+    
+    if ((_normalBoard[2][0] == _normalBoard[1][1]) && (_normalBoard[2][0] == _normalBoard[0][2])) {
+        NSLog(@"You win.");
+    }
+    
+}
+
 @end
+
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
         Player *umar = [[Player alloc] init];
-        
-        gameManager *simulate = [[gameManager alloc] init];
+        GameManager *simulate = [[GameManager alloc] init];
         
         
         [simulate displayBlankBoard];
         [simulate askUserForSpace:umar];
         [simulate displayBoard:umar];
-       
-        
+        [simulate askUserForSpace:umar];
+        [simulate displayBoard:umar];
+        [simulate askUserForSpace:umar];
+        [simulate displayBoard:umar];
+        [simulate result];
         
         
         
