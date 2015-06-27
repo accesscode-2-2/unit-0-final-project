@@ -36,14 +36,14 @@
 - (void) ToDoHome;
 - (void) createList;
 - (void) showList;
-- (void) addItem;
+- (void) addItem:(NSString *)newItem;
 
 @end
 
 @implementation Manager {
 
     NSMutableArray *_yourList;
-    NSString *_newItem;
+    //NSString *_newItem;
 
 }
 
@@ -59,8 +59,7 @@
     
         if (i == 1) {
             NSLog(@"You chose to list items");
-            NSLog(@"Your list:");
-            
+            [self showList];
         }
         
         if (i == 2) {
@@ -84,23 +83,18 @@
     
 //}
 //
-- (void) showList{
-    
-    NSLog(@"%@", _yourList);
-}
+
 
 //const *char cString = "Hello";
 //NSString *myNSString = [NSString stringWithUTF8String:cString];
 
 
-//
-//- (void) createList{                // creating list if there is none
-//    if (_list == nil) {
-//    _list = [[NSMutableArray alloc] init];
-//    }   else {
-//        [_list addObject:listItem];
-//    }
-//}
+
+- (void) createList{                // creating list if there is none
+
+    _yourList = [[NSMutableArray alloc] init];      // initializing array
+    
+}
 
 
 
@@ -108,21 +102,27 @@
 
     char word;
     scanf("%s", &word);
-    NSString *_newItem = [NSString stringWithUTF8String:&word];
+    NSString *_newItem = [NSString stringWithUTF8String:&word];     // converting to string
 
-    NSMutableArray *_yourList = [[NSMutableArray alloc] init];
     
-    [_yourList addObject:_newItem];
     
-    for (int i = 0; i < [_yourList count]; i++) {
-        NSLog(@"Your list so far: \n%@\n", _yourList[i]);
-    }
+    [_yourList addObject:_newItem];                                 // add new item to your list
     
     [self ToDoHome];
     
     }
 
 
+
+- (void) showList{
+    
+        for (int i = 0; i < [_yourList count]; i++)
+        {
+            NSLog(@"%@", _yourList[i]);
+        }
+
+    [self ToDoHome];
+}
 
 @end
 
@@ -132,7 +132,6 @@
 // Represent To Do List
 
 @interface ToDoList : NSObject
-
 
 
 @end
@@ -161,8 +160,13 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
     
         Manager *ListManager = [[Manager alloc]init];
+       
+        [ListManager createList];
+        
         [ListManager ToDoHome];
-//        [ListManager createList];
+        
+       
+
         
         
         
