@@ -12,6 +12,7 @@
 -(void) initializeArray: (int) dimension;
 -(void) printBoard;
 -(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition;
+-(BOOL) isWinner;
 
 @end
 
@@ -59,11 +60,47 @@
         return NO;
     }
     
-    
-    
-    
 }
 
+-(BOOL) isWinner {
+    NSString *winner;
+    
+    //horizontal cases
+    
+    for (int i =0; i<3; i++) {
+        if( [[[_board objectAtIndex:i] objectAtIndex:0] isEqualToString: [[_board objectAtIndex:i] objectAtIndex:1]] &&
+            [[[_board objectAtIndex:i] objectAtIndex:1] isEqualToString: [[_board objectAtIndex:i] objectAtIndex:2]] &&
+            ![[[_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "]
+           ){
+            
+            winner = [[_board objectAtIndex:i] objectAtIndex:0];
+            NSLog(@"%@ won", winner);
+            return YES;
+            
+        }
+        
+    }
+    
+    //vertical cases
+    
+    for ( int i = 0; i < 3; i++) {
+        if( [[[_board objectAtIndex:0] objectAtIndex:i] isEqualToString: [[_board objectAtIndex:1] objectAtIndex:i]] &&
+           [[[_board objectAtIndex:1] objectAtIndex:i] isEqualToString: [[_board objectAtIndex:2] objectAtIndex:i]] &&
+           ![[[_board objectAtIndex:0] objectAtIndex:i] isEqualToString: @" "]
+           ){
+            winner = [[_board objectAtIndex:0] objectAtIndex:i];
+            NSLog(@"%@ won", winner);
+            return YES;
+            
+        
+        }
+    }
+    
+    //diagnol cases
+    
+    
+    return NO;
+}
 
 
 @end
@@ -153,14 +190,13 @@ int main(int argc, const char * argv[]) {
                 }
                 
             }
+            
             [game printBoard];
+            BOOL won = [game isWinner];
             
-            
-            
-            
-            
-            
-            //break;
+            if (won) {
+                break;
+            }
             
             
             
