@@ -66,25 +66,31 @@
 
 @interface Item : NSObject
 
-- (instancetype)initWithItemName:(NSString *)itemName;
+- (instancetype)initWithItemName:(NSString *)title;
+- (NSString *) getItemName;
 
 @end
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 @implementation Item{
-    NSString * _title;
+    NSString * _itemName;
 }
 
 
-- (instancetype)initWithItemName:(NSString *)itemName{
+- (instancetype)initWithItemName:(NSString *)title{
     if (self = [super init]) {
-        _title = itemName;
+        _itemName = title;
         return self;
     }
     return nil;
     
 }
+
+-(NSString *)getItemName{
+    return _itemName;
+}
+
 
 @end
 
@@ -93,7 +99,7 @@
 
 @interface Manager : NSObject
 
--(void)displayItems:(NSMutableArray *)items;
+-(void)displayItems:(List *)list;
 
 //-(void)markDone;
 //-(void)setPriority:(NSInteger *)i;
@@ -110,7 +116,7 @@
 -(void)displayItems:(List *)list{
     NSMutableArray *myListOfItems = [list listOfItems];
     for (int i = 0; i < [myListOfItems count]; i++) {
-        NSLog(@"%@", myListOfItems[i]);
+        NSLog(@"%@", [myListOfItems[i] getItemName]);
     }
 }
 
@@ -127,7 +133,7 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        Manager *listManagaer = [[Manager alloc] init];
+        Manager *listManager = [[Manager alloc] init];
         
         List *toDoToday = [[List alloc] initWithListName:@"To Do Today"];
         
@@ -139,11 +145,7 @@ int main(int argc, const char * argv[]) {
         [toDoToday addItem:yoga];
         [toDoToday addItem:practiceGuitar];
         
-        //NSLog(@"%@, %@, %@", toDoToday[0], toDoToday[1], toDoToday[2]);
-        
-        [listManagaer displayItems:toDoToday];
-        
-        
+        [listManager displayItems:toDoToday];
         
         
         
