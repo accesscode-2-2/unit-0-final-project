@@ -11,8 +11,9 @@
 
 -(void) initializeArray: (int) dimension;
 -(void) printBoard;
--(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition;
+-(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition userType: (BOOL) isComputer;
 -(BOOL) isWinner;
+-(BOOL) isFull;
 
 @end
 
@@ -39,7 +40,7 @@
     NSLog(@"\n\t\t|%@|%@|%@| \n\t\t|%@|%@|%@| \n\t\t|%@|%@|%@|", [row1 objectAtIndex:0], [row1 objectAtIndex:1], [row1 objectAtIndex:2], [row2 objectAtIndex:0], [row2 objectAtIndex:1], [row2 objectAtIndex:2], [row3 objectAtIndex:0], [row3 objectAtIndex:1], [row3 objectAtIndex:2]);
 }
 
--(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition {
+-(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition userType: (BOOL) isComputer{
     
     x = x-1;    // this is the position on the row-array we want to check
     y = y-1;    // this is the position in our board array we want the row-array from
@@ -54,6 +55,9 @@
             [[_board objectAtIndex:y] replaceObjectAtIndex:x withObject:@"O"];
         }
         return YES;
+    }
+    else if(isComputer) {
+        return NO;
     }
     else {
         NSLog(@"This is a not valid position");
@@ -120,6 +124,21 @@
     return NO;
 }
 
+-(BOOL) isFull {
+    for (int i = 0; i < 3; i ++) {
+        if (    [ [ [_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "] ||
+                [ [ [_board objectAtIndex:i] objectAtIndex:1] isEqualToString: @" "] ||
+                [ [ [_board objectAtIndex:i] objectAtIndex:2] isEqualToString: @" "]
+            ){
+            
+            return NO;
+        }
+    
+        }
+        NSLog(@"No more plays, game over :(");
+            return YES;
+
+}
 
 @end
 
@@ -154,6 +173,9 @@ int main(int argc, const char * argv[]) {
             }
         }
         
+        
+        [game printBoard];
+        
         BOOL computerTurn = NO;
         
         while (true) {
@@ -164,8 +186,10 @@ int main(int argc, const char * argv[]) {
             
             if (computerTurn) {
 
-                hPosition = arc4random_uniform(2) + 1;
-                vPosition = arc4random_uniform(2) + 1;
+                hPosition = 1 + arc4random_uniform(3);
+                vPosition = 1 + arc4random_uniform(3);
+                
+                NSLog(@"%d %d", hPosition, vPosition );
                 
                 //pick a hposition and vposition for computer
             }
@@ -194,7 +218,7 @@ int main(int argc, const char * argv[]) {
             
             // Pass in this position into our class and then check if it's empty and if so place this person's x or o into the board
             
-            if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO]){
+            if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO userType:computerTurn ]){
                 if (computerTurn == YES) {
                     computerTurn = NO;
                 }
@@ -208,12 +232,13 @@ int main(int argc, const char * argv[]) {
                     xOrO = 'X';
                 }
                 
+                [game printBoard];
             }
-            
-            [game printBoard];
+
             BOOL won = [game isWinner];
+            BOOL full = [game isFull];
             
-            if (won) {
+            if (won || full) {
                 break;
             }
             
