@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class List;
-@class Item;
+@class Task;
 @class Manager;
 
 
@@ -21,9 +21,9 @@
 
 - (instancetype)initWithListName:(NSString *)listName;
 
--(void)addItem:(Item *)item;
+-(void)addTask:(Task *) task;
 
--(NSMutableArray *)listOfItems;
+-(NSMutableArray *)listOfTasks;
 
 
 
@@ -33,7 +33,7 @@
 
 @implementation List{
     NSString* _list;
-    NSMutableArray* _listOfItems;
+    NSMutableArray* _listOfTasks;
 }
 
 
@@ -46,15 +46,15 @@
     
 }
 
--(NSMutableArray *)listOfItems{
-    if(_listOfItems == nil){
-        _listOfItems = [[NSMutableArray alloc] init];
+-(NSMutableArray *)listOfTasks{
+    if(_listOfTasks == nil){
+        _listOfTasks = [[NSMutableArray alloc] init];
     }
-    return _listOfItems;
+    return _listOfTasks;
 }
 
--(void)addItem:(Item *)item{
-    [[self listOfItems] addObject:item];
+-(void)addTask:(Task *)task{
+    [[self listOfTasks] addObject:task];
 }
 
 
@@ -64,31 +64,31 @@
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
-@interface Item : NSObject
+@interface Task : NSObject
 
-- (instancetype)initWithItemName:(NSString *)title;
-- (NSString *) getItemName;
+- (instancetype)initWithTaskName:(NSString *)title;
+- (NSString *) getTaskName;
 
 @end
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-@implementation Item{
-    NSString * _itemName;
+@implementation Task{
+    NSString * _taskName;
 }
 
 
-- (instancetype)initWithItemName:(NSString *)title{
+- (instancetype)initWithTaskName:(NSString *)title{
     if (self = [super init]) {
-        _itemName = title;
+        _taskName = title;
         return self;
     }
     return nil;
     
 }
 
--(NSString *)getItemName{
-    return _itemName;
+-(NSString *)getTaskName{
+    return _taskName;
 }
 
 
@@ -99,7 +99,7 @@
 
 @interface Manager : NSObject
 
--(void)displayItems:(List *)list;
+-(void)displayTasks:(List *)list;
 
 //-(void)markDone;
 //-(void)setPriority:(NSInteger *)i;
@@ -113,10 +113,10 @@
     
 }
 
--(void)displayItems:(List *)list{
-    NSMutableArray *myListOfItems = [list listOfItems];
-    for (int i = 0; i < [myListOfItems count]; i++) {
-        NSLog(@"%@", [myListOfItems[i] getItemName]);
+-(void)displayTasks:(List *)list{
+    NSMutableArray *myListOfTasks = [list listOfTasks];
+    for (int i = 0; i < [myListOfTasks count]; i++) {
+        NSLog(@"%@", [myListOfTasks[i] getTaskName]);
     }
 }
 
@@ -137,15 +137,15 @@ int main(int argc, const char * argv[]) {
         
         List *toDoToday = [[List alloc] initWithListName:@"To Do Today"];
         
-        Item *swim = [[Item alloc] initWithItemName:@"swim"];
-        Item *yoga = [[Item alloc] initWithItemName:@"yoga"];
-        Item *practiceGuitar = [[Item alloc] initWithItemName:@"practice guitar"];
+        Task *swim = [[Task alloc] initWithTaskName:@"swim"];
+        Task *yoga = [[Task alloc] initWithTaskName:@"yoga"];
+        Task *practiceGuitar = [[Task alloc] initWithTaskName:@"practice guitar"];
         
-        [toDoToday addItem:swim];
-        [toDoToday addItem:yoga];
-        [toDoToday addItem:practiceGuitar];
+        [toDoToday addTask:swim];
+        [toDoToday addTask:yoga];
+        [toDoToday addTask:practiceGuitar];
         
-        [listManager displayItems:toDoToday];
+        [listManager displayTasks:toDoToday];
         
         
         
