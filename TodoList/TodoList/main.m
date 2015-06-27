@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@interface ManageItem : NSObject
+
+@end
+
+@implementation ManageItem
+
+
+@end
+
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // START CODE HERE
@@ -15,8 +25,6 @@ int main(int argc, const char * argv[]) {
         
         
         // END CODE HERE
-        
-//        or End code here
     }
     return 0;
 }
