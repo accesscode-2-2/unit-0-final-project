@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface ManageItem : NSObject
+@property (nonatomic) NSString *markItem;
+@property (nonatomic) int priorityItem;
+@property (nonatomic) BOOL markDoneItem;
+@property (nonatomic) NSString *addItem;
+@property (nonatomic) NSString *deletItem;
+
+
 
 @end
 
