@@ -59,29 +59,22 @@ int main(int argc, const char * argv[]) {
         int homework;
         int shopping;
         int exercise;
-        NSLog(@"Good morning, what are you going to do today?\n 1) Laundry\n 2) Homework\n 3) Shopping\n 4) Exercise\n", laundry, homework, shopping, exercise);
-        scanf("%d", &laundry, &homework, &shopping, &exercise);
+        int chore;
         
-//        if (laundry == 1) {
-//            NSLog(@"Choose another chore\n");
-//
-//        } else if (homework == 2) {
-//            NSLog(@"You need to do more! Choose another one!");
-//        } else if (shopping == 3) {
-//            NSLog(@"Anything else?");
-//        } else if (exercise == 4) {
-//            NSLog(@"Great, now we're set for the day");
-//        }
+        NSLog(@"Good morning, what are you going to do today?\n 1) Laundry\n 2) Homework\n 3) Shopping\n 4) Exercise\n");
         
-        for (int chores; chores <=4 ; chores++) {
-            if (laundry == 1) {
-                NSLog(@"Choose another chore\n");
-            } else if (homework == 2) {
-                NSLog(@"You need to do more! Choose another one!");
-            } else if (shopping == 3) {
-                NSLog(@"Anything else?");
-            } else if (exercise == 4) {
-                NSLog(@"Great, now we're set for the day");
+        
+        
+        for (int tasks; tasks <=4 ; tasks++) {
+            scanf("%d", &chore);
+            if (chore == 1) {
+                NSLog(@"Choose another chore\n", chore);
+            } else if (chore == 2) {
+                NSLog(@"You need to do more! Choose another one!", chore);
+            } else if (chore == 3) {
+                NSLog(@"Anything else?", chore);
+            } else if (chore == 4) {
+                NSLog(@"Great, now we're set for the day", chore);
             }
 
         
