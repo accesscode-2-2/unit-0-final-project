@@ -66,9 +66,12 @@
         NSLog(@"Player 1, make your move: ");
         int currentMove;
         scanf("%d",&currentMove);
+	
         // integer currentMove is cast as an NSUInteger
-        [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
+		if ([gameBoard[currentMove] isEqual:@" "]) {
+		    [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
         playerTurn = 2;
+		
     }
     else {
         NSLog(@"Player 2, make your move: ");
