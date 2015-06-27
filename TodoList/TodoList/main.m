@@ -35,36 +35,38 @@
 
 - (void) ToDoHome;
 - (void) createList;
+- (void) showList;
+- (void) addItem;
 
 @end
 
 @implementation Manager {
 
     NSMutableArray *_yourList;
-
+    NSString *_newItem;
 
 }
 
 
-
 - (void) ToDoHome {
     NSLog(@"What would you like to do?\n1- list items\n2- add item\n3- remove item\n4- mark item done\n5- list completed item");
-    
+
     
     int i;
     scanf("%d", &i);
  
-    for (int j = 0; j < 5; j++) {
+//    for (int j = 0; j < 5; j++) {
     
         if (i == 1) {
             NSLog(@"You chose to list items");
             NSLog(@"Your list:");
-            _yourList = [[NSMutableArray alloc] init];
-            NSLog(@"%@", _yourList);
+            
         }
         
         if (i == 2) {
-            NSLog(@"You chose to add an item");
+            NSLog(@"You chose to add an item. Please enter a description:");
+            [self addItem];
+        //    scanf(%)
         }
         
         if (i == 3) {
@@ -80,9 +82,15 @@
 
         }
     
+//}
+//
+- (void) showList{
+    
+    NSLog(@"%@", _yourList);
 }
 
-
+//const *char cString = "Hello";
+//NSString *myNSString = [NSString stringWithUTF8String:cString];
 
 
 //
@@ -96,9 +104,24 @@
 
 
 
-- (void) addItem {
+- (void) addItem{
+
+    char word;
+    scanf("%s", &word);
+    NSString *_newItem = [NSString stringWithUTF8String:&word];
+
+    NSMutableArray *_yourList = [[NSMutableArray alloc] init];
     
-}
+    [_yourList addObject:_newItem];
+    
+    for (int i = 0; i < [_yourList count]; i++) {
+        NSLog(@"Your list so far: \n%@\n", _yourList[i]);
+    }
+    
+    [self ToDoHome];
+    
+    }
+
 
 
 @end
@@ -109,6 +132,8 @@
 // Represent To Do List
 
 @interface ToDoList : NSObject
+
+
 
 @end
 
