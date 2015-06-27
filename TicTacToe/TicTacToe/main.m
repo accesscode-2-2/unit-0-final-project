@@ -12,7 +12,6 @@
 //This is all the possible messages for the game class.
 -(BOOL)checkWin;
 -(void)startGame;
--(BOOL)isEmpty;
 
 -(void)printBoard;
 -(void)printTutorialBoard;
@@ -43,7 +42,7 @@
 }
 -(void)startGame {
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
-    win = false;
+    win = NO;
     
     //fill gameboard with spaces
     gameBoard = [[NSMutableArray alloc] init];
@@ -54,37 +53,114 @@
     //print tutorial board
     [self printTutorialBoard];
     
+    //Game Loop
     playerTurn = 1;
-    while (win == false) {
+    while (win == NO) {
         [self turn];
-        [self printBoard];
     }
 }
 
 -(void)turn{
-    if (playerTurn == 1) {
+    while (playerTurn == 1) {
         NSLog(@"Player 1, make your move: ");
         int currentMove;
         scanf("%d",&currentMove);
-        // integer currentMove is cast as an NSUInteger
-        [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
-        playerTurn = 2;
+        
+        if (([gameBoard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
+            [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
+            playerTurn = 2;
+        }
+        else {
+            NSLog(@"Invalid move. Enter a number from 0-8.");
+        }
     }
-    else {
+    
+    [self printBoard];
+    
+    while (playerTurn == 2) {
         NSLog(@"Player 2, make your move: ");
         int currentMove;
         scanf("%d",&currentMove);
-        // integer currentMove is cast as an NSUInteger
-        [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"O"];
-        playerTurn = 1;
+        fpurge(stdin);
+        
+        if (([gameBoard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
+            [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"O"];
+            playerTurn = 1;
+        }
+        else {
+            NSLog(@"Invalid move. Enter a number from 0-8.");
+        }
+        
     }
-
+    [self printBoard];
 }
 
-
-//-(BOOL)isEmpty;
-
-//-(BOOL)checkWin;
+-(BOOL)checkWin{
+    
+    NSString *playerPiece;
+    
+    for (int i = 0; i < 2; i++) {
+        
+        //sets player piece for each of the two loops
+        if (i == 1) {
+            playerPiece = @"X";
+        }
+        else{
+            playerPiece = @"O";
+        }
+        
+        // |X|X|X|
+        // | | | |
+        // | | | |
+        if (([gameBoard[0] isEqual:playerPiece]) && ([gameBoard[1] isEqual:playerPiece]) && ([gameBoard[2] isEqual:playerPiece])){
+            return YES;
+        }
+        // | | | |
+        // |X|X|X|
+        // | | | |
+        if (([gameBoard[3] isEqual:playerPiece]) && ([gameBoard[4] isEqual:playerPiece]) && ([gameBoard[6] isEqual:playerPiece])){
+            return YES;
+        }
+        // | | | |
+        // | | | |
+        // |X|X|X|
+        if (([gameBoard[6] isEqual:playerPiece]) && ([gameBoard[7] isEqual:playerPiece]) && ([gameBoard[8] isEqual:playerPiece])){
+            return YES;
+        }
+        // |X| | |
+        // |X| | |
+        // |X| | |
+        if (([gameBoard[0] isEqual:playerPiece]) && ([gameBoard[3] isEqual:playerPiece]) && ([gameBoard[6] isEqual:playerPiece])){
+            return YES;
+        }
+        // | |X| |
+        // | |X| |
+        // | |X| |
+        if (([gameBoard[1] isEqual:playerPiece]) && ([gameBoard[4] isEqual:playerPiece]) && ([gameBoard[7] isEqual:playerPiece])){
+            return YES;
+        }
+        // | | |X|
+        // | | |X|
+        // | | |X|
+        if (([gameBoard[2] isEqual:playerPiece]) && ([gameBoard[5] isEqual:playerPiece]) && ([gameBoard[8] isEqual:playerPiece])){
+            return YES;
+        }
+        // |X| | |
+        // | |X| |
+        // | | |X|
+        if (([gameBoard[0] isEqual:playerPiece]) && ([gameBoard[4] isEqual:playerPiece]) && ([gameBoard[8] isEqual:playerPiece])){
+            return YES;
+        }
+        // | | |X|
+        // | |X| |
+        // |X| | |
+        if (([gameBoard[2] isEqual:playerPiece]) && ([gameBoard[4] isEqual:playerPiece]) && ([gameBoard[6] isEqual:playerPiece])){
+            return YES;
+        }
+        
+    }
+    return NO;
+}
 
 @end
 
@@ -92,11 +168,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         game *ticTacToe =[[game alloc]init];
-        
         [ticTacToe startGame];
-        
-        
-        
         
         
     }
