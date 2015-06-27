@@ -25,8 +25,6 @@
 //@property (nonatomic) NSString *addItem;
 //@property (nonatomic) NSString *deletItem;
 //
-//
-//
 //@end
 
 @implementation Item
