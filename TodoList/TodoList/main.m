@@ -9,10 +9,84 @@
 
 #import <Foundation/Foundation.h>
 
+// create class declarations
+@class ToDoApp;
+@class ToDoList;
+@class ToDoItem;
+
+//ToDoApp class (we declare methods here)
+@interface ToDoApp : NSObject
+@end
+
+@implementation ToDoApp
+@end
+
+//ToDoList class
+@interface ToDoList : NSObject
+//- (void)setListTitle:(NSString *)title;
+//- (NSString *)title;
+//- (void)setList:
+@end
+
+@implementation ToDoList
+@end
+
+//ToDoItem class
+@interface ToDoItem : NSObject
+- (void)setItem:(NSString *)item;
+- (NSString *)item;
+- (void)addNameAndPriority;
+@end
+
+@implementation ToDoItem {
+    NSString *_item;
+    int _priority;
+}
+
+- (void)setItem:(NSString *)item {
+    _item = item;
+}
+- (NSString *)item {
+    return _item;
+}
+
+
+- (void)addNameAndPriority {
+    NSLog(@"Enter your To Do List item: ");
+    char itemName[256];
+    scanf("%s", itemName);
+    
+    
+    NSLog(@"added: %s", itemName);
+    
+    NSString *item1 = [NSString stringWithUTF8String:itemName];
+    NSLog(@"string test: %@", item1);
+    
+    _item = item1;
+    
+    NSLog(@"Enter priority 1, 2, 3: ");
+    int inputPriority;
+    scanf("%d", &inputPriority);
+    _priority = inputPriority;
+    
+    
+    NSLog(@"%@, %d",_item, _priority);
+
+}
+
+@end
+
+
+
+
+
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+        
+        ToDoItem *addItem = [[ToDoItem alloc]init];
+        [addItem addNameAndPriority];
+        
     }
     return 0;
 }
