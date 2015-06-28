@@ -12,13 +12,14 @@
 //keep track of players and score
 //take in player's name and let them know they won
 
+
 #import <Foundation/Foundation.h>
 
 @interface ticTacToeManager : NSObject
 
 -(void) initializeArray: (int) dimension;
 -(void) printBoard;
--(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition userType: (BOOL) isComputer;
+-(BOOL) isPositionValid: (int) horizontal And: (int) vertical AndIs: (char) userPosition WithUserType: (BOOL) isComputer;
 -(BOOL) isWinner;
 -(BOOL) isFull;
 
@@ -33,7 +34,7 @@
 }
 
 -(void) initializeArray: (int) dimension{
-    
+    //NSMutableArray *array = [[NSMutableArray alloc]init];
     _board = [[NSMutableArray alloc] init];
     
     for (int i = 0; i<dimension; i++) {
@@ -51,20 +52,21 @@
     NSLog(@"\n\t\t|%@|%@|%@| \n\t\t|%@|%@|%@| \n\t\t|%@|%@|%@|", [row1 objectAtIndex:0], [row1 objectAtIndex:1], [row1 objectAtIndex:2], [row2 objectAtIndex:0], [row2 objectAtIndex:1], [row2 objectAtIndex:2], [row3 objectAtIndex:0], [row3 objectAtIndex:1], [row3 objectAtIndex:2]);
 }
 
--(BOOL) isPositionValidX: (int) x AndY: (int) y and: (char) userPosition userType: (BOOL) isComputer{
+-(BOOL) isPositionValid: (int) horizontal And: (int) vertical AndIs: (char) userPosition WithUserType: (BOOL) isComputer{
+
+    horizontal = horizontal-1;    // this is the position on the row-array we want to check
+    vertical = vertical-1;    // this is the position in our board array we want the row-array from
     
-    x = x-1;    // this is the position on the row-array we want to check
-    y = y-1;    // this is the position in our board array we want the row-array from
-    
-    if ([[[_board objectAtIndex:y] objectAtIndex:x] isEqualTo:@" "]) { // get row-array from board, get element from row-array and then compare
+    if ([[[_board objectAtIndex:vertical] objectAtIndex: horizontal] isEqualTo:@" "]) { // get row-array from board, get element from row-array and then compare
         if (userPosition == 'X') {
             
-            [[_board objectAtIndex:y] replaceObjectAtIndex:x withObject:@"X"];
+            [[_board objectAtIndex:vertical] replaceObjectAtIndex:horizontal withObject:@"X"];
             
         }
         else{
-            [[_board objectAtIndex:y] replaceObjectAtIndex:x withObject:@"O"];
+            [[_board objectAtIndex:vertical] replaceObjectAtIndex:horizontal withObject:@"O"];
         }
+        
         return YES;
     }
     else if(isComputer) {
@@ -137,7 +139,7 @@
 
 -(BOOL) isFull {
     for (int i = 0; i < 3; i ++) {
-        if (    [ [ [_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "] ||
+        if ([ [ [_board objectAtIndex:i] objectAtIndex:0] isEqualToString: @" "] ||
             [ [ [_board objectAtIndex:i] objectAtIndex:1] isEqualToString: @" "] ||
             [ [ [_board objectAtIndex:i] objectAtIndex:2] isEqualToString: @" "]
             ){
@@ -191,7 +193,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
-        BOOL playingAgain = YES;
+        BOOL playingAgain = YES; //
         
         
         while (playingAgain) {
@@ -258,8 +260,8 @@ int main(int argc, const char * argv[]) {
             
             while (true) {
                 
-                int hPosition = -1;
-                int vPosition = -1;
+                int hPosition;
+                int vPosition;
                 
                 if (onePlayer && computerTurn) {
                     
@@ -291,8 +293,12 @@ int main(int argc, const char * argv[]) {
                 
                 // Pass in this position into our class and then check if it's empty and if so place this person's x or o into the board
                 
-                if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO userType:computerTurn ]){
-                    if (onePlayer) {
+                //if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO userType:computerTurn ]){
+               
+                //-(BOOL) isPositionValid: (int) horizontal And: (int) vertical AndIs: (char) userPosition WithUserType: (BOOL) isComputer;
+
+                if([game isPositionValid: hPosition  And: vPosition AndIs: xOrO WithUserType:computerTurn ]){
+                if (onePlayer) {
                         if (computerTurn == YES) {
                             computerTurn = NO;
                         }
