@@ -26,7 +26,7 @@
     
     int _playerTurn;
     
-    BOOL *_win;
+    BOOL _win;
     NSString *_winner;
     
     NSMutableArray *_gameboard;
@@ -63,20 +63,21 @@
     while (_win == NO) {
         [self turn];
     }
+	
 }
 
 -(void)turn{
+	if (([self checkWin] == FALSE) && ([_gameboard containsObject:@" "]==FALSE)){
+		_win = FALSE;
+		NSLog(@"It's a draw.");
+	}
     while (_playerTurn == 1) {
         NSLog(@"Player 1, make your move: ");
         int currentMove;
         scanf("%d",&currentMove);
 
 	
-       
-		
-
-        
-        if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
+		if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
             [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
             _playerTurn = 2;
         }
@@ -87,6 +88,23 @@
     }
     
     [self printBoard];
+	
+	
+	
+	if ([self checkWin] == TRUE) {
+	    _win = TRUE;
+		NSLog(@"Player 1 WINS!");
+		_playerTurn = 0;
+		
+		
+	}
+	
+	if (([self checkWin] == FALSE) && ([_gameboard containsObject:@" "]==FALSE)){
+	_win = FALSE;
+	NSLog(@"It's a draw.");
+	_playerTurn = 0;
+		
+	}
     
     while (_playerTurn == 2) {
         NSLog(@"Player 2, make your move: ");
@@ -104,6 +122,14 @@
         
     }
     [self printBoard];
+	if ([self checkWin] == TRUE) {
+		_win = TRUE;
+		NSLog(@"Player 2 WINS!");
+		_playerTurn = 0;
+		
+	}
+	
+	
 }
 
 -(BOOL)checkWin{
