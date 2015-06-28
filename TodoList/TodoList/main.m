@@ -27,14 +27,26 @@ BOOL notQuit = 1;
 
 -(void) mainMenu {
     NSLog(@"Add/Delete items: a/d");
-    char mainMenuChoice;
-    scanf ("%c", &mainMenuChoice);
-    fpurge(stdin);
-    if (mainMenuChoice == 'a') {
+    
+//    char mainMenuChoice;
+//    scanf ("%c", &mainMenuChoice);
+//    fpurge(stdin);
+    
+
+    NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
+    NSString *inputLine = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//    NSString *mainMenuChoice = inputLine;
+    
+    
+    // check if the input length is 1
+    // if so, check if the character is 'd', or 'q'
+    // otherwise, treat the input line as a new item
+    
+    if ([inputLine isEqualToString: @"add"]) {
         [self addItem];
-    } else if (mainMenuChoice =='d') {
+    } else if ([inputLine isEqualToString: @"delete"]) {
         [self deleteItem];
-    } else if (mainMenuChoice == 'q') {
+    } else if ([inputLine isEqualToString: @"quit"]){
         notQuit = 0;
     } else {
         NSLog(@"Invalid Entry");
@@ -76,14 +88,9 @@ int main(int argc, const char * argv[]) {
         Manager *listManager = [[Manager alloc] init];
         [listManager storeList];
         
-        
         while (notQuit) {
             [listManager mainMenu];
         }
-        
-//        [listManager addItem];
-//        [listManager deleteItem];
-        
         
     }
     return 0;
