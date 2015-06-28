@@ -154,129 +154,167 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        ticTacToeManager * game = [[ticTacToeManager alloc] init];
         
-        [game initializeArray:3];
+        BOOL playingAgain = YES;
         
-        
-        char xOrO;
-        int onePlayerChoice;
-        BOOL onePlayer;
-        BOOL computerTurn = NO;
-        
-        while (true) {
+        while (playingAgain) {
+            ticTacToeManager * game = [[ticTacToeManager alloc] init];
             
-            NSLog(@"Type 1 for a one player game and 2 for two-player game: ");
-            fpurge(stdin);
-            scanf("%d", &onePlayerChoice);
+            [game initializeArray:3];
             
-            if ( onePlayerChoice == 1 ) {
-                onePlayer = YES;
-                break;
-            }
-            else if (onePlayerChoice == 2){
-                onePlayer = NO;
-                break;
-            }
-            else{
-                NSLog(@"Please enter a valid number of players");
-            }
-        }
-        
-        while (true) {
             
-            NSLog(@"Choose X or O: ");
-            fpurge(stdin);
-            scanf("%c", &xOrO);
+            char xOrO;                  //first user chooses the position X or O
+            int onePlayerChoice;        //user choice to play one player game or two player game
+            BOOL onePlayer;             //onePlayer or twoPlayer
+            BOOL computerTurn = NO;     //initialize computerTurn to NO
+            BOOL won;
+            BOOL full;
             
-            if ( (xOrO == 'x') || (xOrO == 'X') || (xOrO == 'o') || (xOrO == 'O') ) {
+            
+            
+            while (true) {
                 
-                if (xOrO == 'x' || xOrO =='X') {
-                    xOrO = 'X';
+                NSLog(@"Type 1 for a one player game and 2 for two-player game: ");
+                fpurge(stdin);
+                scanf("%d", &onePlayerChoice);
+                
+                if ( onePlayerChoice == 1 ) {
+                    onePlayer = YES;
+                    break;
+                }
+                else if (onePlayerChoice == 2){
+                    onePlayer = NO;
+                    break;
+                }
+                else{
+                    NSLog(@"Please enter a valid number of players");
+                    continue;
+                }
+            }
+            
+            while (true) {
+                
+                NSLog(@"Choose X or O: ");
+                fpurge(stdin);
+                scanf("%c", &xOrO);
+                
+                if ( (xOrO == 'x') || (xOrO == 'X') || (xOrO == 'o') || (xOrO == 'O') ) {
+                    
+                    if (xOrO == 'x' || xOrO =='X') {
+                        xOrO = 'X';
+                    }
+                    else {
+                        xOrO = 'O';
+                    }
+                    
+                    break;
                 }
                 else {
-                    xOrO = 'O';
+                    continue;
                 }
-                
-                break;
             }
-        }
-        
-        
-        
-        
-        [game printBoard];
-        
-        
-        
-        while (true) {
             
-            int hPosition = -1;
-            int vPosition = -1;
             
-            if (onePlayer) {
-                if (computerTurn) {
+            [game printBoard];
+            
+            
+            
+            while (true) {
+                
+                int hPosition = -1;
+                int vPosition = -1;
+                
+                if (onePlayer && computerTurn) {
                     
                     hPosition = 1 + arc4random_uniform(3);
                     vPosition = 1 + arc4random_uniform(3);
                 }
-            }
-            
-            else{
                 
-                NSLog(@"Choose your horizontal position (1-3): ");
-                fpurge(stdin);
-                scanf("%d", &hPosition);
-                
-                if (hPosition < 1 || hPosition > 3) {
-                    NSLog(@"Please enter a valid position between 1 and 3");
-                    continue;
+                else{
+                    
+                    NSLog(@"Choose your horizontal position (1-3): ");
+                    fpurge(stdin);
+                    scanf("%d", &hPosition);
+                    
+                    if (hPosition < 1 || hPosition > 3) {
+                        NSLog(@"Please enter a valid position between 1 and 3");
+                        continue;
+                    }
+                    
+                    NSLog(@"Choose your vertical position (1-3): ");
+                    fpurge(stdin);
+                    scanf("%d", &vPosition);
+                    
+                    if (vPosition < 1 || vPosition > 3) {
+                        NSLog(@"Please enter a valid position between 1 and 3");
+                        continue;
+                    }
                 }
                 
-                NSLog(@"Choose your vertical position (1-3): ");
-                fpurge(stdin);
-                scanf("%d", &vPosition);
                 
-                if (vPosition < 1 || vPosition > 3) {
-                    NSLog(@"Please enter a valid position between 1 and 3");
-                    continue;
-                }
-            }
-            
-            
-            // Pass in this position into our class and then check if it's empty and if so place this person's x or o into the board
-            
-            if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO userType:computerTurn ]){
-                if (onePlayer) {
-                    if (computerTurn == YES) {
-                        computerTurn = NO;
+                // Pass in this position into our class and then check if it's empty and if so place this person's x or o into the board
+                
+                if ([game isPositionValidX:hPosition AndY:vPosition and:xOrO userType:computerTurn ]){
+                    if (onePlayer) {
+                        if (computerTurn == YES) {
+                            computerTurn = NO;
+                        }
+                        else{
+                            computerTurn = YES;
+                        }
+                    }
+                    if (xOrO == 'X') {  //After each iteration we want to change the postion to X or back to O
+                        xOrO = 'O';
                     }
                     else{
-                        computerTurn = YES;
+                        xOrO = 'X';
                     }
-                }
-                if (xOrO == 'X') {  //After each iteration we want to change the postion to X or back to O
-                    xOrO = 'O';
-                }
-                else{
-                    xOrO = 'X';
+                    
+                    [game printBoard];
                 }
                 
-                [game printBoard];
+                won = [game isWinner];
+                full = [game isFull];
+                
+                if (won || full) {
+                    break;
+                    
+                }
+                else{
+                    continue;
+                }
             }
             
-            BOOL won = [game isWinner];
-            BOOL full = [game isFull];
             
-            if (won || full) {
-                break;
+            
+            
+            while (true) {
+                char playAgain;
+                NSLog(@"Do you want to play again?(Y for yes and N for no: ");
+                fpurge(stdin);
+                scanf("%c", &playAgain);
+                
+                if ( (playAgain == 'y') || (playAgain == 'Y') ) {
+                    playingAgain = YES;
+                    break;
+                }
+                else if ((playAgain == 'n') || (playAgain == 'N')){
+                    
+                    playingAgain = NO;
+                    NSLog(@"Thanks for playing!");
+                    return 0;
+                    
+                }
+                else{
+                    continue;
+                }
+                
             }
             
             
-            
-        }
+        } // end of playingAgain while LOOP
         
         
     }
-    return 0;
+    //return 0;
 }
