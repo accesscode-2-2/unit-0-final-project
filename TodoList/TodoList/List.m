@@ -13,6 +13,15 @@
     NSMutableArray *_items;
 }
 
+- (instancetype) initWithName:(NSString *)name{
+    
+    if(self = [super init]){
+        self.listName = name;
+        return self;
+    }
+    return nil;
+}
+
 -(void) addItem{
     
     if(_items == nil){
@@ -107,7 +116,7 @@
     while(YES){
         char holder[256];
         [self printItems];
-        //[self printCommands
+        [self printCommands];
         scanf("%255[^\n]%*c",holder);
         NSString *checker = [NSString stringWithCString:holder encoding:NSASCIIStringEncoding];
         
@@ -178,13 +187,13 @@
             continue;
         }
         
-        if([checker isEqualToString:@"act"] || [checker isEqualToString:@"ACT"]){
+        if([checker isEqualToString:@"t"] || [checker isEqualToString:@"T"]){
             
             [self active];
             continue;
         }
         
-        if([checker isEqualToString:@"i"] || [checker isEqualToString:@"i"]){
+        if([checker isEqualToString:@"i"] || [checker isEqualToString:@"I"]){
             
             [self inActive];
             continue;
@@ -201,7 +210,8 @@
 -(void) printCommands{
         printf("a|add               e|edit\n");
         printf("d|delete            p|set priority\n");
-        printf("c|mark completed    a|active\n");
-        printf("i|inactive");
+        printf("c|mark completed    t|active\n");
+        printf("i|inactive          q|quit\n");
+    
 }
 @end

@@ -10,7 +10,6 @@
 
 @interface ListManager : NSObject
 
--(void) printCommands;
 -(void) run;
 -(void) addList;
 -(void) deleteList:(int)index;

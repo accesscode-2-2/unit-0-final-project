@@ -17,7 +17,36 @@
 }
 
 -(void) printCommands{
+    
+        printf("a|add               v|view\n");
+        printf("d|delete            q|quit\n");
 }
+
+-(void)addList{
+    if(_listArray == nil){
+        _listArray = [[NSMutableArray alloc]init];
+    }
+    char temp[256];
+    printf("\n Add title of Todo-List: ");
+    scanf("%255[^\n]%*c",temp);
+    fpurge(stdin);
+    NSString *name = [NSString stringWithCString:temp encoding:NSASCIIStringEncoding];
+    List *li = [[List alloc] initWithName:name];
+    
+    [_listArray addObject:li];
+}
+
+-(void) deleteList:(int)index{
+    NSInteger arraySize = [_listArray count];
+    if(index < 1 || index > arraySize){
+        NSString *c = [NSString stringWithFormat:@"%@",index<1? @"Must be greater than or equal to 1":@"out of bounds"];
+        printf("%s",[c UTF8String]);
+        return;
+    }
+    [_listArray removeObjectAtIndex:index];
+    
+}
+
 -(void) run{
     while(YES){
         char userIn[256];
@@ -62,7 +91,10 @@
             [temp run];
             continue;
         }
-
+        if([userString isEqualToString:@"q"] || [userString isEqualToString:@"Q"]){
+            
+            break;
+        }
 
         
     }

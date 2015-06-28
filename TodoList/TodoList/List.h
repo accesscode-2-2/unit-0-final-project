@@ -15,6 +15,7 @@
 
 @property (nonatomic) NSString *listName;
 
+-(instancetype)initWithName:(NSString *)name;
 
 -(void) addItem;
 -(void) printItems;
