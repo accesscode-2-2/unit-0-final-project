@@ -45,7 +45,7 @@
 
 - (id)init
 {
-    // create items array here
+    [self setItems:[[NSMutableArray alloc]init]];
     return self;
 }
 
@@ -62,14 +62,17 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Item *puppyItem = [[Item alloc] init];
-        puppyItem.itemContent = @"Buy a puppy";
-        puppyItem.itemPriority = 4;
+        Item *coffeeItem = [[Item alloc] init];
+        coffeeItem.itemContent = @"Buy coffee";
+        coffeeItem.itemPriority = 4;
         
-        List *myList = [[List alloc] init];
+        List *groceryList = [[List alloc] init];
+        
         
         // this won't do anything unless `items` is initialized
-        [myList.items addObject:puppyItem];
+        [groceryList.items addObject:coffeeItem];
+        
+        
     }
     return 0;
 }
