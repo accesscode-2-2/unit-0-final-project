@@ -7,18 +7,45 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ListManager.h"
+#//import "ListManager.h"
 //#import "List.h"
-#import "ListItem.h"
+//#import "ListItem.h"
+
+@interface Item: NSObject
+
+@end
+
+@implementation Item
+
+@end
+
 
 @interface List: NSObject
 
-@end
-
-@implementation List
-
+- (void) addItem:(NSString *)item;
+- (NSArray *)contents;
 
 @end
+
+@implementation List{
+    NSMutableArray *_contents;
+}
+
+- (id)init {
+    _contents = [[NSMutableArray alloc] init];
+    return self;
+}
+
+-(void) addItem:(NSString *)item {
+    [_contents addObject:item];
+}
+
+- (NSArray *)contents {
+    return _contents;
+}
+
+@end
+
 
 @interface ToDoList: NSObject
 -(void) listItems : (NSMutableArray *) items;
@@ -29,14 +56,11 @@
 
 -(void) addList: (List *) list;
 
-
-
 @end
 
 @implementation ToDoList {
     NSMutableArray *_items;
     NSMutableArray *_lmanage;
-    List *_list;
 }
 
 -(void) listItems : (NSMutableArray *) items{
@@ -55,34 +79,43 @@
 }
 
 -(void) addList: (List *) list {
-    _list = list;
+    [_items addObject:list];
 }
 
-
-
-
 @end
+
+NSString * scanUserInput(void) {
+    char inputUTF8String[256];
+    scanf("%s", inputUTF8String);
+    fpurge(stdin);
+    
+    NSString *input = [NSString stringWithUTF8String:inputUTF8String];
+    return input;
+}
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        
         ToDoList *lmanage = [[ToDoList alloc]init];
-        List *list = [[List alloc]init];
-    
+        List *list = [[List alloc] init];
+        
+        [lmanage addList:list];
+        
+        //list = [NSMutableArray arrayWithObjects:@"shopping, boxing, biking, eating", nil];
+        
+        //[list addItem:@"go swimming"];
         
         printf("To-Do List App\n\n\n");
-        
-        
-        
-        printf("a) Add Item\n\nb) Delete Item\n\nc) Edit Item\n\nd) Mark Item Done\n\ne) Show Active List \n\nq) Quit\n");
-        char option;
+
         int tasks = 0;
         
         while (tasks <=1000)
         {
             tasks++;
             
+            printf("a) Add Item\n\nb) Delete Item\n\nc) Edit Item\n\nd) Mark Item Done\n\ne) Show Active List \n\nq) Quit\n");
+            
+            char option;
             scanf("%c", &option);
             fpurge(stdin);
             
@@ -91,22 +124,26 @@ int main(int argc, const char * argv[]) {
                 // create a list item instance
                 // set the itemName of the list item instance
                 // add list item to list
-                NSLog(@"What would you like to add?\n", option);
+                NSLog(@"What would you like to add?\n");
                 
+                NSString *input = scanUserInput();
+                //get input here
+                [list addItem:input];
                 
+                NSLog(@"\n\n Your list: %@", list.contents);
                 
             } else if (option == 'b') {
                 
                 NSLog(@"Delete which task?", option);
-                
+                 NSString *input = scanUserInput();
             } else if (option == 'c') {
                 
                 NSLog(@"What would you like to edit?", option);
-                
+                 NSString *input = scanUserInput();
             } else if (option == 'd') {
                 
                 NSLog(@"blank is done", option);
-                
+                 NSString *input = scanUserInput();
             } else if (option == 'e') {
                 
                 NSLog(@"This is your current list: ", option);
