@@ -11,6 +11,9 @@
 @interface Game:NSObject
 
 -(BOOL)checkWin;
+-(BOOL)getWin;
+
+
 -(BOOL)checkDraw;
 
 -(void)startGame;
@@ -19,6 +22,9 @@
 -(void)printTutorialBoard;
 
 -(void)turn;
+
+-(void)setGameSize:(int)size;
+-(int)getGameSize;
 
 @end
 
@@ -33,6 +39,15 @@
     NSString *_winner;
     
     NSMutableArray *_gameboard;
+    int _gameSize;
+}
+
+-(void)setGameSize:(int)size{
+    _gameSize = size;
+}
+
+-(int)getGameSize{
+    return _gameSize;
 }
 
 -(void)printTutorialBoard{
@@ -49,8 +64,9 @@
     
 }
 
-
-
+-(BOOL)getWin{
+    return _win;
+}
 
 -(void)startGame {
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
@@ -208,7 +224,19 @@ int main(int argc, const char * argv[]) {
         Game *ticTacToe =[[Game alloc]init];
         [ticTacToe startGame];
         
-        
+        // while ([ticTacToe win] == NO) {
+        // ask user input
+        // validate the users move
+        // if user move valid
+        //  make move
+        // validate board
+        // if won
+        //
+        // // ask game to priint board
     }
+    
     return 0;
 }
+
+
+
