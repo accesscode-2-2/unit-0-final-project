@@ -49,9 +49,10 @@
 
 -(void)introScreen;
 -(void)askUser1ForSpace;
--(void)askUSer2ForSpace;
+-(void)askUser2ForSpace;
 -(void)displayBlankBoard;
 -(BOOL)result;
+-(BOOL)checkIfGameIsOver;
 
 @end
 
@@ -146,7 +147,7 @@
     }
 }
 
--(void)askUSer2ForSpace{
+-(void)askUser2ForSpace{
     BOOL invalid = YES;
     while (invalid) {
         NSLog(@"Player 2, please enter the space you'd like to occupy.");
@@ -228,6 +229,7 @@
         return YES;
     }
     
+    
 //    for (int i = 0; i < 3; i++) {
 //        
 //        for (int j = 0; j < 3; j++) {
@@ -240,7 +242,21 @@
     return NO;
 }
 
+-(BOOL)checkIfGameIsOver{
+        for (int i = 0; i < 3; i++) {
+    
+            for (int j = 0; j < 3; j++) {
+                if (!([_normalBoard[i][j] isEqualToString:@"X"] || [_normalBoard[i][j] isEqualToString:@"O"])) {
+            
+                          return NO;
+                }
+            }
+        }
+    return YES;
+}
+
 @end
+
 
 
 int main(int argc, const char * argv[]) {
@@ -259,17 +275,17 @@ int main(int argc, const char * argv[]) {
                 break;
             }
             
-            [simulate askUSer2ForSpace];
+            if ([simulate checkIfGameIsOver]) {
+                NSLog(@"It's a draw!");
+                break;
+            }
+            
+            [simulate askUser2ForSpace];
             if ([simulate result]) {
                 NSLog(@"Player 2 wins!");
                 break;
             }
-            
-    
-
-            
         }
-        
         
         return 0;
     }
