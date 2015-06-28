@@ -28,14 +28,11 @@ BOOL notQuit = 1;
 -(void) mainMenu {
     NSLog(@"Add/Delete items: a/d");
     
-//    char mainMenuChoice;
-//    scanf ("%c", &mainMenuChoice);
-//    fpurge(stdin);
     
-
     NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
     NSString *inputLine = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//    NSString *mainMenuChoice = inputLine;
+    inputLine = [inputLine lowercaseString];
+    
     
     
     // check if the input length is 1
