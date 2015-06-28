@@ -26,7 +26,7 @@ BOOL notQuit = 1;
 }
 
 -(void) mainMenu {
-    NSLog(@"Add/Delete items: a/d");
+    NSLog(@"Add/Delete/Quit items: ");
     
     
     NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
