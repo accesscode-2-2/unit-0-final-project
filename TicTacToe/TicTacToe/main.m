@@ -107,7 +107,7 @@
     
     
     NSLog(@"%@\n%@", [player1 getSymbol],[player2 getSymbol]);
-
+    
     
     
 }
@@ -172,7 +172,7 @@
             NSLog(@"---------");
         }
     }
-
+    
 }
 
 
@@ -216,27 +216,9 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        
-
-        //        Player *umar = [[Player alloc] init];
-                GameManager *simulate = [[GameManager alloc] init];
-        //
-        //
-        //        [simulate displayBlankBoard];
-        //        [simulate askUserForSpace:umar];
-        //        [simulate displayBoard:player1];
-        //        [simulate askUserForSpace:umar];
-        //        [simulate displayBoard:umar];
-        //        [simulate askUserForSpace:umar];
-        //        [simulate displayBoard:umar];
-        //        [simulate result];
-        
-
+        GameManager *simulate = [[GameManager alloc] init];
         
         [simulate introScreen];
-        
-        
-        
         
         return 0;
     }
