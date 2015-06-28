@@ -10,6 +10,6 @@
 
 
 
-@implementation list : NSObject ;
+@implementation List : NSObject ;
 
 @end

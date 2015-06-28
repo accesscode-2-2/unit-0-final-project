@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class listItem;
 
 @interface ListItem : NSObject
+
+-(instancetype): initWithDefaultAndName :(NSString *) name;
+
+@property (nonatomic) NSInteger priority;
+@property (nonatomic) NSString *itemName;
+@property (nonatomic) BOOL finished;
 
 @end

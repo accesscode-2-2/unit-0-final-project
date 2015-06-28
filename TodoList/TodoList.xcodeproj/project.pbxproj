@@ -66,13 +66,13 @@
 		8D9789F51B3C9A7F007CF4CF /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
-				8D9789F61B3C9A7F007CF4CF /* main.m */,
 				BF668D5D1B3F8DBC0047500D /* ListManager.h */,
 				BF668D5E1B3F8DBC0047500D /* ListManager.m */,
 				BF668D601B3F90050047500D /* List.h */,
 				BF668D611B3F90050047500D /* List.m */,
 				BF668D631B3F90150047500D /* ListItem.h */,
 				BF668D641B3F90150047500D /* ListItem.m */,
+				8D9789F61B3C9A7F007CF4CF /* main.m */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";

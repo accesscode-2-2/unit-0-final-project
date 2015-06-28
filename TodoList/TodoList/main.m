@@ -10,6 +10,8 @@
 
 @interface toDoList: NSObject
 
+
+
 -(void) enterUserList: (NSMutableArray * )userList;
 -(NSArray *)userList;
 -(void) manageList: (NSArray *)manList;
@@ -45,47 +47,25 @@
     _repItem = repItem;
 }
 
-
-
-
 @end
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        toDoList *Charles = [[toDoList alloc]init];
-        NSMutableArray *charlesList = [[NSMutableArray alloc]init];
-        int laundry;
-        int homework;
-        int shopping;
-        int exercise;
-        int chore;
-        
-        NSLog(@"What's on the to-do list?\n");
-        
-        
-
-//        for (int tasks; tasks <=4 ; tasks++) {
-//            scanf("%d", &chore);
-//            if (chore == 1) {
-//                NSLog(@"Choose another chore\n", chore);
-//            } else if (chore == 2) {
-//                NSLog(@"You need to do more! Choose another one!", chore);
-//            } else if (chore == 3) {
-//                NSLog(@"Anything else?", chore);
-//            } else if (chore == 4) {
-//                NSLog(@"Great, now we're set for the day", chore);
-//            }
-
-        
-        
-
+    printf("To-Do List App\n\n\n");
+    
+        char addList, deleteList, editItem, markDone, priority, active, inactive, createList;
+        int opt1, opt2, opt3, opt4, opt5, opt6;
+      
+        printf("\n1) Add Item\n2) Delete Item\n3) Edit Item\n4) Mark Done\n5) Active \n6) Inactive");
+        scanf("%s", &createList);
+        for (int options = 0; options <=6; options++) {
+            scanf("%d", &opt1
+        }
         
         
         
-        
-        
+      
     }
     return 0;
 }
-

@@ -19,9 +19,13 @@
 -(void) printCommand;
 -(void) createList;
 -(void) addList;
--(void) deleteList;
+-(void) deleteList: (int) index;
+-(void) editItem: (int) index;
+-(void) markDone: (int) index;
 -(void) printLists;
--(void) editItem;
--(void) markDone;
+-(void) go;
+-(void) active;
+-(void) inactive;
+
 
 @end
