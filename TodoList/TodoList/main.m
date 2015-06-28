@@ -39,6 +39,15 @@
 
 @implementation Item
 
+-(BOOL) itemCompleted {
+    NSLog(@"Mark Item Complete");
+    char pickComplete;
+    scanf("%d",&pickComplete);
+    if (pickComplete == c) {
+    
+    }
+}
+
 @end
 
 @implementation List
