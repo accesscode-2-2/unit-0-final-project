@@ -82,14 +82,15 @@
     li.itemName = [NSString stringWithCString:newName encoding:NSASCIIStringEncoding];
 }
 
+
 -(void) active{
-    int i = 1;
-    printf("\n");
-    for(ListItem * li in _items){
-        if(!li.completed){
-            printf("%d. %s\n",i, [li.itemName UTF8String]);
+        int i = 1;
+        printf("\n");
+        for(ListItem * li in _items){
+            if(!li.completed){
+                printf("%d. %s\n",i, [li.itemName UTF8String]);
+            }
         }
-    }
 }
 
 -(void) inActive{
@@ -106,12 +107,94 @@
     while(YES){
         char holder[256];
         [self printItems];
-        //[self printCommandActive:..:inactive
+        //[self printCommands
         scanf("%255[^\n]%*c",holder);
         NSString *checker = [NSString stringWithCString:holder encoding:NSASCIIStringEncoding];
+        
         if([checker isEqualToString:@"e"] || [checker isEqualToString:@"E"]){
-            
+            int d;
+            printf("/nIndex number? ");
+            scanf("%d",&d);
+            fpurge(stdin);
+            NSInteger arraySize = [_items count];
+            if(d < 1 || d > arraySize){
+                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
+                printf("%s",[c UTF8String]);
+                continue;
+            }
+            [self editItem:d];
+            continue;
         }
+        
+        if([checker isEqualToString:@"d"] || [checker isEqualToString:@"D"]){
+            int d;
+            printf("/nIndex number? ");
+            scanf("%d",&d);
+            fpurge(stdin);
+            NSInteger arraySize = [_items count];
+            if(d < 1 || d > arraySize){
+                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
+                printf("%s",[c UTF8String]);
+                continue;
+            }
+            [self deleteItem:d];
+            continue;
+        }
+        
+        if([checker isEqualToString:@"c"] || [checker isEqualToString:@"C"]){
+            int d;
+            printf("/nIndex number? ");
+            scanf("%d",&d);
+            fpurge(stdin);
+            NSInteger arraySize = [_items count];
+            if(d < 1 || d > arraySize){
+                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
+                printf("%s",[c UTF8String]);
+                continue;
+            }
+            [self markCompleted:d];
+            continue;
+        }
+        
+        if([checker isEqualToString:@"p"] || [checker isEqualToString:@"P"]){
+            int d;
+            printf("/nIndex number? ");
+            scanf("%d",&d);
+            fpurge(stdin);
+            NSInteger arraySize = [_items count];
+            if(d < 1 || d > arraySize){
+                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
+                printf("%s",[c UTF8String]);
+                continue;
+            }
+            
+            [self setPriority:d];
+            continue;
+        }
+    
+        if([checker isEqualToString:@"a"] || [checker isEqualToString:@"A"]){
+            
+            [self addItem];
+            continue;
+        }
+        
+        if([checker isEqualToString:@"act"] || [checker isEqualToString:@"ACT"]){
+            
+            [self active];
+            continue;
+        }
+        
+        if([checker isEqualToString:@"i"] || [checker isEqualToString:@"i"]){
+            
+            [self inActive];
+            continue;
+        }
+        
+        if([checker isEqualToString:@"q"] || [checker isEqualToString:@"Q"]){
+            
+            break;
+        }
+
     }
 }
 
