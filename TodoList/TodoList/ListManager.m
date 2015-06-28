@@ -13,7 +13,7 @@
 @class List;
 
 @implementation ListManager{
-    NSMutableArray
+    NSMutableArray *_listArray;
 }
 
 -(void) printCommands{
@@ -37,7 +37,7 @@
             printf("/nList Number? ");
             scanf("%d",&d);
             fpurge(stdin);
-            NSInteger arraySize = [//_items count];
+            NSInteger arraySize = [_listArray count];
             if(d < 1 || d > arraySize){
                 NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
                 printf("%s",[c UTF8String]);
@@ -52,14 +52,14 @@
             printf("/nIndex number? ");
             scanf("%d",&d);
             fpurge(stdin);
-            NSInteger arraySize = [//_items count];
+            NSInteger arraySize = [_listArray count];
             if(d < 1 || d > arraySize){
                 NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
                 printf("%s",[c UTF8String]);
                 continue;
             }
-            List* temp = [//_items objectAtIndex:d-1] ;
-            //[temp run]
+            List* temp = [_listArray objectAtIndex:d-1] ;
+            [temp run];
             continue;
         }
 
