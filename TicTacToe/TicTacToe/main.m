@@ -48,6 +48,7 @@
     
     NSMutableArray *_gameboard;
     int _gameSize;
+    int _maxIndex;
 }
 
 -(void)setDifficulty:(int)level{
@@ -104,23 +105,46 @@
 }
 
 -(void) printBoard {
-    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:0],[_gameboard objectAtIndex:1],[_gameboard objectAtIndex:2] );
-    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:3],[_gameboard objectAtIndex:4],[_gameboard objectAtIndex:5] );
-    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:6],[_gameboard objectAtIndex:7],[_gameboard objectAtIndex:8] );
+    for (int i = 0; i < pow (_gameSize,2); i++) {
+        
+        NSString *placeHolderString = [_gameboard objectAtIndex:i];
+        const char *placeHolderCharString = [placeHolderString cStringUsingEncoding:NSUTF8StringEncoding];
+        
+        if ((i >= _gameSize) && (i % _gameSize  == 0)) {
+            printf("\n|%s|", placeHolderCharString);
+        }
+        else{
+            printf("|%s|", placeHolderCharString);
+        }
+    }
+    printf("\n");
 }
 
 -(void)startGame {
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
     _win = NO;
-    NSLog(@"Set a game size, fool:");
+    NSLog(@"Set a game size from 3-10, fool!:");
     int userGameSize;
     scanf("%d",&userGameSize);
     [self setGameSize:userGameSize];
     
-    //fill gameboard with spaces
+    //calculate max index
+    _maxIndex = (pow(_gameSize, 2) - 1);
+    
+    //fill gameboard with the index of the space
     _gameboard = [[NSMutableArray alloc] init];
     for (int i = 0; i < pow (_gameSize,2); i++) {
-        [_gameboard addObject:@" "];
+        
+        // create a string from i
+        NSString *placeNumber = [NSString stringWithFormat:@"%d",i];
+        int lengthOfPlaceNumber = (int)[placeNumber length];
+        
+        // check the length of the string
+        if (lengthOfPlaceNumber == 1) {
+            NSString *zero = [NSString stringWithFormat:@"0"];
+            placeNumber = [zero stringByAppendingString:placeNumber];
+        }
+        [_gameboard addObject: placeNumber];
     }
     
     //print tutorial board
@@ -154,9 +178,17 @@
             NSLog(@"Player 1, make your move: ");
             int currentMove;
             scanf("%d",&currentMove);
+            fpurge(stdin);
             
-            if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
-                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
+            NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%d",currentMove];
+            int lengthOfStringOfCurrentMove = (int)[stringOfCurrentMove length];
+            if (lengthOfStringOfCurrentMove == 1) {
+                NSString *zero = [NSString stringWithFormat:@"0"];
+                stringOfCurrentMove = [zero stringByAppendingString:stringOfCurrentMove];
+            }
+            
+            if (([_gameboard[currentMove] isEqual: stringOfCurrentMove]) && (currentMove>=0) && (currentMove<=_maxIndex)) {
+                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"~X"];
                 _playerTurn = 2;
             }
             else {
@@ -172,8 +204,15 @@
             scanf("%d",&currentMove);
             fpurge(stdin);
             
-            if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
-                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"O"];
+            NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%d",currentMove];
+            int lengthOfStringOfCurrentMove = (int)[stringOfCurrentMove length];
+            if (lengthOfStringOfCurrentMove == 1) {
+                NSString *zero = [NSString stringWithFormat:@"0"];
+                stringOfCurrentMove = [zero stringByAppendingString:stringOfCurrentMove];
+            }
+            
+            if (([_gameboard[currentMove] isEqual: stringOfCurrentMove]) && (currentMove>=0) && (currentMove<=_maxIndex)) {
+                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"~O"];
                 _playerTurn = 1;
             }
             else {
@@ -193,11 +232,11 @@
         
         //sets player piece for each of the two loops
         if (i == 1) {
-            playerPiece = @"X";
+            playerPiece = @"~X";
             _winner = @"Player 1";
         }
         else{
-            playerPiece = @"O";
+            playerPiece = @"~O";
             _winner = @"Player 2";
         }
         
@@ -255,7 +294,7 @@
 }
 
 -(BOOL)checkDraw{
-    if (([self checkWin] == FALSE) && ([_gameboard containsObject:@" "]==FALSE)){
+    if ((_win == NO) && (_turnCount == (_maxIndex + 1))){
         return TRUE;
     }
     return FALSE;
