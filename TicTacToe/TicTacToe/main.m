@@ -72,6 +72,9 @@
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
     _win = NO;
     
+    NSLog(@"Set a game size:");
+    
+    
     //fill gameboard with spaces
     _gameboard = [[NSMutableArray alloc] init];
     for (int i = 0; i < 9; i++) {
