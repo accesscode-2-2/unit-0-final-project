@@ -22,7 +22,11 @@
 -(BOOL) isWinner;
 -(BOOL) isFull;
 
+
+
 @end
+
+
 
 @implementation ticTacToeManager{
     NSMutableArray *_board;
@@ -149,6 +153,38 @@
 
 @end
 
+@interface Person : NSObject
+
+-(void)setName:(NSString *)name;
+
+-(void)won;
+
+
+
+@end
+
+
+@implementation Person { // class
+    
+    // instance variable
+    NSString *_name;
+    int _pointsEarned;
+}
+    // methods
+
+-(void)setName:(NSString *)name {
+    
+    _name = name;
+    _pointsEarned = 0;
+    
+}
+
+-(void)won{
+    _pointsEarned = _pointsEarned + 1;
+}
+
+
+@end
 
 
 int main(int argc, const char * argv[]) {
@@ -156,6 +192,7 @@ int main(int argc, const char * argv[]) {
         
         
         BOOL playingAgain = YES;
+        
         
         while (playingAgain) {
             ticTacToeManager * game = [[ticTacToeManager alloc] init];
@@ -316,5 +353,8 @@ int main(int argc, const char * argv[]) {
         
         
     }
+
     //return 0;
+
+    
 }
