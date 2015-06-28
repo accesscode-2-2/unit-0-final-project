@@ -13,7 +13,6 @@
 -(BOOL)checkWin;
 -(BOOL)getWin;
 
-
 -(BOOL)checkDraw;
 
 -(void)startGame;
@@ -26,11 +25,20 @@
 -(void)setGameSize:(int)size;
 -(int)getGameSize;
 
+//Easy, Medium, Hard
+-(void)setDifficulty:(int)level;
+-(int)getDifficulty;
+
+//Player vs. Player OR Player vs. Computer
+-(void)setMode:(int)mode;
+-(int)getMode;
+
 @end
 
 @implementation Game{
-    NSString *_mode;
-    NSInteger *_difficulty;
+    int _mode;
+    
+    int _difficulty;
     
     int _playerTurn;
     int _turnCount;
@@ -42,6 +50,14 @@
     int _gameSize;
 }
 
+-(void)setDifficulty:(int)level{
+    _difficulty = level;
+}
+
+-(int)getDifficulty{
+    return _difficulty;
+}
+
 -(void)setGameSize:(int)size{
     _gameSize = size;
 }
@@ -50,34 +66,60 @@
     return _gameSize;
 }
 
--(void)printTutorialBoard{
-    NSLog(@"|0|1|2|");
-    NSLog(@"|3|4|5|");
-    NSLog(@"|6|7|8|");
+-(void)setMode:(int)mode{
+    _mode = mode;
 }
-
-
--(void) printBoard {
-    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:0],[_gameboard objectAtIndex:1],[_gameboard objectAtIndex:2] );
-    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:3],[_gameboard objectAtIndex:4],[_gameboard objectAtIndex:5] );
-    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:6],[_gameboard objectAtIndex:7],[_gameboard objectAtIndex:8] );
-    
+-(int)getMode{
+    return _mode;
 }
 
 -(BOOL)getWin{
     return _win;
 }
 
+-(void)printTutorialBoard{
+    for (int i = 0; i < pow (_gameSize,2); i++) {
+        
+        // create a string from i
+        NSString *placeNumber = [NSString stringWithFormat:@"%d",i];
+        int lengthOfPlaceNumber = (int)[placeNumber length];
+        
+        // check the length of the sting
+        if (lengthOfPlaceNumber == 1) {
+            NSString *zero = [NSString stringWithFormat:@"0"];
+            placeNumber = [zero stringByAppendingString:placeNumber];
+        }
+        //convert NSString to char string
+        const char *placeNumberCharString = [placeNumber cStringUsingEncoding: NSUTF8StringEncoding];
+        
+        if ((i >= _gameSize) && (i % _gameSize  == 0)) {
+            printf("\n|%s|", placeNumberCharString);
+            
+        }
+        else{
+            printf("|%s|", placeNumberCharString);
+        }
+    }
+    printf("\n");
+}
+
+-(void) printBoard {
+    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:0],[_gameboard objectAtIndex:1],[_gameboard objectAtIndex:2] );
+    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:3],[_gameboard objectAtIndex:4],[_gameboard objectAtIndex:5] );
+    NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:6],[_gameboard objectAtIndex:7],[_gameboard objectAtIndex:8] );
+}
+
 -(void)startGame {
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
     _win = NO;
-    
-    NSLog(@"Set a game size:");
-    
+    NSLog(@"Set a game size, fool:");
+    int userGameSize;
+    scanf("%d",&userGameSize);
+    [self setGameSize:userGameSize];
     
     //fill gameboard with spaces
     _gameboard = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < pow (_gameSize,2); i++) {
         [_gameboard addObject:@" "];
     }
     
@@ -240,6 +282,4 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
-
 
