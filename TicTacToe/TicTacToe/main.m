@@ -21,8 +21,8 @@
 @end
 
 @implementation Game{
-    NSString *mode;
-    NSInteger *difficulty;
+    NSString *_mode;
+    NSInteger *_difficulty;
     
     int _playerTurn;
     
