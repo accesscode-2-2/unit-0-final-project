@@ -5,6 +5,13 @@
 //  Created by Henna and Kaisha  on 6/27/15.
 //
 
+//Henna:
+//include a way to check for no more plays
+
+//Kaisha:
+//keep track of players and score
+//take in player's name and let them know they won
+
 #import <Foundation/Foundation.h>
 
 @interface ticTacToeManager : NSObject
