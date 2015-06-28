@@ -11,6 +11,8 @@
 @interface Game:NSObject
 
 -(BOOL)checkWin;
+-(BOOL)checkDraw;
+
 -(void)startGame;
 
 -(void)printBoard;
@@ -25,6 +27,7 @@
     NSInteger *_difficulty;
     
     int _playerTurn;
+    int _turnCount;
     
     BOOL _win;
     NSString *_winner;
@@ -45,6 +48,10 @@
     NSLog(@"|%@|%@|%@|",[_gameboard objectAtIndex:6],[_gameboard objectAtIndex:7],[_gameboard objectAtIndex:8] );
     
 }
+
+
+
+
 -(void)startGame {
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
     _win = NO;
@@ -60,54 +67,61 @@
     
     //Game Loop
     _playerTurn = 1;
+    _turnCount = 1;
     while (_win == NO) {
+        
         [self turn];
+        
+        [self printBoard];
+        
+        if ([self checkDraw] == TRUE) {
+            _win = TRUE; //set win to true to break game loop
+            NSLog(@"It's a draw.");
+        }
+        
+        if ([self checkWin] == TRUE) {
+            _win = TRUE;
+            NSLog(@"%@ WINS!",_winner);
+        }
     }
 }
 
 -(void)turn{
-    while (_playerTurn == 1) {
-        NSLog(@"Player 1, make your move: ");
-        int currentMove;
-        scanf("%d",&currentMove);
-        
-        if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
-            [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
-            _playerTurn = 2;
-        }
-        else {
-            NSLog(@"Invalid move. Enter a number from 0-8.");
+    
+    if (_turnCount % 2 == 1) {
+        while (_playerTurn == 1) {
+            NSLog(@"Player 1, make your move: ");
+            int currentMove;
+            scanf("%d",&currentMove);
+            
+            if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
+                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
+                _playerTurn = 2;
+            }
+            else {
+                NSLog(@"Invalid move. Enter a number from 0-8.");
+            }
+            
         }
     }
-    
-    [self printBoard];
-    
-    if ([self checkWin] == TRUE) {
-        _win = TRUE;
-        NSLog(@"Player 1 WINS!");
-    }
-    
-    while (_playerTurn == 2) {
-        NSLog(@"Player 2, make your move: ");
-        int currentMove;
-        scanf("%d",&currentMove);
-        fpurge(stdin);
-        
-        if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
-            [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"O"];
-            _playerTurn = 1;
+    else{
+        while (_playerTurn == 2) {
+            NSLog(@"Player 2, make your move: ");
+            int currentMove;
+            scanf("%d",&currentMove);
+            fpurge(stdin);
+            
+            if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
+                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"O"];
+                _playerTurn = 1;
+            }
+            else {
+                NSLog(@"Invalid move. Enter a number from 0-8.");
+            }
+            
         }
-        else {
-            NSLog(@"Invalid move. Enter a number from 0-8.");
-        }
-        
     }
-    [self printBoard];
-    
-    if ([self checkWin] == TRUE) {
-        _win = TRUE;
-        NSLog(@"Player 2 WINS!");
-    }
+    _turnCount = _turnCount + 1;
 }
 
 -(BOOL)checkWin{
@@ -135,7 +149,7 @@
         // | | | |
         // |X|X|X|
         // | | | |
-        if (([_gameboard[3] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[6] isEqual:playerPiece])){
+        if (([_gameboard[3] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[5] isEqual:playerPiece])){
             return YES;
         }
         // | | | |
@@ -177,6 +191,13 @@
         
     }
     return NO;
+}
+
+-(BOOL)checkDraw{
+    if (([self checkWin] == FALSE) && ([_gameboard containsObject:@" "]==FALSE)){
+        return TRUE;
+    }
+    return FALSE;
 }
 
 @end
