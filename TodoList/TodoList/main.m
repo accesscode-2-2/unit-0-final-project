@@ -10,11 +10,10 @@
 
 @interface Item : NSObject
 
-@property (nonatomic) NSString *content;
+@property (nonatomic) NSString *itemContent;
 @property (nonatomic) int itemPriority;
+@property (nonatomic) BOOL itemCompleted;
 
-//-(void)setContent:(NSString *)contentInfo andPriority: (int)contentPriority;
--(instancetype)initWithContent:(NSString *)contentInfo priority: (int)contentPriority;
 
 @end
 
@@ -23,7 +22,6 @@
 @property (nonatomic) NSMutableArray *items;
 @property (nonatomic) NSString *listName;
 @property (nonatomic) int listPriority;
-@property (nonatomic) BOOL completed;
 
 
 -(void)setListPriority:(int)listPriority;
@@ -39,88 +37,39 @@
 
 @end
 
-
-
 @implementation Item
-
-- (instancetype)initWithContent:(NSString *)contentInfo priority:(int)contentPriority
-{
-    self = [super init];
-    if (self) {
-        self.content = contentInfo;
-        self.itemPriority = contentPriority;
-    }
-    return self;
-}
-
--(NSString *)description
-{
-    return self.content;
-}
 
 @end
 
 @implementation List
 
-- (instancetype)init
+- (id)init
 {
-    self = [super init];
-    if (self) {
-        self.items = [NSMutableArray array];
-    }
+    // create items array here
     return self;
 }
 
--(void)setListPriority:(int)listPriority
-{
-    
-}
-
--(void)removeListItem:(int)itemIndex
-{
-    
-}
-
--(void)scanItem
-{
-    char inputText[256];
-    scanf("%s", inputText);
-    Item *item = [[Item alloc] initWithContent:@(inputText) priority:(int)self.items.count];
-    [self.items addObject:item];
-}
-
--(NSString *)description
-{
-    return [NSString stringWithFormat:@"%@", self.items];
-}
 @end
 
 @implementation Manager
 
--(void)addList:(List *)list
+- (id)init
 {
-    
+    [self setLists:[[NSMutableArray alloc]init]];
+    return self;
 }
-
 @end
-
-
-
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        Item *puppyItem = [[Item alloc] init];
+        puppyItem.itemContent = @"Buy a puppy";
+        puppyItem.itemPriority = 4;
         
+        List *myList = [[List alloc] init];
         
-//        Item *newItem = [[Item alloc]init];
-//        [newItem setContent:@"puppy" andPriority:1];
-//        Item *newItem = [[Item alloc] initWithContent:@"puppy" priority:1];
-//
-//
-//        List *list = [[List alloc] init];
-//        [list scanItem];
-//        [list scanItem];
-//        printf("%s\n", [[NSString stringWithFormat:@"%@", list] UTF8String]);
-
+        // this won't do anything unless `items` is initialized
+        [myList.items addObject:puppyItem];
     }
     return 0;
 }
