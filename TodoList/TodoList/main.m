@@ -68,10 +68,13 @@
 -(NSMutableArray *)myListedItems;
 -(void)addItem:(ToDoItem *)newItem;
 -(void)printList;
+-(void)setListName:(NSString *)listName;
+-(NSString *)listName;
 @end
 
 @implementation ToDoList {
     NSMutableArray *_myListedItems;
+    NSString *_listName;
 }
 
 //initialize our list of items:
@@ -115,34 +118,78 @@
         }
     }
 }
+-(void)setListName:(NSString *)listName {
+    _listName = listName;
+}
+-(NSString *)listName {
+    return _listName;
+}
 @end
 
 // *** ManageList class *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 
 @interface ManageList : NSObject
-//-(NSMutableArray *)manageMyList;
-//-(void)manageAddList:(ToDoList *)newList;
-//-(void)managePrintList;
-//
+-(NSMutableArray *)manageMyList;
+-(void)manageAddList:(ToDoList *)newList;
+-(void)managePrintList;
+
 @end
 
 @implementation ManageList {
-//    NSMutableArray *_manageMyList;
-//}
-//
-////
-//-(NSMutableArray *)manageMyList;
-//-(void)manageAddList:(ToDoList *)newList;
-//-(void)managePrintList;
+    NSMutableArray *_manageMyList;
+}
+
+//initialize manageMylist
+-(NSMutableArray *)manageMyList {
+    if (_manageMyList == nil) {
+        _manageMyList = [[NSMutableArray alloc] init];
+    }
+    return _manageMyList;
+}
+
+-(void)manageAddList:(ToDoList *)newList {
+    [[self manageMyList] addObject:newList];
+}
+
+-(void)managePrintList {
+    for (int i = 0; i < [_manageMyList count]; i++) {
+        NSLog(@"Print master list: %@", [[_manageMyList objectAtIndex:i] listName]);
+    }
+}
+
+-(void)manageNewList {
+    int addList;
+    while (true) {
+        NSLog(@"Enter 1 to create a new list or 0 to quit:");
+        scanf("%d", &addList);
+        fpurge(stdin);
+        //later we can add more functionality ie edit a list or delete a list
+        if (addList == 1) {
+            ToDoList *newList = [[ToDoList alloc] init];
+            [newList createItems];
+            
+            [self manageAddList:newList];
+        } else {
+            NSLog(@"Good bye!");
+            break;
+        }
+    }
 }
 @end
 
 // *** MAIN *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        ToDoList *addList = [[ToDoList alloc] init];
-        [addList createItems];
-        [addList printList];
-    }
+        
+        ManageList *newList = [[ManageList alloc] init];
+        
+        [newList manageNewList];
+        [newList managePrintList];
+//        ToDoList *addList = [[ToDoList alloc] init];
+//        [addList createItems];
+//        [addList printList];
+        
+    
+   }
     return 0;
 }
