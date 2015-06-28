@@ -14,11 +14,14 @@
 
 -(void)setSpace:(NSString *)space;
 -(NSString *)getSpace;
+-(void)setSymbol:(NSString *)symbol;
+-(NSString *)getSymbol;
 
 @end
 
 @implementation Player {
     NSString *_space;
+    NSString *_symbol;
 }
 
 -(void)setSpace:(NSString *)space{
@@ -27,6 +30,14 @@
 
 -(NSString *)getSpace{
     return _space;
+}
+
+-(void)setSymbol:(NSString *)symbol;{
+    _symbol = symbol;
+}
+
+-(NSString *)getSymbol;{
+    return _symbol;
 }
 
 @end
@@ -86,7 +97,28 @@
     
     [player setSpace:spaceChosen];
     
-    NSLog(@"%@", [player getSpace]);
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++) {
+            if ([[player getSpace] isEqualToString:_normalBoard[i][j]]) {
+                if ([[player getSymbol] isEqualToString:@"X"]) {
+                    _normalBoard[i][j] = @"X";
+                }
+                else {
+                    _normalBoard[i][j] = @"O";
+                }
+            }
+        }
+    }
+    
+    for (int i = 0; i < 3 ; i++) {
+        int j = 0;
+        NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
+        NSLog(@"%@", rowColumn);
+        
+        if (i < 2){
+            NSLog(@"---------");
+        }
+    }
 }
 
 -(void)displayBlankBoard{
@@ -109,23 +141,6 @@
 
 -(void)displayBoard:player{
     
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++) {
-            if ([[player getSpace] isEqualToString:_normalBoard[i][j]]) {
-                _normalBoard[i][j] = @"X";
-            }
-        }
-    }
-    
-    for (int i = 0; i < 3 ; i++) {
-        int j = 0;
-        NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
-        NSLog(@"%@", rowColumn);
-        
-        if (i < 2){
-            NSLog(@"---------");
-        }
-    }
     
 }
 
@@ -176,7 +191,7 @@ int main(int argc, const char * argv[]) {
 //        
 //        [simulate displayBlankBoard];
 //        [simulate askUserForSpace:umar];
-//        [simulate displayBoard:umar];
+//        [simulate displayBoard:player1];
 //        [simulate askUserForSpace:umar];
 //        [simulate displayBoard:umar];
 //        [simulate askUserForSpace:umar];
