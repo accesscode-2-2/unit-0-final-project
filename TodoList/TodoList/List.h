@@ -8,8 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class listItem;
 
 @interface List : NSObject
+
+@property (nonatomic) NSString *listName;
+
+-(instancetype) initWithName:(NSString *) name;
+
+-(void) printCommand;
+-(void) createList;
+-(void) addList;
+-(void) deleteList;
+-(void) printLists;
+-(void) editItem;
+-(void) markDone;
 
 @end
