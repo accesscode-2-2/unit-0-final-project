@@ -55,18 +55,19 @@
         printf("%s",[c UTF8String]);
         return;
     }
-
+    
     ListItem *item = [_items objectAtIndex:index-1];
     item.completed = YES;
 }
 
 -(void) printItems{
-        int i =1;
-        for(ListItem *li in _items){
-            printf("%d. %s\n",i,[li.itemName UTF8String]);
-            i++;
-        }
+    int i =1;
+    for(ListItem *li in _items){
+        printf("%d. %s\n",i,[li.itemName UTF8String]);
+        i++;
     }
+    printf("\n");
+}
 
 -(void) setPriority:(int)index{
     NSInteger arraySize = [_items count];
@@ -93,13 +94,13 @@
 
 
 -(void) active{
-        int i = 1;
-        printf("\n");
-        for(ListItem * li in _items){
-            if(!li.completed){
-                printf("%d. %s\n",i, [li.itemName UTF8String]);
-            }
+    int i = 1;
+    printf("\n");
+    for(ListItem * li in _items){
+        if(!li.completed){
+            printf("%d. %s\n",i, [li.itemName UTF8String]);
         }
+    }
 }
 
 -(void) inActive{
@@ -122,7 +123,7 @@
         
         if([checker isEqualToString:@"e"] || [checker isEqualToString:@"E"]){
             int d;
-            printf("/nIndex number? ");
+            printf("\nIndex number? ");
             scanf("%d",&d);
             fpurge(stdin);
             NSInteger arraySize = [_items count];
@@ -131,7 +132,7 @@
                 printf("%s",[c UTF8String]);
                 continue;
             }
-            [self editItem:d];
+            [self editItem:d-1];
             continue;
         }
         
@@ -146,7 +147,7 @@
                 printf("%s",[c UTF8String]);
                 continue;
             }
-            [self deleteItem:d];
+            [self deleteItem:d-1];
             continue;
         }
         
@@ -180,7 +181,7 @@
             [self setPriority:d];
             continue;
         }
-    
+        
         if([checker isEqualToString:@"a"] || [checker isEqualToString:@"A"]){
             
             [self addItem];
@@ -203,17 +204,17 @@
             
             break;
         }
-
+        
     }
 }
 
 -(void) printCommands{
-        printf("a|add               e|edit\n");
-        printf("d|delete            p|set priority\n");
-        printf("c|mark completed    t|active\n");
-        printf("i|inactive          q|quit\n");
-        printf("c|mark completed    a|active\n");
-        printf("i|inactive          q|quit\n");
-
+    printf("a|add               e|edit\n");
+    printf("d|delete            p|set priority\n");
+    printf("c|mark completed    t|active\n");
+    printf("i|inactive          q|quit\n");
+    printf("c|mark completed    a|active\n");
+    printf("i|inactive          q|quit\n");
+    
 }
 @end

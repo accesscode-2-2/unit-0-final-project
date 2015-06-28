@@ -7,10 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ListItem.h"
+#import "ListManager.h"
+#import "List.h"
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
+        printf("Welcome to your To-do List app!");
+        printf("\n\n*******************************\n");
+        
+        
+        ListManager *lm = [[ListManager alloc]init];
+        
+        [lm run];
     }
     return 0;
 }

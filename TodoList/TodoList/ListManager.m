@@ -30,6 +30,7 @@
     printf("\n Add title of Todo-List: ");
     scanf("%255[^\n]%*c",temp);
     fpurge(stdin);
+    printf("\n");
     NSString *name = [NSString stringWithCString:temp encoding:NSASCIIStringEncoding];
     List *li = [[List alloc] initWithName:name];
     
@@ -37,12 +38,7 @@
 }
 
 -(void) deleteList:(int)index{
-    NSInteger arraySize = [_listArray count];
-    if(index < 1 || index > arraySize){
-        NSString *c = [NSString stringWithFormat:@"%@",index<1? @"Must be greater than or equal to 1":@"out of bounds"];
-        printf("%s",[c UTF8String]);
-        return;
-    }
+    
     [_listArray removeObjectAtIndex:index];
     
 }
@@ -53,14 +49,15 @@
         printf("%d. %s\n",i, [l.listName UTF8String]);
         i++;
     }
+    printf("\n");
 }
 
 
 -(void) run{
     while(YES){
         char userIn[256];
-        //[self printLists]
-        //[self printCommands]
+        [self printLists];
+        [self printCommands];
         scanf("%255[^\n]%*c",userIn);
         NSString *userString = [NSString stringWithCString:userIn encoding:NSASCIIStringEncoding];
         
@@ -72,22 +69,22 @@
 
         if([userString isEqualToString:@"d"] || [userString isEqualToString:@"D"]){
             int d;
-            printf("/nList Number? ");
+            printf("\nList Number? ");
             scanf("%d",&d);
             fpurge(stdin);
             NSInteger arraySize = [_listArray count];
             if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
+                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
                 printf("%s",[c UTF8String]);
                 continue;
             }
-            [self addList];
+            [self deleteList:d-1];
             continue;
         }
         
         if([userString isEqualToString:@"v"] || [userString isEqualToString:@"V"]){
             int d;
-            printf("/nIndex number? ");
+            printf("\nIndex number? ");
             scanf("%d",&d);
             fpurge(stdin);
             NSInteger arraySize = [_listArray count];
