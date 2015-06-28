@@ -14,10 +14,11 @@
 
 - (void)printBoard;
 
-- (int)playerMove:(int)x;
+- (void)playerMove;
 
 - (NSMutableArray *)board;
 
+- (BOOL)gameState:(int)tries;
 
 @end
 
@@ -25,6 +26,8 @@
 @implementation TicTacToe {
     NSMutableArray * _board;
 }
+
+
 
 - (void)printIntroduction{
     
@@ -41,16 +44,6 @@
     printf( " [7] | [8] | [9] \n");
     printf( "     |     |     \n \n") ;
     
-};
-
-- (int)playerMove:(int)x{
-    
-    printf("Please pick a number where you want to put your move:  ");
-    int num;
-    scanf("%d", &num);
-    printf("\n");
-    
-    return num;
 }
 
 - (NSMutableArray *)board{
@@ -59,6 +52,27 @@
     
     return _board;
 }
+
+
+
+- (void)playerMove{
+    
+    printf("Please pick a number where you want to put your move:  ");
+    int x;
+    scanf("%d", &x);
+    printf("\n");
+    
+    for (int i = 0; i < 9; i++){
+        NSLog(@"user selection: %d, current value: %d", x, i);
+        NSLog(@"%@", _board);
+        if (x == i+1){
+            _board[i] = @"x";
+        }
+    }
+    
+    
+}
+
 
 - (void)printBoard {
     
@@ -78,6 +92,55 @@
 }
 
 
+- (BOOL)gameState:(int)tries{
+    
+    [self board];
+    int maxTries = 9;
+    while (tries < maxTries){
+        
+        [self playerMove];
+        
+        [self printBoard];
+        
+        int horizontalCorrect1 = 0;
+        int horizontalCorrect2 = 0;
+        int horizontalCorrect3 = 0;
+        
+        // vertical check
+        for (int i = 0; i < [_board count]; i = i + 3) {
+            
+            if([ _board[i] isEqualToString:@"x"]){
+                horizontalCorrect1++;
+            }
+            
+            if([_board[i+1] isEqualToString:@"x"]){
+                horizontalCorrect2++;
+            }
+            
+            if ([_board[i+2] isEqualToString:@"x"]){
+                horizontalCorrect3++;
+            }
+            
+            if (horizontalCorrect1 == 3 || horizontalCorrect2 == 3 || horizontalCorrect3 == 3){
+                printf("WIN WIN WIN WIN WIN!");
+                break;
+            }
+            
+            
+        }
+        
+        // diagonal check
+        
+        for (int i = 0; i < [_board count]; i = i + 4) {
+            
+            if ([_board[i] isEqualToString: ])
+        }
+        
+        tries++;
+    }
+    return true;
+}
+
 
 @end
 
@@ -86,34 +149,12 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
 
-
         TicTacToe *tictactoe = [[TicTacToe alloc]init];
-        
+
         [tictactoe printIntroduction];
         
-        [tictactoe board];
+        [tictactoe gameState:0];
         
-        [tictactoe printBoard];
-
-
-
-        
-
-        
-        for (int i = 0; i < 9; i++){
-            NSLog(@"user selection: %d, current value: %d", x, i);
-            NSLog(@"%@", board);
-            if (x == i+1){
-                board[i] = @"x";
-            }
-        }
-
-
-// make object tic tac toe
-// in while loop -
-// hey tic tac toe print board
-// inside while loop get # from user
-// hey tic tac toe make move
         
         
     }
