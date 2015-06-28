@@ -67,6 +67,7 @@
     
 }
 
+// Allows player to choose whether to play against human  or computer
 
 -(void)introScreen{
     player1 = [[Player alloc] init];
@@ -176,16 +177,9 @@
 }
 
 
+// checks for win or lose
 
 -(void)result{
-    
-    //    //_normalBoard [i][j]
-    //    if ([j] == [j] == [j]) {
-    //        win;
-    //    }
-    //    if ([j] increasing or decreaing order) {
-    //        win;
-    //    }
     
     for (int i = 0; i < 3; i++) {
         
