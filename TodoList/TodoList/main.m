@@ -28,26 +28,26 @@ BOOL notQuit = 1;
 -(void) mainMenu {
     NSLog(@"Add/Delete/Quit items: ");
     
-    
-    NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
-    NSString *inputLine = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    inputLine = [inputLine lowercaseString];
-    
-    
-    
-    // check if the input length is 1
-    // if so, check if the character is 'd', or 'q'
-    // otherwise, treat the input line as a new item
-    
-    if ([inputLine isEqualToString: @"add"]) {
-        [self addItem];
-    } else if ([inputLine isEqualToString: @"delete"]) {
-        [self deleteItem];
-    } else if ([inputLine isEqualToString: @"quit"]){
-        notQuit = 0;
-    } else {
-        NSLog(@"Invalid Entry");
+    while (notQuit) {
+        
+        NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
+        NSString *inputLine = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        inputLine = [inputLine lowercaseString];
+        
+        
+        if ([inputLine isEqualToString: @"add"]) {
+            [self addItem];
+            notQuit = 1;
+        } else if ([inputLine isEqualToString: @"delete"]) {
+            [self deleteItem];
+            notQuit = 1;
+        } else if ([inputLine isEqualToString: @"quit"]){
+            notQuit = 0;
+        } else {
+            NSLog(@"Invalid Entry");
+        }
     }
+
 }
 
 -(void) storeList {
@@ -55,12 +55,26 @@ BOOL notQuit = 1;
 }
 
 -(void) addItem {
-    char addItem[256];
-    NSLog(@"Add/Delete/Quit");
-    gets(addItem);
-    userADDItem = [NSString stringWithCString:addItem encoding:1];
-    [itemList addObject:userADDItem];
-    NSLog(@"%@", itemList);
+
+    
+    BOOL addNotQuit = 1;
+    
+    while (addNotQuit) {
+        NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
+        NSString *uADDItem = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        if ([uADDItem isEqualToString:@"quit"]) {
+             addNotQuit = 0;
+        } else if ([uADDItem isEqualToString:@"delete"]) {
+            [self deleteItem];
+        } else  {
+            [itemList addObject:uADDItem];
+            NSLog(@"%@", itemList);
+        }
+    }
+
+    
+    
     
 }
 
