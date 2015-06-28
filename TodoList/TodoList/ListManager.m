@@ -51,6 +51,7 @@
     int i =1;
     for(List *l in _listArray){
         printf("%d. %s\n",i, [l.listName UTF8String]);
+        i++;
     }
 }
 
