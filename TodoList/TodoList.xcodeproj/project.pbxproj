@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8D9789F71B3C9A7F007CF4CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9789F61B3C9A7F007CF4CF /* main.m */; };
+		BF668D5F1B3F8DBC0047500D /* ListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF668D5E1B3F8DBC0047500D /* ListManager.m */; };
+		BF668D621B3F90050047500D /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = BF668D611B3F90050047500D /* List.m */; };
+		BF668D651B3F90150047500D /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BF668D641B3F90150047500D /* ListItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,12 @@
 /* Begin PBXFileReference section */
 		8D9789F31B3C9A7F007CF4CF /* TodoList */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TodoList; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9789F61B3C9A7F007CF4CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BF668D5D1B3F8DBC0047500D /* ListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListManager.h; sourceTree = "<group>"; };
+		BF668D5E1B3F8DBC0047500D /* ListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListManager.m; sourceTree = "<group>"; };
+		BF668D601B3F90050047500D /* List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = List.h; sourceTree = "<group>"; };
+		BF668D611B3F90050047500D /* List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = List.m; sourceTree = "<group>"; };
+		BF668D631B3F90150047500D /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItem.h; sourceTree = "<group>"; };
+		BF668D641B3F90150047500D /* ListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +67,12 @@
 			isa = PBXGroup;
 			children = (
 				8D9789F61B3C9A7F007CF4CF /* main.m */,
+				BF668D5D1B3F8DBC0047500D /* ListManager.h */,
+				BF668D5E1B3F8DBC0047500D /* ListManager.m */,
+				BF668D601B3F90050047500D /* List.h */,
+				BF668D611B3F90050047500D /* List.m */,
+				BF668D631B3F90150047500D /* ListItem.h */,
+				BF668D641B3F90150047500D /* ListItem.m */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";
@@ -118,7 +133,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF668D651B3F90150047500D /* ListItem.m in Sources */,
+				BF668D621B3F90050047500D /* List.m in Sources */,
 				8D9789F71B3C9A7F007CF4CF /* main.m in Sources */,
+				BF668D5F1B3F8DBC0047500D /* ListManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +253,7 @@
 				8D9789FC1B3C9A7F007CF4CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
