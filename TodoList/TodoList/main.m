@@ -54,18 +54,19 @@ int main(int argc, const char * argv[]) {
         
     printf("To-Do List App\n\n\n");
     
-        char addList, deleteList, editItem, markDone, priority, active, inactive, createList;
+        char addList, deleteList, editItem, markDone, priority, active,  createList;
         int opt1, opt2, opt3, opt4, opt5, opt6;
       
-        printf("\n1) Add Item\n2) Delete Item\n3) Edit Item\n4) Mark Done\n5) Active \n6) Inactive");
+        printf("\na) Add Item\n\nd) Delete Item\n\ne) Edit Item\n\nm) Mark Item Done\n\ns) Show Active List\n");
         scanf("%s", &createList);
         for (int options = 0; options <=6; options++) {
-            scanf("%d", &opt1
-        }
+            scanf("%d", &opt1);
+        
         
         
         
       
     }
     return 0;
+}
 }
