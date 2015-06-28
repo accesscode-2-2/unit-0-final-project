@@ -8,78 +8,81 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Item : NSObject
-
-@property (nonatomic) NSString *itemContent;
-@property (nonatomic) int itemPriority;
-@property (nonatomic) BOOL itemCompleted;
-
-
-@end
-
-@interface List : NSObject
-//turn this item array of type item into a mutable array in implenetation?
-@property (nonatomic) NSMutableArray *items;
-@property (nonatomic) NSString *listName;
-@property (nonatomic) int listPriority;
-
-
--(void)setListPriority:(int)listPriority;
--(void)removeListItem:(int)itemIndex;
--(void)scanItem;
-
-@end
+BOOL notQuit = 1;
 
 @interface Manager : NSObject
 
-@property (nonatomic) NSMutableArray *lists;
--(void)addList:(List *)list;
+-(void) mainMenu;
+-(void) storeList;
+-(void) addItem;
+-(void) deleteItem;
+
 
 @end
 
-@implementation Item
+@implementation Manager {
+    NSMutableArray *itemList;
+    NSString *userADDItem;
+}
 
--(BOOL) itemCompleted {
-    NSLog(@"Mark Item Complete");
-    char pickComplete;
-    scanf("%d",&pickComplete);
-    if (pickComplete == c) {
-    
+-(void) mainMenu {
+    NSLog(@"Add/Delete items: a/d");
+    char mainMenuChoice;
+    scanf ("%c", &mainMenuChoice);
+    fpurge(stdin);
+    if (mainMenuChoice == 'a') {
+        [self addItem];
+    } else if (mainMenuChoice =='d') {
+        [self deleteItem];
+    } else if (mainMenuChoice == 'q') {
+        notQuit = 0;
+    } else {
+        NSLog(@"Invalid Entry");
     }
 }
 
-@end
+-(void) storeList {
+    itemList = [[NSMutableArray alloc] init];
+}
 
-@implementation List
+-(void) addItem {
+    char addItem[256];
+    NSLog(@"Add/Delete/Quit");
+    gets(addItem);
+    userADDItem = [NSString stringWithCString:addItem encoding:1];
+    [itemList addObject:userADDItem];
+    NSLog(@"%@", itemList);
+    
+}
 
-- (id)init
-{
-    [self setItems:[[NSMutableArray alloc]init]];
-    return self;
+-(void) deleteItem {
+    NSLog(@"Which Item would you like to delete?");
+    int udi;
+    int userDeleteItem = udi+1;
+    scanf("%d",&udi);
+    fpurge(stdin);
+    [itemList removeObjectAtIndex:userDeleteItem];
+    NSLog(@"%@", itemList);
 }
 
 @end
 
-@implementation Manager
 
-- (id)init
-{
-    [self setLists:[[NSMutableArray alloc]init]];
-    return self;
-}
-@end
+
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Item *coffeeItem = [[Item alloc] init];
-        coffeeItem.itemContent = @"Buy coffee";
-        coffeeItem.itemPriority = 4;
-        
-        List *groceryList = [[List alloc] init];
+
+        Manager *listManager = [[Manager alloc] init];
+        [listManager storeList];
         
         
-        // this won't do anything unless `items` is initialized
-        [groceryList.items addObject:coffeeItem];
+        while (notQuit) {
+            [listManager mainMenu];
+        }
+        
+//        [listManager addItem];
+//        [listManager deleteItem];
         
         
     }
