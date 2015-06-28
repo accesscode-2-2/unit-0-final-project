@@ -8,12 +8,15 @@
 //
 
 #import <Foundation/Foundation.h>
-// create class declarations
-@class ManageList;
-@class ToDoList;
-@class ToDoItem;
 
-// *** ToDoItem class *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+// *** CLASS DECLERATIONS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+@class ToDoItem;
+@class ToDoList;
+@class ManageList;
+
+// *** TO DO ITEM CLASS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
 @interface ToDoItem : NSObject
 - (void)setItem:(NSString *)itemName;
 - (NSString *)itemName;
@@ -62,7 +65,8 @@
 }
 @end
 
-// *** ToDoList class *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+// *** TO DO LIST CLASS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ** *** *** *** *** *** *** *** *** *** *** ***
+
 @interface ToDoList : NSObject
 
 -(NSMutableArray *)myListedItems;
@@ -113,7 +117,7 @@
             // added the Item to `self`'s myListedItems array
             [self addItem:newItem];
         } else {
-            NSLog(@"you quit");
+//            NSLog(@"Finished adding items");
             break;
         }
     }
@@ -124,14 +128,27 @@
 -(NSString *)listName {
     return _listName;
 }
+-(void)addListTitle {
+//    NSLog(@"Enter 1 to create a new list or 0 to quit:");
+    NSLog(@"Please name your list:");
+    char name[256];
+    fgets(name, 256, stdin);
+//    NSLog(@"%s: list name", name);
+    NSString *item2 = [NSString stringWithUTF8String:name];
+    [self setListName: item2];
+    NSLog(@"Now, let's add items to %s list!", name);
+
+}
+
 @end
 
-// *** ManageList class *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+// *** MANAGE LIST CLASS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ** *** *** *** *** *** *** *** *** *** *** ***
 
 @interface ManageList : NSObject
 -(NSMutableArray *)manageMyList;
 -(void)manageAddList:(ToDoList *)newList;
 -(void)managePrintList;
+-(void)manageListName;
 
 @end
 
@@ -153,9 +170,14 @@
 
 -(void)managePrintList {
     for (int i = 0; i < [_manageMyList count]; i++) {
-        NSLog(@"Print master list: %@", [[_manageMyList objectAtIndex:i] listName]);
+        NSLog(@"Your %@ List", [[_manageMyList objectAtIndex:i] listName]); // this displays list categories, add items too - loop again
+//        for (int j=0; j< [[_manageMyList objectAtIndex:i] count]; j++) {
+//            
+//        }
     }
 }
+
+
 
 -(void)manageNewList {
     int addList;
@@ -166,7 +188,15 @@
         //later we can add more functionality ie edit a list or delete a list
         if (addList == 1) {
             ToDoList *newList = [[ToDoList alloc] init];
+//            NSLog(@"Please name your list:");
+//            char name[256];
+//            fgets(name, 256, stdin);
+//            NSString *item2 = [NSString stringWithUTF8String:name];
+//            [self manageNewList];
+//            NSLog(@"Now, let's add items to %s list!", name);
+            [newList addListTitle];
             [newList createItems];
+            [newList listName];
             
             [self manageAddList:newList];
         } else {
@@ -177,7 +207,8 @@
 }
 @end
 
-// *** MAIN *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+// *** MAIN *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ** *** *** *** *** *** *** *** ***
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
