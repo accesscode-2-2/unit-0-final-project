@@ -1,15 +1,15 @@
+////
+////  List.m
+////  TodoList
+////
+////  Created by Charles Kang on 6/27/15.
+////  Copyright (c) 2015 Mike Kavouras. All rights reserved.
+////
 //
-//  List.m
-//  TodoList
+//#import "List.h"
 //
-//  Created by Charles Kang on 6/27/15.
-//  Copyright (c) 2015 Mike Kavouras. All rights reserved.
 //
-
-#import "List.h"
-
-
-
-@implementation List : NSObject ;
-
-@end
+//
+//@implementation List : NSObject ;
+//
+//@end

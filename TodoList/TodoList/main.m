@@ -8,31 +8,56 @@
 
 #import <Foundation/Foundation.h>
 #import "ListManager.h"
-#import "List.h"
+//#import "List.h"
 #import "ListItem.h"
 
-@interface toDoList: NSObject
--(void) listItems : (NSMutableArray *) items;
--(NSMutableArray *) items;
+@interface List: NSObject
 
--(void) listManager: (NSArray *) lmanage;
--(NSArray *) lmanage;
+@end
+
+@implementation List
 
 
 @end
 
-@implementation toDoList {
+@interface ToDoList: NSObject
+-(void) listItems : (NSMutableArray *) items;
+-(NSMutableArray *) items;
+
+-(void) setListManger: (NSArray *) lmanage;
+-(NSMutableArray *) lmanage;
+
+-(void) addList: (List *) list;
+
+
+
+@end
+
+@implementation ToDoList {
     NSMutableArray *_items;
-    NSArray *_lmanage;
+    NSMutableArray *_lmanage;
+    List *_list;
 }
 
 -(void) listItems : (NSMutableArray *) items{
     _items = items;
 }
 
--(void) listManager: (NSArray *) lmanage {
+-(NSMutableArray *) items {
+    if (_lmanage == nil) {
+        _lmanage = [[NSMutableArray alloc] init];
+    }
+    return _lmanage;
+}
+
+-(void) setListManager: (NSMutableArray *) lmanage {
     _lmanage = lmanage;
 }
+
+-(void) addList: (List *) list {
+    _list = list;
+}
+
 
 
 
@@ -42,11 +67,9 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
-        toDoList *manage = [[toDoList alloc]init];
-        
-        //        [manage lmanage:@"Study,", @"Swim", @"Run", @"Jump"];
-        
-        
+        ToDoList *lmanage = [[ToDoList alloc]init];
+        List *list = [[List alloc]init];
+    
         
         printf("To-Do List App\n\n\n");
         
