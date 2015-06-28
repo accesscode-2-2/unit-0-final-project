@@ -58,6 +58,7 @@
         char userIn[256];
         [self printLists];
         [self printCommands];
+        printf("\n:");
         scanf("%255[^\n]%*c",userIn);
         NSString *userString = [NSString stringWithCString:userIn encoding:NSASCIIStringEncoding];
         
