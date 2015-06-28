@@ -29,8 +29,50 @@
 
 #import <Foundation/Foundation.h>
 
-//To Do List Manager
+@class Item;
+@class Manager;
+@class List;
 
+// ************************* Represent To Do Item *************************
+
+@interface Item : NSObject
+-(void)setNewItem:(NSString *)newItem;
+
+
+@end
+
+@implementation Item {
+    NSString *_newItem;
+}
+-(void)setNewItem:(NSString *)newItem{
+    _newItem = newItem;
+}
+
+
+@end
+
+
+//************************** Represent To Do List ************************
+
+@interface List : NSObject
+- (void) setNewList:(NSMutableArray *)newList;
+
+
+@end
+
+@implementation List{
+    NSMutableArray *_newList;
+}
+- (void) setNewList:(NSMutableArray *)newList{
+    _newList = newList;
+}
+
+
+
+@end
+
+
+//******************************** Manager *********************************
 @interface Manager : NSObject
 
 - (void) ToDoHome;
@@ -38,7 +80,6 @@
 - (void) showList;
 - (void) addItem;
 - (void) deleteItem;
-- (void) markComplete;
 - (void) completedList;
 
 @end
@@ -87,18 +128,13 @@
         }
 
         }
-    
-//}
-//
-
-
-//const *char cString = "Hello";
-//NSString *myNSString = [NSString stringWithUTF8String:cString];
-
-
 
 - (void) createList{                // creating list if there is none
 
+    List *newList = [[List alloc] init];
+    
+    [newList setNewList:(_yourList)];
+    
     _yourList = [[NSMutableArray alloc] init];      // initializing array
     
 }
@@ -113,21 +149,21 @@
     [self ToDoHome];
 }
 
-
-
 - (void) addItem{                               //Add item to our list
 
     char word;
     scanf("%s", &word);
     NSString *_newItem = [NSString stringWithUTF8String:&word];     // converting to string
     
+    Item *newItem = [[Item alloc] init];
+    
+    [newItem setNewItem:(_newItem)];
+    
     [_yourList addObject:_newItem];                                 // add new item to your list
     
     [self ToDoHome];
     
-    }
-
-
+}
 
 - (void) deleteItem{                            //Delete item from our list
     NSLog(@"Which item would you like to delete? ");
@@ -148,8 +184,6 @@
     [self ToDoHome];
 }
 
-
-
 - (void) markComplete{
     NSLog(@"Which item is complete? ");
     for (int i = 0; i < [_yourList count]; i++)
@@ -164,17 +198,12 @@
 
     [_yourList insertObject:complete atIndex:q-1];
     
-//[_yourList replaceObjectAtIndex:q-1 withObject:[q-1]@"completed"];
-    
     NSLog(@"Your updated list is:");
     for (int i = 0; i < [_yourList count]; i++)
     {
         
         NSLog(@"%d %@",i+1, _yourList[i]);
     }
-
-    
-    
   //  [self ToDoHome];
 }
 
@@ -198,31 +227,35 @@
 @end
 
 
+//
+////************************** Represent To Do List ************************
+//
+//@interface List : NSObject
+//
+//
+//@end
+//
+//@implementation List
+//
+//
+//@end
+//
+//
 
-
-// Represent To Do List
-
-@interface ToDoList : NSObject
-
-
-@end
-
-@implementation ToDoList
-
-@end
-
-
-
-
-// Represent To Do Item
-
-@interface Item : NSObject
-
-@end
-
-@implementation Item
-
-@end
+//// ************************* Represent To Do Item *************************
+//
+//@interface Item : NSObject
+//-(void)setNewItem:(NSString *)newItem;
+//
+//@end
+//
+//@implementation Item {
+//    NSString *_newItem;
+//}
+//-(void)setNewItem:(NSString *)newItem{
+//    _newItem = newItem;
+//}
+//@end
 
 
 // ==============================================================
@@ -230,15 +263,15 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
     
-        Manager *ListManager = [[Manager alloc]init];
+        Manager *listManager = [[Manager alloc]init];
         
-        [ListManager createList];
+        [listManager createList];
         
-        [ListManager ToDoHome];
+        [listManager ToDoHome];
         
-        [ListManager completedList];
+        [listManager completedList];
         
-        
+
         
         
         
