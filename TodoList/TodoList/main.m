@@ -5,23 +5,34 @@
 //  Created by Michael Kavouras on 6/25/15.
 //  Copyright (c) 2015 Mike Kavouras. All rights reserved.
 //
-// delete this add
+
 #import <Foundation/Foundation.h>
+#import "ListManager.h"
+#import "List.h"
+#import "ListItem.h"
 
 @interface toDoList: NSObject
 -(void) listItems : (NSMutableArray *) items;
 -(NSMutableArray *) items;
+
+-(void) listManager: (NSArray *) lmanage;
+-(NSArray *) lmanage;
 
 
 @end
 
 @implementation toDoList {
     NSMutableArray *_items;
+    NSArray *_lmanage;
 }
 
-    -(void) listItems : (NSMutableArray *) items{
-        _items = items;
-    }
+-(void) listItems : (NSMutableArray *) items{
+    _items = items;
+}
+
+-(void) listManager: (NSArray *) lmanage {
+    _lmanage = lmanage;
+}
 
 
 
@@ -31,14 +42,17 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
-            
-            
-        }
+        toDoList *manage = [[toDoList alloc]init];
+        
+        //        [manage lmanage:@"Study,", @"Swim", @"Run", @"Jump"];
+        
+        
+        
         printf("To-Do List App\n\n\n");
         
         
         
-        printf("a) Add Item\n\nb) Delete Item\n\nc) Edit Item\n\nd) Mark Item Done\n\ne) Show Active List\n");
+        printf("a) Add Item\n\nb) Delete Item\n\nc) Edit Item\n\nd) Mark Item Done\n\ne) Show Active List \n\nq) Quit\n");
         char option;
         int tasks = 0;
         
@@ -50,8 +64,12 @@ int main(int argc, const char * argv[]) {
             fpurge(stdin);
             
             if (option == 'a') {
-                
+                // ask for a title
+                // create a list item instance
+                // set the itemName of the list item instance
+                // add list item to list
                 NSLog(@"What would you like to add?\n", option);
+                
                 
                 
             } else if (option == 'b') {
@@ -69,15 +87,22 @@ int main(int argc, const char * argv[]) {
             } else if (option == 'e') {
                 
                 NSLog(@"This is your current list: ", option);
+            } else if (option == 'q') {
+                NSLog(@"See Ya!!!");
+                break;
             }
-            else if (option !='a,b,c,d,e') {
-                NSLog(@"Invalid", option);
+             else  {
+                NSLog(@"Invalid Option! \n\na)Add Item        b)Delete Item \n\nc)Edit\n\n", option);
             }
+            
         }
-        return 0;
+        
+        
     }
-    
-    
+    return 0;
+}
+
+
 
 
 
