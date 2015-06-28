@@ -142,11 +142,13 @@ NSString * scanUserInput(void) {
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 @implementation Manager{
-    
+    List *_completedTasks;
+    List *_activeTasks;
 }
 
 -(List *) createNewList: (NSString *)name{
     List *newList = [[List alloc] initWithListName:name];
+    
     return newList;
 }
 
@@ -199,7 +201,8 @@ NSString * scanUserInput(void) {
         
         if ([objectToBeMarkedAsDone isEqualToString: [myListOfTasks[i] getTaskName]]){
             
-            List *doneAndDone = [self createNewList:@"Done and Done"];
+            
+            List *doneAndDone = [self _completedTasks];
             Task *newDoneTask = [self createNewTask:objectToBeMarkedAsDone];
             [doneAndDone addTask:newDoneTask];
             
