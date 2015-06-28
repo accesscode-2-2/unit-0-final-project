@@ -26,7 +26,7 @@
     
     int _playerTurn;
     
-    BOOL *_win;
+    BOOL _win;
     NSString *_winner;
     
     NSMutableArray *_gameboard;
@@ -82,6 +82,11 @@
     
     [self printBoard];
     
+    if ([self checkWin] == TRUE) {
+        _win = TRUE;
+        NSLog(@"Player 1 WINS!");
+    }
+    
     while (_playerTurn == 2) {
         NSLog(@"Player 2, make your move: ");
         int currentMove;
@@ -98,6 +103,11 @@
         
     }
     [self printBoard];
+    
+    if ([self checkWin] == TRUE) {
+        _win = TRUE;
+        NSLog(@"Player 2 WINS!");
+    }
 }
 
 -(BOOL)checkWin{
