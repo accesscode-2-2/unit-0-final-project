@@ -42,23 +42,24 @@ NSString *_oxChoice;
     for (int i=0; i<9; i++) {
         boxes[i] = @" ";
     }
-    NSLog (@"%@ | %@ | %@", boxes[0],boxes[1],boxes[2]);
-    NSLog (@"----------");
-    NSLog (@"%@ | %@ | %@", boxes[3],boxes[4],boxes[5]);
-    NSLog (@"----------");
-    NSLog (@"%@ | %@ | %@", boxes[6],boxes[7],boxes[8]);
+    NSLog (@" %@ | %@ | %@ ", boxes[0],boxes[1],boxes[2]);
+    NSLog (@"-----------");
+    NSLog (@" %@ | %@ | %@ ", boxes[3],boxes[4],boxes[5]);
+    NSLog (@"-----------");
+    NSLog (@" %@ | %@ | %@ ", boxes[6],boxes[7],boxes[8]);
     
     BOOL winnerIsX = NO;
     BOOL winnerIsO = NO;
-    
+    //user number input
     int number;
+    
+    //
     for (int i =0; i<9; i++){
+        //while there is still an empty box
         while ([boxes[i] isEqualTo:@" "]) {
-            
             
             printf ("Enter a number ");
             scanf("%d", &number);
-            //123 456 789 147 258 369 159 357
             
             
             
@@ -131,11 +132,11 @@ NSString *_oxChoice;
                      (([boxes[2] isEqualToString: @"o"]) && ([boxes [4] isEqualToString: @"o"]) && ([boxes [6] isEqualToString: @"o"])))
                 winnerIsO = YES;
             
-            NSLog (@"%@ | %@ | %@", boxes[0],boxes[1],boxes[2]);
-            NSLog (@"----------");
-            NSLog (@"%@ | %@ | %@", boxes[3],boxes[4],boxes[5]);
-            NSLog (@"----------");
-            NSLog (@"%@ | %@ | %@", boxes[6],boxes[7],boxes[8]);
+            NSLog (@" %@ | %@ | %@ ", boxes[0],boxes[1],boxes[2]);
+            NSLog (@"-----------");
+            NSLog (@" %@ | %@ | %@ ", boxes[3],boxes[4],boxes[5]);
+            NSLog (@"-----------");
+            NSLog (@" %@ | %@ | %@ ", boxes[6],boxes[7],boxes[8]);
             NSLog (@"\n\n\n\n");
             
             
@@ -155,9 +156,9 @@ NSString *_oxChoice;
             break; }
         else if (winnerIsO) {
             break; }
-
+        
     } //end of for
-   
+    
     
 } //end of the function
 -(NSString *) oxChoice {
@@ -170,35 +171,129 @@ NSString *_oxChoice;
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        TicTacToe *user1 = [[TicTacToe alloc] init];
+        int singleOrMultiplayer;
+        int singlePlayerLevel, multiplePlayerLevel;
+        char player1Name[30], player2Name[30];
+        NSString *nsConversion ;
+        
+        
+        while (true) {
+            NSLog (@"1. Single player");
+            NSLog (@"2. Multiple players");
+            scanf("%d", &singleOrMultiplayer);
+            fpurge(stdin);
+            
+            
+            if (singleOrMultiplayer == 1) {
+                NSLog (@"1. Level 1: Computer is totally dumb.");
+                NSLog (@"2. Level 2: Computer is smarter.");
+                NSLog (@"3. Level 3: You MAY win (only when you start).");
+                NSLog (@"4. Level 4: Computer NEVER loses.");
+                scanf ("%d", &singlePlayerLevel);
+                break;
+            }
+            else if (singleOrMultiplayer == 2) {
+                NSLog (@"1. Level 1: Easy level");
+                NSLog (@"2. Level 2: Loose your turn if you pick up an occupied box");
+                scanf ("%d", &multiplePlayerLevel);
+                break;
+            }
+            else if ((singleOrMultiplayer != 1) || (singleOrMultiplayer != 2)) {
+                NSLog (@"Wrong choice! ");
+                continue;
+            }
+            
+        } //end of while
+        
+        
+        if (singleOrMultiplayer == 1) {
+            NSLog(@"Player 1 Name:  ");
+            scanf ("%s", player1Name);
+            fpurge(stdin);
+
+            if (singlePlayerLevel == 1) {
+                
+            } //end of if (singlePlayerLevel == 1)
+            else if (singlePlayerLevel == 2) {
+                
+            } //end of if (singlePlayerLevel == 2)
+            
+            else if (singlePlayerLevel == 3) {
+                
+            } //end of if (singlePlayerLevel == 3)
+            
+            else if (singlePlayerLevel == 2) {
+                
+            } //end of if (singlePlayerLevel == 3)
+            
+            else if (singlePlayerLevel == 4) {
+                
+            } //end of if (singlePlayerLevel == 4)
+            
+            
+            
+        } // end of if (singleOrMultiplayer == 1)
+        
+        
+        else if (singleOrMultiplayer == 2) {
+            NSLog(@"Player 1 Name:  ");
+            scanf ("%s", player1Name);
+            NSLog(@"Player 2 Name:  ");
+            scanf ("%s", player2Name);
+            fpurge(stdin);
+
+            
+            if (multiplePlayerLevel == 1) {
+                // play the game without loosing your turn
+            } //end of if (multiplePlayerLevel == 1)
+            
+            else if (multiplePlayerLevel == 2) {
+                // play the game and loose your turn
+            } // end of if (multiplePlayerLevel == 2)
+            
+            
+            
+        } // end of if (singleOrMultiplayer == 2)
+        
+        
         
         NSLog (@" 1 | 2 | 3");
-        NSLog (@"----------");
+        NSLog (@"-----------");
         NSLog (@" 4 | 5 | 6");
-        NSLog (@"----------");
+        NSLog (@"-----------");
         NSLog (@" 7 | 8 | 9");
         NSLog (@"\n");
-        NSLog(@"Choose X or O: ");
         
-        NSString *nsConversion ;
-        char userOption[2];
         
-        scanf("%s", userOption);
+        char * userOption;
         
-        nsConversion = [NSString stringWithCString: userOption encoding: NSASCIIStringEncoding];
+        while (true) {
+            
+            NSLog(@"Choose X or O: ");
+            scanf("%s", userOption);
+            fpurge(stdin);
+            
+            // create nsstring
+            nsConversion = [NSString stringWithCString: userOption encoding: NSASCIIStringEncoding];
+
+            
+            // [nsConversion length]
+            if ([nsConversion length] == 1 && ([nsConversion isEqualToString:@"x"] || [nsConversion isEqualToString:@"0"])) {
+                NSLog(@"This is your choice: %@",nsConversion);
+                break;
+            } // end of if
+            else  {
+                NSLog (@"Wrong choice! ");
+                continue;
+            } //end of else
+            
+        } // end of while
         
-        NSLog(@"This is your choice: %@", nsConversion);
+        
+        TicTacToe *user1 = [[TicTacToe alloc] init];
+        
         [user1 setOxChoice:nsConversion];
         
-        
-        
-        
-        
-        //        for (int i = 1; i<=9; i++){
-        //         int number;
-        //            
-        //
-        //        }
     }
     return 0;
 }
