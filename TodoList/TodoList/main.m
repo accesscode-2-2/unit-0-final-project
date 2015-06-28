@@ -52,7 +52,7 @@ int main(int argc, const char * argv[]) {
             if (option == 'a') {
                 
                 NSLog(@"What would you like to add?\n", option);
-                scanf("\n", &items);
+                
                 
             } else if (option == 'b') {
                 
@@ -69,6 +69,9 @@ int main(int argc, const char * argv[]) {
             } else if (option == 'e') {
                 
                 NSLog(@"This is your current list: ", option);
+            }
+            else if (option !='a,b,c,d,e') {
+                NSLog(@"Invalid", option);
             }
         }
         return 0;

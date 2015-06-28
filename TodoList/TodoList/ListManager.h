@@ -11,8 +11,6 @@
 #import "List.h"
 #import "ListItem.h"
 
-@class listManager;
-
 @interface ListManager : NSObject
 
 -(void) printCommand;
