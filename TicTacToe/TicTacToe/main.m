@@ -36,6 +36,7 @@
     _symbol = symbol;
 }
 
+
 -(NSString *)getSymbol{
     return _symbol;
 }
@@ -171,6 +172,7 @@
             NSLog(@"---------");
         }
     }
+
 }
 
 
@@ -215,6 +217,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
+
         //        Player *umar = [[Player alloc] init];
                 GameManager *simulate = [[GameManager alloc] init];
         //
@@ -228,6 +231,7 @@ int main(int argc, const char * argv[]) {
         //        [simulate displayBoard:umar];
         //        [simulate result];
         
+
         
         [simulate introScreen];
         
