@@ -24,7 +24,7 @@
 -(void)addTask:(Task *) task;
 
 -(NSMutableArray *)listOfTasks;
-
+-(void)removeObject:(id)object;
 
 
 @end
@@ -55,6 +55,10 @@
 
 -(void)addTask:(Task *)task{
     [[self listOfTasks] addObject:task];
+}
+
+-(void)removeObject:(NSString *)object{
+    [[self listOfTasks] removeObject:object];
 }
 
 
@@ -101,8 +105,7 @@
 
 -(void)displayTasks:(List *)list;
 
-//-(void)markDone;
-//-(void)setPriority:(NSInteger *)i;
+-(void)removeTask:(List *)list;
 
 
 @end
@@ -118,6 +121,27 @@
     for (int i = 0; i < [myListOfTasks count]; i++) {
         NSLog(@"%@", [myListOfTasks[i] getTaskName]);
     }
+}
+-(void)removeTask:(List *)list {
+    
+    [self displayTasks: list];
+    NSLog(@"Which task would you like to remove?");
+    
+    NSMutableArray *myListOfTasks = [list listOfTasks];
+    for (int i = 0; i < [myListOfTasks count]; i++) {
+        
+        char userInput[40];
+        scanf("%s", userInput);
+        NSString *objectToBeRemoved = [[NSString alloc] initWithCString: userInput encoding:NSUTF8StringEncoding];
+        
+        if ([objectToBeRemoved isEqualToString: [myListOfTasks[i] getTaskName]]){
+            
+            [list removeObject: myListOfTasks[i]];
+            NSLog(@"Your new list:");
+            [self displayTasks: list];
+            
+    }
+  }
 }
 
 
@@ -147,6 +171,7 @@ int main(int argc, const char * argv[]) {
         
         [listManager displayTasks:toDoToday];
         
+        [listManager removeTask:toDoToday];
         
         
         
