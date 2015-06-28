@@ -38,14 +38,14 @@
 }
 
 -(void) deleteItem:(int)index{
-   
-    [_items removeObjectAtIndex:index];
     
+    [_items removeObjectAtIndex:index];
 }
 
 -(void) markCompleted:(int)index{
    
     ListItem *item = [_items objectAtIndex:index];
+
     item.completed = YES;
 }
 
@@ -60,11 +60,11 @@
 
 -(void) setPriority:(int)index{
     int newValue;
-    
+
     printf("Enter a priority value, 1-4: ");
     scanf("%d",&newValue);
     fpurge(stdin);
-    
+
     ListItem *li = [_items objectAtIndex:index];
     li.priority = newValue;
 }
@@ -227,6 +227,5 @@
     printf("d|delete            p|set priority\n");
     printf("c|mark completed    t|active\n");
     printf("i|inactive          q|quit\n");
-    
 }
 @end
