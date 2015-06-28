@@ -16,15 +16,15 @@
 @property (nonatomic) NSString *listName;
 
 
--(void) addItem:(ListItem *)item;
+-(void) addItem;
 -(void) printItems;
 -(void) deleteItem:(int)index;
 -(void) editItem:(int)index;
 -(void) markCompleted:(int)index;
--(void) setPriority:(int)value;
+-(void) setPriority:(int)index;
 -(void) active;
 -(void) inActive;
 -(void) run;
--(void) printCommandsActive:(BOOL)active inActive:(BOOL)inActive;
+-(void) printCommands;
 
 @end

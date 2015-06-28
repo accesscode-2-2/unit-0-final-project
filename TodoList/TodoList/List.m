@@ -13,7 +13,7 @@
     NSMutableArray *_items;
 }
 
--(void) addItem:(ListItem *)item{
+-(void) addItem{
     
     if(_items == nil){
         _items = [[NSMutableArray alloc]init];
@@ -59,5 +59,24 @@
         }
     }
 
+-(void) setPriority:(int)index{
+    NSInteger arraySize = [_items count];
+    if(index <1 || index >arraySize){
+        NSString *c = [NSString stringWithFormat:@"%@",index<1? @"Must be greater than or equal to 1":@"Highest priority level is 4."];
+        printf("%s",[c UTF8String]);
+        return;
+    }
+    int newValue;
+    printf("Enter a priorty value, 1-4");
+    scanf("%d",&newValue);
+    ListItem *li = [_items objectAtIndex:index - 1];
+    li.priority = newValue;
+}
 
+-(void) printCommands{
+        printf("a|add               e|edit\n");
+        printf("d|delete            p|set priority\n");
+        printf("c|mark completed    a|active\n");
+        printf("i|inactive");
+}
 @end
