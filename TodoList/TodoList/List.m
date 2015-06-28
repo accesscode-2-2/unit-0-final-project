@@ -8,6 +8,8 @@
 
 #import "List.h"
 
-@implementation List
+
+
+@implementation list : NSObject ;
 
 @end

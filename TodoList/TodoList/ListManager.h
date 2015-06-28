@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class listManager;
+
 @interface ListManager : NSObject
 
 -(void) printCommand;

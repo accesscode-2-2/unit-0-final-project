@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class listItem;
+
 @interface ListItem : NSObject
 
 @end
