@@ -194,6 +194,7 @@
             spaceChosen = [NSString stringWithFormat:@"%i", randomSelection];
         }
         
+         //For loop that loops through the rows and columns of the board to see if that space is occupied; continue looping if so.
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++) {
                 if ([spaceChosen isEqualToString:_normalBoard[i][j]]) {
@@ -203,6 +204,7 @@
         }
     }
     
+    //Set player space to the space chosen if available
     [player2 setSpace:spaceChosen];
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++) {
@@ -222,6 +224,7 @@
         sleep(1);
     }
     
+    //Prints out board after the player's selection
     for (int i = 0; i < 3 ; i++) {
         int j = 0;
         NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
@@ -253,33 +256,44 @@
 // checks for win or lose
 -(BOOL)result{
     
+    //Check for a win horizontally and vertically
     for (int i = 0; i < 3; i++) {
         
+        //Check if there is a win vertically
         if ((_normalBoard[i][0] == _normalBoard[i][1]) && (_normalBoard[i][0] == _normalBoard[i][2])) {
             
             return YES;
             
         }
+        
+        //Check if there is horizontally
         if ((_normalBoard[0][i] == _normalBoard[1][i]) && (_normalBoard[0][i] == _normalBoard[2][i])){
             
             return YES;
         }
     }
+    
+    //Check if there is a win diagonally from top left to bottom right
     if ((_normalBoard[0][0] == _normalBoard[1][1]) && (_normalBoard[0][0] == _normalBoard[2][2])) {
         
         return YES;
     }
+    
+    //Check if there is a win diagonally from bottom left to top right
     if ((_normalBoard[2][0] == _normalBoard[1][1]) && (_normalBoard[2][0] == _normalBoard[0][2])) {
         
         return YES;
     }
     
+    //If there isn't any wins, return the result as NO, the game has not been won
     return NO;
 }
 
+//Checks if all spaces are occupied
 -(BOOL)checkIfGameIsOver{
     for (int i = 0; i < 3; i++) {
         
+    
         for (int j = 0; j < 3; j++) {
             if (!([_normalBoard[i][j] isEqualToString:@"X"] || [_normalBoard[i][j] isEqualToString:@"O"])) {
                 
@@ -302,19 +316,25 @@ int main(int argc, const char * argv[]) {
         [simulate introScreen];
         [simulate displayBlankBoard];
         
+        //Loop while the result of the game is not yet known;
         while (![simulate result]) {
             
+            //Get input from user 1
             [simulate askUser1ForSpace];
+            
+            //If the result method returns a YES, meaning there is a win, display the result
             if ([simulate result]) {
                 NSLog(@"Player 1 wins!");
                 break;
             }
             
+            //If all spaces are occupied, the game is over and results in a draw
             if ([simulate checkIfGameIsOver]) {
                 NSLog(@"It's a draw!");
                 break;
             }
             
+            //Get input from user 2
             [simulate askUser2ForSpace];
             if ([simulate result]) {
                 NSLog(@"Player 2 wins!");
