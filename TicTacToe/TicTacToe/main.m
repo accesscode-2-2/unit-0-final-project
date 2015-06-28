@@ -70,14 +70,11 @@
         NSLog(@"Player 1, make your move: ");
         int currentMove;
         scanf("%d",&currentMove);
-<<<<<<< HEAD
+
 	
-        // integer currentMove is cast as an NSUInteger
-		if ([gameBoard[currentMove] isEqual:@" "]) {
-		    [gameBoard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
-        playerTurn = 2;
+       
 		
-=======
+
         
         if (([_gameboard[currentMove] isEqual: @" "]) && (currentMove>=0) && (currentMove<=8)) {
             [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"X"];
@@ -86,7 +83,7 @@
         else {
             NSLog(@"Invalid move. Enter a number from 0-8.");
         }
->>>>>>> 09600c8c829270d21249feb375c70d669cc821e6
+
     }
     
     [self printBoard];
