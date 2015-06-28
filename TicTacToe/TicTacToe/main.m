@@ -48,9 +48,10 @@
 @interface GameManager : NSObject
 
 -(void)introScreen;
--(void)askUserForSpace;
+-(void)askUser1ForSpace;
+-(void)askUSer2ForSpace;
 -(void)displayBlankBoard;
--(void)result;
+-(BOOL)result;
 
 @end
 
@@ -101,26 +102,17 @@
         else {
             [player2 setSymbol:@"X"];
         }
-        
-        
-        
     }
-    
-    
-    NSLog(@"%@\n%@", [player1 getSymbol],[player2 getSymbol]);
-    
-    
-    
 }
--(void)askUserForSpace{
+
+-(void)askUser1ForSpace{
     
     BOOL invalid = YES;
     while (invalid) {
-        NSLog(@"Please enter the space you'd like to occupy.");
+        NSLog(@"Player 1, please enter the space you'd like to occupy.");
         char space[256];
         scanf("%s", space);
         spaceChosen = [NSString stringWithCString:space encoding:NSUTF8StringEncoding];
-        
         
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++) {
@@ -129,15 +121,12 @@
                 }
             }
         }
-        
     }
-    
     [player1 setSpace:spaceChosen];
-    
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++) {
             if ([[player1 getSpace] isEqualToString:_normalBoard[i][j]]) {
-                if ([[player1 getSymbol] isEqualToString:@"X"]) {
+                if ([[player1 getSymbol] isEqualToString:@"X"] || [[player1 getSymbol] isEqualToString:@"x"]) {
                     _normalBoard[i][j] = @"X";
                 }
                 else {
@@ -151,11 +140,51 @@
         int j = 0;
         NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
         NSLog(@"%@", rowColumn);
-        
         if (i < 2){
             NSLog(@"---------");
         }
     }
+}
+
+-(void)askUSer2ForSpace{
+    BOOL invalid = YES;
+    while (invalid) {
+        NSLog(@"Player 2, please enter the space you'd like to occupy.");
+        char space[256];
+        scanf("%s", space);
+        spaceChosen = [NSString stringWithCString:space encoding:NSUTF8StringEncoding];
+        
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++) {
+                if ([spaceChosen isEqualToString:_normalBoard[i][j]]) {
+                    invalid = NO;
+                }
+            }
+        }
+    }
+    [player2 setSpace:spaceChosen];
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++) {
+            if ([[player2 getSpace] isEqualToString:_normalBoard[i][j]]) {
+                if ([[player2 getSymbol] isEqualToString:@"X"] || [[player2 getSymbol] isEqualToString:@"x"]) {
+                    _normalBoard[i][j] = @"X";
+                }
+                else {
+                    _normalBoard[i][j] = @"O";
+                }
+            }
+        }
+    }
+    
+    for (int i = 0; i < 3 ; i++) {
+        int j = 0;
+        NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
+        NSLog(@"%@", rowColumn);
+        if (i < 2){
+            NSLog(@"---------");
+        }
+    }
+
 }
 
 -(void)displayBlankBoard{
@@ -168,40 +197,47 @@
         int j = 0;
         NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
         NSLog(@"%@", rowColumn);
-        
         if (i < 2){
             NSLog(@"---------");
         }
     }
-    
 }
 
 
 // checks for win or lose
-
--(void)result{
+-(BOOL)result{
     
     for (int i = 0; i < 3; i++) {
-        
-        //Check horizantally
+    
         if ((_normalBoard[i][0] == _normalBoard[i][1]) && (_normalBoard[i][0] == _normalBoard[i][2])) {
-            NSLog(@"You win.");
+            
+            return YES;
+            
         }
-        
         if ((_normalBoard[0][i] == _normalBoard[1][i]) && (_normalBoard[0][i] == _normalBoard[2][i])){
-            NSLog(@"You win.");
+            
+            return YES;
         }
     }
-    
-    
     if ((_normalBoard[0][0] == _normalBoard[1][1]) && (_normalBoard[0][0] == _normalBoard[2][2])) {
-        NSLog(@"You win.");
+        
+        return YES;
     }
-    
     if ((_normalBoard[2][0] == _normalBoard[1][1]) && (_normalBoard[2][0] == _normalBoard[0][2])) {
-        NSLog(@"You win.");
+        
+        return YES;
     }
     
+//    for (int i = 0; i < 3; i++) {
+//        
+//        for (int j = 0; j < 3; j++) {
+//            if ([_normalBoard[i][j] isEqualToString:@"X"] || [_normalBoard[i][j] isEqualToString:@"O"]) {
+//                NSLog(@"Tie game!");
+//                      return YES;
+//            }
+//        }
+//    }
+    return NO;
 }
 
 @end
@@ -214,8 +250,39 @@ int main(int argc, const char * argv[]) {
         
         [simulate introScreen];
         [simulate displayBlankBoard];
-        [simulate askUserForSpace];
+        
+        while (![simulate result]) {
+            
+            [simulate askUser1ForSpace];
+            if ([simulate result]) {
+                NSLog(@"Player 1 wins!");
+                break;
+            }
+            
+            [simulate askUSer2ForSpace];
+            if ([simulate result]) {
+                NSLog(@"Player 2 wins!");
+                break;
+            }
+            
+    
+
+            
+        }
+        
         
         return 0;
     }
 }
+
+//
+
+
+
+
+
+
+
+
+
+
