@@ -8,113 +8,74 @@
 // delete this add
 #import <Foundation/Foundation.h>
 
-//@interface toDoList: NSObject
-//
-//
-//
-//-(void) enterUserList: (NSMutableArray * )userList;
-//-(NSArray *)userList;
-//-(void) manageList: (NSArray *)manList;
-//-(NSArray *)manList;
-//-(void) representList: (NSArray *)repList;
-//-(NSArray *)repList;
-//-(void) representItem: (NSString *)repItem;
-//-(NSString *)repItem;
-//
-//@end
-//
-//@implementation toDoList {
-//    NSMutableArray *_userList;
-//    NSArray *_manList;
-//    NSArray *_repList;
-//    NSString *_repItem;
-//    
-//}
-//
-//-(void) enterUserList: (NSMutableArray *)userList {
-//    _userList = userList;
-//}
-//
-//-(void) manageList:(NSArray *)manList {
-//    _manList = manList;
-//}
-//
-//-(void) representList: (NSArray *)repList {
-//    _repList = repList;
-//}
-//
-//-(void) representItem: (NSString *)repItem {
-//    _repItem = repItem;
-//}
-//
-//@end
+@interface toDoList: NSObject
+-(void) listItems : (NSMutableArray *) items;
+-(NSMutableArray *) items;
+
+
+@end
+
+@implementation toDoList {
+    NSMutableArray *_items;
+}
+
+    -(void) listItems : (NSMutableArray *) items{
+        _items = items;
+    }
+
+
+
+@end
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-    printf("To-Do List App\n\n\n");
-    
-//        char addList, deleteList, editItem, markDone, priority, active,  createList;
         
-      
-        printf("1) Add Item\n\n2) Delete Item\n\n3) Edit Item\n\n4) Mark Item Done\n\n5) Show Active List\n");
+            
+            
+        }
+        printf("To-Do List App\n\n\n");
         
-        char opt;
+        
+        
+        printf("a) Add Item\n\nb) Delete Item\n\nc) Edit Item\n\nd) Mark Item Done\n\ne) Show Active List\n");
+        char option;
         int tasks = 0;
         
         while (tasks <=1000)
         {
             tasks++;
             
-            scanf("%c", &opt);
+            scanf("%c", &option);
             fpurge(stdin);
             
-            if (opt == 'a') {
+            if (option == 'a') {
                 
-                NSLog(@"What would you like to add?\n", opt);
+                NSLog(@"What would you like to add?\n", option);
+                scanf("\n", &items);
                 
-            } else if (opt == 'b') {
+            } else if (option == 'b') {
                 
-                NSLog(@"Delete which task?", opt);
+                NSLog(@"Delete which task?", option);
                 
-            } else if (opt == 'c') {
+            } else if (option == 'c') {
                 
-                NSLog(@"What would you like to edit?", opt);
+                NSLog(@"What would you like to edit?", option);
                 
-            } else if (opt == 'd') {
+            } else if (option == 'd') {
                 
-                NSLog(@"blank is done", opt);
+                NSLog(@"blank is done", option);
                 
-            } else if (opt == 'e') {
+            } else if (option == 'e') {
                 
-                NSLog(@"This is your current list: ", opt);
+                NSLog(@"This is your current list: ", option);
             }
-//        for (int tasks = 0; tasks <=4 ; tasks++) {
-//
-//            scanf("%d", &opt);
-//            fpurge(stdin);
-//
-//            if (opt == 1) {
-//
-//                NSLog(@"What would you like to add?\n", opt);
-//                
-//            } else if (opt == 2) {
-//            
-//                NSLog(@"Delete which task?", opt);
-//                
-//            } else if (opt == 3) {
-//                
-//                NSLog(@"What would you like to edit?", opt);
-//                
-//            } else if (opt == 4) {
-//                
-//                NSLog(@"blank is done", opt);
-//                
-//            } else if (opt == 5) {
-//                
-//                NSLog(@"This is your current list: ", opt);
-//            }
-         }
+        }
+        return 0;
     }
-    return 0;
-}
+    
+    
+
+
+
+
