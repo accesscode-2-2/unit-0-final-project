@@ -14,11 +14,14 @@
 
 -(void)setSpace:(NSString *)space;
 -(NSString *)getSpace;
+-(void)setSymbol:(NSString *)symbol;
+-(NSString *)getSymbol;
 
 @end
 
 @implementation Player {
     NSString *_space;
+    NSString *_symbol;
 }
 
 -(void)setSpace:(NSString *)space{
@@ -27,6 +30,14 @@
 
 -(NSString *)getSpace{
     return _space;
+}
+
+-(void)setSymbol:(NSString *)symbol;{
+    _symbol = symbol;
+}
+
+-(NSString *)getSymbol{
+    return _symbol;
 }
 
 @end
@@ -38,7 +49,6 @@
 -(void)introScreen;
 -(void)askUserForSpace:(Player *)player;
 -(void)displayBlankBoard;
--(void)displayBoard:(Player *)player;
 -(void)result;
 
 @end
@@ -49,20 +59,56 @@
     NSString *_stringSpace;
     NSString *spaceChosen;
     NSString *playerChoice;
+    NSString *symbolChoice;
+    Player *player1;
+    Player *player2;
     
     
 }
 
 
 -(void)introScreen{
+    player1 = [[Player alloc] init];
     NSLog(@"Welcome to Tic-Tac-Toe! Will you be playing against a friend or the CPU?\nA. A Friend\nB. CPU");;
     char choice[256];
     scanf("%s", choice);
     playerChoice = [NSString stringWithCString:choice encoding:NSUTF8StringEncoding];
     
+    while (!([playerChoice isEqualToString:@"A"] || [playerChoice isEqualToString: @"a"] || [playerChoice isEqualToString:@"B"] || [playerChoice isEqualToString: @"b"])){
+        NSLog(@"Please choose from the options available.\nA. A Friend\nB. CPU");
+        scanf("%s", choice);
+        playerChoice = [NSString stringWithCString:choice encoding:NSUTF8StringEncoding];
+    }
+    
+    if ([playerChoice isEqualToString:@"A"] || [playerChoice isEqualToString: @"a"]) {
+        player2 = [[Player alloc] init];
+        NSLog(@"Player 1, what symbol would you like to use: X or O?");
+        scanf("%s", choice);
+        symbolChoice = [NSString stringWithCString:choice encoding:NSUTF8StringEncoding];
+        
+        while (!([symbolChoice isEqualToString:@"x"] || [symbolChoice isEqualToString:@"X"] || [symbolChoice isEqualToString:@"o"] || [symbolChoice isEqualToString:@"O"])) {
+            NSLog(@"Please choose from the options available: X or O?");
+            scanf("%s", choice);
+            symbolChoice =[NSString stringWithCString:choice encoding:NSUTF8StringEncoding];
+        }
+        
+        [player1 setSymbol:symbolChoice];
+        if ([[player1 getSymbol] isEqualToString:@"x"] || [[player1 getSymbol] isEqualToString:@"X"]) {
+            [player2 setSymbol:@"O"];
+        }
+        else {
+            [player2 setSymbol:@"X"];
+        }
+        
+        
+        
+    }
     
     
-   
+    NSLog(@"%@\n%@", [player1 getSymbol],[player2 getSymbol]);
+
+    
+    
 }
 -(void)askUserForSpace:(Player *)player{
     
@@ -86,7 +132,28 @@
     
     [player setSpace:spaceChosen];
     
-    NSLog(@"%@", [player getSpace]);
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++) {
+            if ([[player getSpace] isEqualToString:_normalBoard[i][j]]) {
+                if ([[player getSymbol] isEqualToString:@"X"]) {
+                    _normalBoard[i][j] = @"X";
+                }
+                else {
+                    _normalBoard[i][j] = @"O";
+                }
+            }
+        }
+    }
+    
+    for (int i = 0; i < 3 ; i++) {
+        int j = 0;
+        NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
+        NSLog(@"%@", rowColumn);
+        
+        if (i < 2){
+            NSLog(@"---------");
+        }
+    }
 }
 
 -(void)displayBlankBoard{
@@ -107,38 +174,16 @@
 }
 
 
--(void)displayBoard:player{
-    
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++) {
-            if ([[player getSpace] isEqualToString:_normalBoard[i][j]]) {
-                _normalBoard[i][j] = @"X";
-            }
-        }
-    }
-    
-    for (int i = 0; i < 3 ; i++) {
-        int j = 0;
-        NSString *rowColumn = [NSString stringWithFormat:@"%@ | %@ | %@", _normalBoard[i][j], _normalBoard[i][j+1], _normalBoard[i][j+2]];
-        NSLog(@"%@", rowColumn);
-        
-        if (i < 2){
-            NSLog(@"---------");
-        }
-    }
-    
-}
-
 
 -(void)result{
     
-//    //_normalBoard [i][j]
-//    if ([j] == [j] == [j]) {
-//        win;
-//    }
-//    if ([j] increasing or decreaing order) {
-//        win;
-//    }
+    //    //_normalBoard [i][j]
+    //    if ([j] == [j] == [j]) {
+    //        win;
+    //    }
+    //    if ([j] increasing or decreaing order) {
+    //        win;
+    //    }
     
     for (int i = 0; i < 3; i++) {
         
@@ -170,21 +215,22 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         
-//        Player *umar = [[Player alloc] init];
-//        GameManager *simulate = [[GameManager alloc] init];
-//        
-//        
-//        [simulate displayBlankBoard];
-//        [simulate askUserForSpace:umar];
-//        [simulate displayBoard:umar];
-//        [simulate askUserForSpace:umar];
-//        [simulate displayBoard:umar];
-//        [simulate askUserForSpace:umar];
-//        [simulate displayBoard:umar];
-//        [simulate result];
+        //        Player *umar = [[Player alloc] init];
+                GameManager *simulate = [[GameManager alloc] init];
+        //
+        //
+        //        [simulate displayBlankBoard];
+        //        [simulate askUserForSpace:umar];
+        //        [simulate displayBoard:player1];
+        //        [simulate askUserForSpace:umar];
+        //        [simulate displayBoard:umar];
+        //        [simulate askUserForSpace:umar];
+        //        [simulate displayBoard:umar];
+        //        [simulate result];
         
         
-       
+        [simulate introScreen];
+        
         
         
         
