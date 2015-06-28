@@ -212,6 +212,8 @@
         printf("d|delete            p|set priority\n");
         printf("c|mark completed    t|active\n");
         printf("i|inactive          q|quit\n");
-    
+        printf("c|mark completed    a|active\n");
+        printf("i|inactive          q|quit\n");
+
 }
 @end
