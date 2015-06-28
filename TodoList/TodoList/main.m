@@ -91,14 +91,13 @@
 - (void) addItem;
 - (void) deleteItem;
 - (void) _completedList;
-- (void) completedList;
 
 @end
 
 @implementation Manager {
-    NSMutableArray *uCompletedList;
-    NSMutableArray *_yourList;
+    
     NSMutableArray *_completedList;
+    NSMutableArray *_yourList;
     //NSString *_newItem;
 
 }
@@ -141,9 +140,7 @@
 - (void) createList{                // creating list if there is none
 
     List *newList = [[List alloc] init];
-    
     [newList setNewList:(_yourList)];
-    
     _yourList = [[NSMutableArray alloc] init];      // initializing array
     
 }
@@ -207,9 +204,6 @@
 //    
 //}
 
--(void) completedList {
-    uCompletedList = [[NSMutableArray alloc] init];
-}
 
 - (void) markAsCompleted {                            //Delete item from our list
     NSLog(@"Which item would you like to mark as completed? ");
@@ -219,31 +213,44 @@
     }
 
 
-    NSUInteger q;
-    scanf("%ld", &q);
-    [uCompletedList addObjectsFromArray: [_yourList objectAtIndex:q]];
-    NSLog(@"%@", uCompletedList[0]);
+    int q;
+    scanf("%d", &q);
+    fpurge(stdin);
+
+    if (_completedList == nil) {
+        _completedList = [[NSMutableArray alloc] init];
+    }
     
-//    _completedList = [[NSMutableArray alloc] init];
+//    // remove item at index q from __yourList
+//
+    Item *newItem = [_yourList objectAtIndex:q-1];
+    
+    [_completedList addObject:newItem];
+    [_yourList removeObject:newItem];
+//
+//    NSLog(@"Your updated active list is : \n %@", _yourList);
 //    
+//    // add the item to _completedList
+//    
+
+
+    
+
+    
 //    [_completedList addObject:[_yourList objectAtIndex:q]];
-    
-//    insertObject:myObject atIndex:42
-//    
-//    [_completedList insertObject:completedItem atIndex:q];
-//    
-//    [_completedList addObjectsFromArray: _yourList];
+
+//    [_completedList insertObject:completedItem atIndex:0];
+
 
 }
     
     
 - (void) _completedList {
     
-    NSLog(@"\n Your completed list is: \n");
     
-    for (int i = 0; i < [uCompletedList count]; i++)
+    for (int i = 0; i < [_completedList count]; i++)
     {
-        NSLog(@"%d | %@ \n",i+1, uCompletedList[i]);
+        NSLog(@"Your completed list is:%d | %@ \n",i+1, _completedList[i]);
     }
     
     [self ToDoHome];
