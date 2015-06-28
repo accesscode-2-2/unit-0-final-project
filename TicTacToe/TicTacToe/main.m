@@ -48,7 +48,7 @@
 @interface GameManager : NSObject
 
 -(void)introScreen;
--(void)askUserForSpace:(Player *)player;
+-(void)askUserForSpace;
 -(void)displayBlankBoard;
 -(void)result;
 
@@ -111,7 +111,7 @@
     
     
 }
--(void)askUserForSpace:(Player *)player{
+-(void)askUserForSpace{
     
     BOOL invalid = YES;
     while (invalid) {
@@ -131,12 +131,12 @@
         
     }
     
-    [player setSpace:spaceChosen];
+    [player1 setSpace:spaceChosen];
     
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++) {
-            if ([[player getSpace] isEqualToString:_normalBoard[i][j]]) {
-                if ([[player getSymbol] isEqualToString:@"X"]) {
+            if ([[player1 getSpace] isEqualToString:_normalBoard[i][j]]) {
+                if ([[player1 getSymbol] isEqualToString:@"X"]) {
                     _normalBoard[i][j] = @"X";
                 }
                 else {
@@ -219,6 +219,8 @@ int main(int argc, const char * argv[]) {
         GameManager *simulate = [[GameManager alloc] init];
         
         [simulate introScreen];
+        [simulate displayBlankBoard];
+        [simulate askUserForSpace];
         
         return 0;
     }
