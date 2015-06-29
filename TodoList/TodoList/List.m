@@ -254,7 +254,7 @@
             continue;
         }
         
-        if([checker isEqualToString:@"d"] || [checker isEqualToString:@"D"]){
+        if([checker isEqualToString:@"c"] || [checker isEqualToString:@"C"]){
             int d;
             printf("\nIndex number? ");
             scanf("%d",&d);
@@ -266,7 +266,7 @@
                 printf("%s",[c UTF8String]);
                 continue;
             }
-            [self deleteItem:d-1];
+            [self markCompleted:d-1];
             continue;
         }
         
@@ -313,11 +313,7 @@
             [self active];
             continue;
         }
-        if([checker isEqualToString:@"t"] || [checker isEqualToString:@"T"]){
-            
-            [self active];
-            continue;
-        }
+       
         
         if([checker isEqualToString:@"i"] || [checker isEqualToString:@"I"]){
             
@@ -334,16 +330,19 @@
                 self.viewPriority=NO;
             }
             else{
+                self.viewByDueDate = NO;
                 self.viewPriority = YES;
             }
             continue;
         }
         if([checker isEqualToString:@"vd"] || [checker isEqualToString:@"VD"]){
             if(self.viewByDueDate){
-                self.viewPriority=NO;
+                
+                self.viewByDueDate=NO;
             }
             else{
                 self.viewByDueDate = YES;
+                self.viewPriority=NO;
             }
             continue;
         }
@@ -356,7 +355,7 @@
     printf(" d|delete            p|set priority     c|mark completed\n");
     printf(" t|active            i|inactive         q|quit\n");
     printf("vp|View by priority(ON/OFF)      vd|View by date(ON/OFF)\n");
-    
+    printf("\n\n\n\n\n\n\n\n\n");
     
 }
 @end

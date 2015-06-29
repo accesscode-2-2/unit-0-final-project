@@ -20,6 +20,7 @@
     
         printf("a|add               v|view\n");
         printf("d|delete            q|quit\n");
+    printf("\n\n\n\n\n\n\n");
 }
 
 -(void)addList{

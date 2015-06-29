@@ -24,7 +24,7 @@
         [c setMonth:12];
         [c setYear:3000];
         
-        NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+        NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         
         NSDate *date = [calendar dateFromComponents:c];
         
