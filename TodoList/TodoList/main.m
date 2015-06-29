@@ -20,7 +20,9 @@
 @interface ToDoItem : NSObject
 - (void)setItem:(NSString *)itemName;
 - (NSString *)itemName;
-- (void)addNameAndPriority;
+//- (void)addNameAndPriority;
+- (void)addItemName;
+- (void)addPriority;
 @end
 
 @implementation ToDoItem {
@@ -42,26 +44,30 @@
     return _priority;
 }
 
-- (void)addNameAndPriority {
-    
+//- (void)addNameAndPriority {
+
+- (void)addItemName {
     NSLog(@"Enter item: ");
     // "fgets" allows the user to input an item with more than one word ie: "cat food"
     char name[256];
     fgets(name, 256, stdin);
     
-    NSLog(@"item added: %s", name); // we test our work above here
+  //  NSLog(@"item added: %s", name); // we test our work above here
     // we used "stringWithUTF8String" to convert char to string
     NSString *item1 = [NSString stringWithUTF8String:name];
     //    NSLog(@"string test: %@", item1);
     [self setItem: item1];
+}
+
+- (void)addPriority {
     // we set the priority level for each inputted item
-    NSLog(@"Enter priority 1 = hair on fire urgent, 2, 3, 4 = whatever, later: ");
+    NSLog(@"Enter priority level: 1 = hair on fire urgent, 2, 3, 4 = whatever, later: ");
     int inputPriority;
     scanf("%d", &inputPriority);
     
     [self setPriority: inputPriority];
     // we print/test the inputted item name and priority
-    NSLog(@"priority level: %d", inputPriority);
+   // NSLog(@"priority level: %d", inputPriority);
 }
 @end
 
@@ -93,11 +99,11 @@
     [[self myListedItems] addObject:newItem];
 }
 
--(void)printList {
-    for (int i = 0; i < [_myListedItems count]; i++) {
-        NSLog(@"print test:%@", [[_myListedItems objectAtIndex:i] itemName]);
-    }
-}
+//-(void)printList {
+//    for (int i = 0; i < [_myListedItems count]; i++) {
+//        NSLog(@"print test:%@", [[_myListedItems objectAtIndex:i] itemName]);
+//    }
+//}
 
 - (void)createItems {
     int add;
@@ -112,12 +118,19 @@
             // created a new Item object and set its item/priority. This addes our item to the memory
             ToDoItem *newItem = [[ToDoItem alloc] init];
             // this sends a message to add an item
-            [newItem addNameAndPriority];
+           // [newItem addNameAndPriority];
+            [newItem addItemName];
+            [newItem addPriority];
 
             // added the Item to `self`'s myListedItems array
             [self addItem:newItem];
         } else {
-//            NSLog(@"Finished adding items");
+            NSLog(@"Your Current List Contains:");
+            
+                for (int i = 0; i < [_myListedItems count]; i++) {
+                    NSLog(@"%@", [[_myListedItems objectAtIndex:i] itemName]);
+                }
+            
             break;
         }
     }
@@ -148,7 +161,7 @@
 -(NSMutableArray *)manageMyList;
 -(void)manageAddList:(ToDoList *)newList;
 -(void)managePrintList;
--(void)manageListName;
+//-(void)manageListName;
 
 @end
 
@@ -170,10 +183,16 @@
 
 -(void)managePrintList {
     for (int i = 0; i < [_manageMyList count]; i++) {
-        NSLog(@"Your %@ List", [[_manageMyList objectAtIndex:i] listName]); // this displays list categories, add items too - loop again
-//        for (int j=0; j< [[_manageMyList objectAtIndex:i] count]; j++) {
-//            
-//        }
+        NSLog(@"Your %@", [[_manageMyList objectAtIndex:i] listName]); // this displays list categories, add items too - loop again
+        
+        ToDoList *list = [_manageMyList objectAtIndex:i];
+        
+        for (int j=0; j< [list.myListedItems count]; j++) {
+            
+            ToDoItem *item = [list.myListedItems objectAtIndex:j];
+            
+            NSLog(@"%@",item.itemName);
+        }
     }
 }
 
@@ -217,10 +236,7 @@ int main(int argc, const char * argv[]) {
         
         [newList manageNewList];
         [newList managePrintList];
-//        ToDoList *addList = [[ToDoList alloc] init];
-//        [addList createItems];
-//        [addList printList];
-        
+
     
    }
     return 0;
