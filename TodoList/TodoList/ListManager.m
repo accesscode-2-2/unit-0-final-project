@@ -33,7 +33,9 @@
     printf("\n");
     NSString *name = [NSString stringWithCString:temp encoding:NSASCIIStringEncoding];
     List *li = [[List alloc] initWithName:name];
-    
+    li.id = 0;
+    li.viewByDueDate = NO;
+    li.viewPriority = NO;
     [_listArray addObject:li];
 }
 

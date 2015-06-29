@@ -11,9 +11,11 @@
 @interface ListItem : NSObject
 -(instancetype)initWithDefaultAndName:(NSString *)name;
 
-@property (nonatomic) NSInteger priority;
+@property (nonatomic) int priority;
 @property (nonatomic) NSString *itemName;
 @property (nonatomic) BOOL completed;
-
+@property (nonatomic) int idNumber;
+@property (nonatomic) NSDate* date;
+@property (nonatomic) BOOL hasDate;
 
 @end

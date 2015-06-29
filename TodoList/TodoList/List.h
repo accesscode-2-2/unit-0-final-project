@@ -15,6 +15,10 @@
 
 @property (nonatomic) NSString *listName;
 
+@property (nonatomic) int id;
+@property (nonatomic) BOOL viewPriority;
+@property (nonatomic) BOOL viewByDueDate;
+
 -(instancetype)initWithName:(NSString *)name;
 
 -(void) addItem;
@@ -27,5 +31,8 @@
 -(void) inActive;
 -(void) run;
 -(void) printCommands;
+-(void) printItemsByPriority;
+-(void) printByDueDate;
+-(void) setDate:(int)index;
 
 @end
