@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-// *** CLASS DECLERATIONS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+// *** CLASS DECLERATIONS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 
 @class ToDoItem;
 @class ToDoList;
@@ -23,12 +23,16 @@
 //- (void)addNameAndPriority;
 - (void)addItemName;
 - (void)addPriority;
+- (BOOL)isDone;
+- (void)makeAsDone:(BOOL)isDone;
+- (void)setCompletionDate;
 @end
 
 @implementation ToDoItem {
     NSString *_itemName;
     int _priority;
     BOOL _isDone;
+    NSDate *_completionDate;
 }
 
 - (void)setItem:(NSString *)itemName {
@@ -51,6 +55,18 @@
 - (BOOL)isDone {
     return _isDone;
 }
+- (void)makeAsDone:(BOOL)isDone {
+    self.isDone = isDone;
+    [self setCompletionDate];
+}
+- (void)setCompletionDate {
+    if (self.isDone){
+        _completionDate = [NSDate date];
+    } else {
+        _completionDate = nil;
+    }
+}
+
 
 
 //- (void)addNameAndPriority {
@@ -80,8 +96,9 @@
     
     [self setPriority: inputPriority];
     // we print/test the inputted item name and priority
-   // NSLog(@"priority level: %d", inputPriority);
+    // NSLog(@"priority level: %d %@ %@", inputPriority, _itemName, _completionDate);
 }
+
 @end
 
 // *** TO DO LIST CLASS *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ** *** *** *** *** *** *** *** *** *** *** ***
@@ -114,11 +131,12 @@
     [[self myListedItems] addObject:newItem];
 }
 
-//-(void)printList {
-//    for (int i = 0; i < [_myListedItems count]; i++) {
-//        NSLog(@"print test:%@", [[_myListedItems objectAtIndex:i] itemName]);
-//    }
-//}
+// uncommented this, maybe test it
+-(void)printList {
+    for (int i = 0; i < [_myListedItems count]; i++) {
+        NSLog(@"print test:%@", [[_myListedItems objectAtIndex:i] itemName]);
+    }
+}
 
 - (void)createItems {
     int choices, itemNo;
@@ -147,7 +165,7 @@
             // added the Item to `self`'s myListedItems array
             [self addItem:newItem];
         } else if (choices == 2) {
-            NSLog(@"Which item no to edit?");
+            NSLog(@"Enter item number to edit:");
             scanf("%d", &itemNo);
             fpurge(stdin);
             ToDoItem *newItem = [_myListedItems objectAtIndex:itemNo-1];
@@ -156,11 +174,11 @@
             [newItem addItemName];
             [newItem addPriority];
         } else if (choices == 3) {
-            NSLog(@"which item no to delete?");
+            NSLog(@"Enter item number to delete:");
             scanf("%d", &itemNo);
             [_myListedItems removeObjectAtIndex:itemNo-1];
         } else if (choices == 4) {
-            NSLog(@"which item no to mark as done?");
+            NSLog(@"Enter item number to mark as done:");
             scanf("%d", &itemNo);
             fpurge(stdin);
             ToDoItem *newItem = [_myListedItems objectAtIndex:itemNo-1];
@@ -175,6 +193,7 @@
             NSLog(@"Your Current List Contains:");
                 for (int i = 0; i < [_myListedItems count]; i++) {
                     NSLog(@"%d %@", i+1,[[_myListedItems objectAtIndex:i] itemName]);
+                    // NSLog(@"priority level: %d %@ %@", inputPriority, _itemName, _completionDate);
                 }
             
             break;
