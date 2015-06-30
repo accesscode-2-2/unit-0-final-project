@@ -51,6 +51,7 @@
     int _maxIndex;
 }
 
+
 -(void)setDifficulty:(int)level{
     _difficulty = level;
 }
@@ -123,15 +124,28 @@
 -(void)startGame {
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
     _win = NO;
-    NSLog(@"Set a game size from 3-10, fool!:");
-    int userGameSize;
-    scanf("%d",&userGameSize);
-    [self setGameSize:userGameSize];
+    
+    BOOL gameSizeSet = NO;
+    while (gameSizeSet == NO) {
+        NSLog(@"Set a game size from 3-10, fool!:");
+        int userGameSize;
+        scanf("%d",&userGameSize);
+        fpurge(stdin);
+        
+        
+        if (userGameSize >=3 && userGameSize <= 10) {
+            [self setGameSize:userGameSize];
+            gameSizeSet = YES;
+        }
+        else{
+            NSLog(@"Invalid size.");
+        }
+    }
     
     //calculate max index
     _maxIndex = (pow(_gameSize, 2) - 1);
     
-    //fill gameboard with the index of the space
+    //fill gameboard with the indices of the positions to occupy
     _gameboard = [[NSMutableArray alloc] init];
     for (int i = 0; i < pow (_gameSize,2); i++) {
         
@@ -139,7 +153,7 @@
         NSString *placeNumber = [NSString stringWithFormat:@"%d",i];
         int lengthOfPlaceNumber = (int)[placeNumber length];
         
-        // check the length of the string
+        // if the string is of a single digit number, padd with 0 for formatting purposes
         if (lengthOfPlaceNumber == 1) {
             NSString *zero = [NSString stringWithFormat:@"0"];
             placeNumber = [zero stringByAppendingString:placeNumber];
@@ -187,12 +201,13 @@
                 stringOfCurrentMove = [zero stringByAppendingString:stringOfCurrentMove];
             }
             
-            if (([_gameboard[currentMove] isEqual: stringOfCurrentMove]) && (currentMove>=0) && (currentMove<=_maxIndex)) {
+            //NOTE that the order of the conditionals matters. WHY?????
+            if ((currentMove<=_maxIndex) && (currentMove>=0) && ([_gameboard[currentMove] isEqual: stringOfCurrentMove])) {
                 [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"~X"];
                 _playerTurn = 2;
             }
             else {
-                NSLog(@"Invalid move. Enter a number from 0-8.");
+                NSLog(@"Invalid move. Enter a number from 0-%d.",_maxIndex);
             }
             
         }
@@ -211,12 +226,12 @@
                 stringOfCurrentMove = [zero stringByAppendingString:stringOfCurrentMove];
             }
             
-            if (([_gameboard[currentMove] isEqual: stringOfCurrentMove]) && (currentMove>=0) && (currentMove<=_maxIndex)) {
+            if ((currentMove<=_maxIndex) && (currentMove>=0) && ([_gameboard[currentMove] isEqual: stringOfCurrentMove])) {
                 [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"~O"];
                 _playerTurn = 1;
             }
             else {
-                NSLog(@"Invalid move. Enter a number from 0-8.");
+                NSLog(@"Invalid move. Enter a number from 0-%d.",_maxIndex);
             }
             
         }
