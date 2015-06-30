@@ -33,6 +33,9 @@
 
 - (void)computerEasy;
 
+- (void)printWinnerX;
+
+- (void)printWinnerO;
 
 
 @end
@@ -43,6 +46,37 @@
     NSMutableArray * _board;
 }
 
+- (void)printWinnerX {
+  
+    
+    printf(" `8.`8888.      ,8'          `8.`888b                 ,8' 8 8888 b.             8    d888888o.\n");
+    printf("  `8.`8888.    ,8'            `8.`888b               ,8'  8 8888 888o.          8  .`8888:' `88.\n");
+    printf("   `8.`8888.  ,8'              `8.`888b             ,8'   8 8888 Y88888o.       8  8.`8888.   Y8\n");
+    printf("    `8.`8888.,8'                `8.`888b     .b    ,8'    8 8888 .`Y888888o.    8  `8.`8888.\n");
+    printf("     `8.`88888'                  `8.`888b    88b  ,8'     8 8888 8o. `Y888888o. 8   `8.`8888.\n");
+    printf("     .88.`8888.                   `8.`888b .`888b,8'      8 8888 8`Y8o. `Y88888o8    `8.`8888.\n");
+    printf("    .8'`8.`8888.                   `8.`888b8.`8888'       8 8888 8   `Y8o. `Y8888     `8.`8888.\n");
+    printf("   .8'  `8.`8888.                   `8.`888`8.`88'        8 8888 8      `Y8o. `Y8 8b   `8.`8888.\n");
+    printf("  .8'    `8.`8888.                   `8.`8' `8,`'         8 8888 8         `Y8o.` `8b.  ;8.`8888\n");
+    printf(" .8'      `8.`8888.                   `8.`   `8'          8 8888 8            `Yo  `Y8888P ,88P'\n");
+}
+
+- (void)PrinterWinnerO {
+    
+    
+   printf("     ,o888888o.              `8.`888b                 ,8' 8 8888 b.             8    d888888o.\n");
+   printf("  . 8888     `88.             `8.`888b               ,8'  8 8888 888o.          8  .`8888:' `88.\n");
+   printf(" ,8 8888       `8b             `8.`888b             ,8'   8 8888 Y88888o.       8  8.`8888.   Y8\n");
+   printf(" 88 8888        `8b             `8.`888b     .b    ,8'    8 8888 .`Y888888o.    8  `8.`8888.\n");
+   printf(" 88 8888         88              `8.`888b    88b  ,8'     8 8888 8o. `Y888888o. 8   `8.`8888.\n");
+   printf(" 88 8888         88               `8.`888b .`888b,8'      8 8888 8`Y8o. `Y88888o8    `8.`8888.\n");
+   printf(" 88 8888        ,8P                `8.`888b8.`8888'       8 8888 8   `Y8o. `Y8888     `8.`8888.\n");
+   printf(" `8 8888       ,8P                  `8.`888`8.`88'        8 8888 8      `Y8o. `Y8 8b   `8.`8888.\n");
+   printf("  ` 8888     ,88'                    `8.`8' `8,`'         8 8888 8         `Y8o.` `8b.  ;8.`8888\n");
+   printf("     `8888888P'                       `8.`   `8'          8 8888 8            `Yo  `Y8888P ,88P'\n");
+
+    
+}
 
 - (void)printIntroduction{
     
@@ -113,25 +147,38 @@
 }
 
 
-
 - (void)playerOne{
     
     printf("PLAYER ONE MOVE:  ");
     int x;
     scanf("%d", &x);
     printf("\n");
+    BOOL wrongMove = false;
     
-    if (x < 10){
-        if (![[_board objectAtIndex:x - 1] isEqualToString:@"x"] && ![[_board objectAtIndex:x - 1] isEqualToString:@"o"]) {
-            // valid input
-            _board[x - 1] = @"x";
-        } else {
-            // already taken
-            NSLog(@"this is already taken");
+    do {
+        if (!(x < 10)){
+            printf("Please pick a valid number: ");
+            scanf("%d", &x);
+            printf("\n");
+            wrongMove = true;
         }
-    } else {
-        printf("You inputted twice!");
-    }
+        
+        if (x < 10){
+            if (![[_board objectAtIndex:x - 1] isEqualToString:@"o"] && ![[_board objectAtIndex:x - 1] isEqualToString:@"x"]) {
+                // valid input
+                _board[x - 1] = @"x";
+                break;
+            }
+            else {
+                // already taken
+                printf("Please pick a valid number: ");
+                scanf("%d", &x);
+                printf("\n");
+                wrongMove = true;
+            }
+        }
+                      
+    } while (wrongMove);
     
 }
 
@@ -141,36 +188,31 @@
     int o;
     scanf("%d", &o);
     printf("\n");
-    while(!(o < 10)){
-        printf("Please pick a valid number: ");
-        scanf("%d", &o);
-        printf("\n");
-        
-    }
+    BOOL wrongMove = false;
     
     do {
-        
         if (!(o < 10)){
-            printf("This is already taken!\n");
             printf("Please pick a valid number: ");
             scanf("%d", &o);
             printf("\n");
+            wrongMove = true;
         }
-        
         if (o < 10){
-            if (![[_board objectAtIndex:o - 1] isEqualToString:@"x"] && ![[_board objectAtIndex:o - 1] isEqualToString:@"o"]) {
+            if (![[_board objectAtIndex:o - 1] isEqualToString:@"o"] && ![[_board objectAtIndex:o - 1] isEqualToString:@"x"]) {
                 // valid input
                 _board[o - 1] = @"o";
+                break;
             }
             else {
-                printf("This is already taken!\n");
+                // already taken
                 printf("Please pick a valid number: ");
                 scanf("%d", &o);
                 printf("\n");
+                wrongMove = true;
             }
-            
         }
-    } while (!(o < 10) || ([[_board objectAtIndex:o - 1] isEqualToString:@"x"] && ![[_board objectAtIndex:o - 1] isEqualToString:@"o"]) );
+        
+    } while (wrongMove);
     
 }
 
@@ -260,13 +302,13 @@
     
     if([[_board objectAtIndex:0] isEqualToString:@"x"] && [[_board objectAtIndex:1] isEqualToString:@"x"] && [[_board objectAtIndex:2] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:0] isEqualToString:@"o"] && [[_board objectAtIndex:1] isEqualToString:@"o"] && [[_board objectAtIndex:2] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -275,13 +317,13 @@
     
     if([[_board objectAtIndex:3] isEqualToString:@"x"] && [[_board objectAtIndex:4] isEqualToString:@"x"] && [[_board objectAtIndex:5] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:3] isEqualToString:@"o"] && [[_board objectAtIndex:4] isEqualToString:@"o"] && [[_board objectAtIndex:5] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -290,13 +332,13 @@
     
     if([[_board objectAtIndex:6] isEqualToString:@"x"] && [[_board objectAtIndex:7] isEqualToString:@"x"] && [[_board objectAtIndex:8] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:6] isEqualToString:@"o"] && [[_board objectAtIndex:7] isEqualToString:@"o"] && [[_board objectAtIndex:8] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -308,13 +350,13 @@
     
     if([[_board objectAtIndex:0] isEqualToString:@"x"] && [[_board objectAtIndex:3] isEqualToString:@"x"] && [[_board objectAtIndex:6] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:0] isEqualToString:@"o"] && [[_board objectAtIndex:3] isEqualToString:@"o"] && [[_board objectAtIndex:6] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -323,13 +365,13 @@
     
     if([[_board objectAtIndex:1] isEqualToString:@"x"] && [[_board objectAtIndex:4] isEqualToString:@"x"] && [[_board objectAtIndex:7] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:1] isEqualToString:@"o"] && [[_board objectAtIndex:4] isEqualToString:@"o"] && [[_board objectAtIndex:7] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -338,13 +380,13 @@
     
     if([[_board objectAtIndex:2] isEqualToString:@"x"] && [[_board objectAtIndex:5] isEqualToString:@"x"] && [[_board objectAtIndex:8] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:2] isEqualToString:@"o"] && [[_board objectAtIndex:5] isEqualToString:@"o"] && [[_board objectAtIndex:8] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -362,13 +404,13 @@
     
     if([[_board objectAtIndex:0] isEqualToString:@"x"] && [[_board objectAtIndex:4] isEqualToString:@"x"] && [[_board objectAtIndex:8] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:0] isEqualToString:@"o"] && [[_board objectAtIndex:4] isEqualToString:@"o"] && [[_board objectAtIndex:8] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
@@ -383,13 +425,13 @@
     
     if([[_board objectAtIndex:2] isEqualToString:@"x"] && [[_board objectAtIndex:4] isEqualToString:@"x"] && [[_board objectAtIndex:6] isEqualToString:@"x"]){
         
-        printf("Player X wins!");
+        [self printWinnerX];
         win = true;
     }
     
     else if ([[_board objectAtIndex:2] isEqualToString:@"o"] && [[_board objectAtIndex:4] isEqualToString:@"o"] && [[_board objectAtIndex:6] isEqualToString:@"o"]) {
         
-        printf("Player O wins!");
+        [self printWinnerO];
         win = true;
         
     }
