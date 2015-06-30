@@ -28,10 +28,10 @@ NSString * scanUserInput(void) {
 - (instancetype)initWithListName:(NSString *)listName;
 
 -(NSMutableArray *)listOfTasks;
--(NSMutableArray *)listOfDoneTasks;
+
 
 -(void)addTask:(Task *) task;
--(void)addTaskToDoneTasks:(Task *)task;
+
 
 -(void)removeObject:(NSString *)object;
 
@@ -45,7 +45,7 @@ NSString * scanUserInput(void) {
 @implementation List{
     NSString* _list;
     NSMutableArray* _listOfTasks;
-    NSMutableArray* _listOfDoneTasks;
+    
 }
 
 
@@ -65,20 +65,13 @@ NSString * scanUserInput(void) {
     return _listOfTasks;
 }
 
--(NSMutableArray *)listOfDoneTasks{
-    if(_listOfDoneTasks == nil){
-        _listOfDoneTasks = [[NSMutableArray alloc] init];
-    }
-    return _listOfDoneTasks;
-}
+
 
 -(void)addTask:(Task *)task{
     [[self listOfTasks] addObject:task];
 }
 
--(void)addTaskToDoneTasks:(Task *)task{
-    [[self listOfDoneTasks] addObject:task];
-}
+
 
 -(void)removeObject:(NSString *)object{
     [[self listOfTasks] removeObject:object];
@@ -126,15 +119,21 @@ NSString * scanUserInput(void) {
 
 @interface Manager : NSObject
 
--(List *) createNewList;
+- (List *)doneTasks;
 
--(Task *) createNewTask;
+- (List *)activeTasks;
+
+-(NSMutableArray *)listOfDoneTasks;
+
+-(Task *) createCompletedTask: (NSString *)name;
+
+-(void)addTaskToDoneTasks:(Task *)task;
 
 -(void)displayTasks:(List *)list;
 
 -(void)removeTask:(List *)list;
 
--(void)markTaskAsDone:(List *)list;
+-(void)markTaskAsDone:(NSInteger *)index fromList: (List *)list;
 
 
 @end
@@ -142,20 +141,44 @@ NSString * scanUserInput(void) {
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 @implementation Manager{
-    List *_completedTasks;
+    NSMutableArray* _listOfDoneTasks;
+    List *_doneTasks;
     List *_activeTasks;
-}
-
--(List *) createNewList: (NSString *)name{
-    List *newList = [[List alloc] initWithListName:name];
-    
-    return newList;
+    Task *_completedTask;
 }
 
 
--(Task *) createNewTask: (NSString *)name{
-    Task *newTask = [[Task alloc] initWithTaskName:name];
-    return newTask;
+- (List *)doneTasks {
+    // if it is nil create it
+    if (_doneTasks == nil) {
+        _doneTasks = [[List alloc] initWithListName:@"Done and Done"];
+    }
+    return _doneTasks;
+}
+
+- (List *)activeTasks {
+    // if it is nil create it
+    if (_activeTasks == nil) {
+        _activeTasks = [[List alloc] initWithListName:@"To Do Today"];
+    }
+    return _activeTasks;
+}
+
+
+-(Task *) createCompletedTask: (NSString *)name{
+    Task *completedTask = [[Task alloc] initWithTaskName:name];
+    return completedTask;
+}
+
+-(NSMutableArray *)listOfDoneTasks{
+    if(_listOfDoneTasks == nil){
+        _listOfDoneTasks = [[NSMutableArray alloc] init];
+    }
+    return _listOfDoneTasks;
+}
+
+-(void)addTaskToDoneTasks:(Task *)task{
+    [[self listOfDoneTasks] addObject:task];
 }
 
 
@@ -188,33 +211,44 @@ NSString * scanUserInput(void) {
     }
 }
 
--(void)markTaskAsDone:(List *)list{
+-(void)markTaskAsDone:(NSInteger *)index fromList:(List *)list{
     
-    [self displayTasks: list];
-    NSLog(@"Which task would you like to mark as 'Done'?");
+    // take task from active list, hold it in a variable, add to done list
     
-    NSString *objectToBeMarkedAsDone = scanUserInput();
+    NSMutableArray *tempList = [list listOfTasks];
+    Task *foundTask = [[list listOfTasks] objectAtIndex:index];
+    [tempList removeObjectAtIndex:index];
+    [[self doneTasks] addTask:foundTask];
+    //[[_doneTasks listOfTasks] addObject:foundTask];
     
-    NSMutableArray *myListOfTasks = [list listOfTasks];
     
-    for (int i = 0; i < [myListOfTasks count]; i++) {
-        
-        if ([objectToBeMarkedAsDone isEqualToString: [myListOfTasks[i] getTaskName]]){
-            
-            
-            List *doneAndDone = [self _completedTasks];
-            Task *newDoneTask = [self createNewTask:objectToBeMarkedAsDone];
-            [doneAndDone addTask:newDoneTask];
-            
-            NSLog(@"Completed tasks:");
-            [self displayTasks:doneAndDone];
-            
-            [list removeObject: myListOfTasks[i]];
-            NSLog(@"Your new list:");
-            [self displayTasks: list];
-            
-        }
-    }
+//    [self displayTasks: list];
+//    NSLog(@"Which task would you like to mark as 'Done'?");
+//    
+//    NSString *objectToBeMarkedAsDone = scanUserInput();
+//    
+//    NSMutableArray *myListOfTasks = [list listOfTasks];
+//    
+//    for (int i = 0; i < [myListOfTasks count]; i++) {
+//        
+//        if ([objectToBeMarkedAsDone isEqualToString: [myListOfTasks[i] getTaskName]]){
+//            
+//            _completedTask = [self createCompletedTask:objectToBeMarkedAsDone];
+//            [self addTaskToDoneTasks: _completedTask];
+//            
+////            List *doneAndDone = [self _completedTasks];
+////            Task *newDoneTask = [self createNewTask:objectToBeMarkedAsDone];
+////            [doneAndDone addTask:newDoneTask];
+//            
+//            NSLog(@"Completed tasks:");
+//            [self displayTasks:_listOfDoneTasks];
+//            
+//            [list removeObject: myListOfTasks[i]];
+//            NSLog(@"Your new list:");
+//            [self displayTasks: list];
+//            
+//        }
+//    }
 }
 
 
@@ -230,27 +264,34 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         Manager *listManager = [[Manager alloc] init];
-        
-        List *toDoToday = [[List alloc] initWithListName:@"To Do Today"];
-        //List *doneAndDone = [[List alloc] initWithListName:@"Done and Done"];
+//        
+//        while (true) {
+//            // print list of actions
+//            // user selects actions
+//            // perform task based on user action
+//            
+//        }
         
         Task *practiceGuitar = [[Task alloc] initWithTaskName:@"practice guitar"];
         Task *swim = [[Task alloc] initWithTaskName:@"swim"];
         Task *yoga = [[Task alloc] initWithTaskName:@"yoga"];
         
-        [toDoToday addTask:practiceGuitar];
-        [toDoToday addTask:swim];
-        [toDoToday addTask:yoga];
+        List *al = [listManager activeTasks];
+        [al addTask:practiceGuitar];
+        [al addTask:swim];
+        [al addTask:yoga];
         
         //[listManager displayTasks:toDoToday];
         
         //[listManager removeTask:toDoToday];
         
-        [listManager markTaskAsDone:toDoToday];
+        [listManager markTaskAsDone:1 fromList:al];
+        [listManager markTaskAsDone:0 fromList:al];
+//        [listManager markTaskAsDone:toDoToday];
+//        
+//        [listManager markTaskAsDone:toDoToday];
         
-        [listManager markTaskAsDone:toDoToday];
-        
-        
+        NSLog(@"whatever");
         
     }
     return 0;
