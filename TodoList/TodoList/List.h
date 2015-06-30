@@ -15,7 +15,6 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) int priority;
 
--(Item *)enterItem;
 -(void)showMenu;
 
 @end

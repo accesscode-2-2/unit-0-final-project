@@ -20,7 +20,7 @@
     return self;
 }
 
--(Item *)enterItem {
+-(Item *)addItem {
     [Manager printString:@"Enter task:"];
     NSString *task = [Manager getInputString];
     // If the user inputs nothing, return no item (nil)
@@ -37,6 +37,18 @@
     return newItem;
 }
 
+-(void)removeItem {
+    [self printList];
+    [Manager printString:@"Choose the index to remove:"];
+    int removeIndex = [Manager getInputString].intValue-1;
+    // TODO Implement this!
+}
+
+-(void)printList {
+    [Manager printString:self.description];
+}
+
+
 -(NSString *)description
 {
     NSMutableString *desc = [[NSMutableString alloc] init];
@@ -51,8 +63,9 @@
 
 -(void)printMenu {
     [Manager printString:[NSString stringWithFormat:@"Submenu for %@ list. Choose form the following:", self.title]];
-    [Manager printString:@"1. Add Item"];
-    [Manager printString:@"2. Print list"];
+    [Manager printString:@"1. Print list"];
+    [Manager printString:@"2. Add Item"];
+    [Manager printString:@"3. Remove Item"];
     [Manager printString:@"99. Main menu"];
 }
 
@@ -64,14 +77,17 @@
 -(void)showMenu {
     while (true) {
         int input = [self getMenuInput];
-        if (input == 99) {
-            break;
-        }
-        else if (input == 1) {
-            [self enterItem];
+        if (input == 1) {
+            [self printList];
         }
         else if (input == 2) {
-            [Manager printString:self.description];
+            [self addItem];
+        }
+        else if (input == 3) {
+            [self removeItem];
+        }
+        else if (input == 99) {
+            break;
         }
     }
 }

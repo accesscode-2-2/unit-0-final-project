@@ -51,8 +51,8 @@
 
 -(void)printMenu {
     [Manager printString:@"Main menu. Choose form the following:"];
-    [Manager printString:@"1. Create List"];
-    [Manager printString:@"2. Print all lists"];
+    [Manager printString:@"1. Print all lists"];
+    [Manager printString:@"2. Create List"];
     [Manager printString:@"99. Exit"];
 }
 
@@ -70,15 +70,15 @@
 -(void)showMenu {
     while (true) {
         int input = [self getMenuInput];
-        if (input == 99) {
-            break;
+        if (input == 1) {
+            [self printLists];
         }
-        else if (input == 1) {
+        else if (input == 2) {
             List *newList = [self createList];
             [newList showMenu];
         }
-        else if (input == 2) {
-            [self printLists];
+        else if (input == 99) {
+            break;
         }
     }
 }
