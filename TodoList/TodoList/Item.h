@@ -10,4 +10,9 @@
 
 @interface Item : NSObject
 
+@property (nonatomic) NSString *content;
+@property (nonatomic) int priority;
+
+- (instancetype)initWithContent:(NSString *)content priority:(int)priority;
+
 @end

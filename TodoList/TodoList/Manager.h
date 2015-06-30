@@ -10,4 +10,11 @@
 
 @interface Manager : NSObject
 
+@property (nonatomic) NSMutableArray *lists;
+
++(NSString *)getInputString;
++(void)printString:(NSString *)string;
+
+-(void)showMenu;
+
 @end

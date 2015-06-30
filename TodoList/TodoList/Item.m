@@ -10,4 +10,19 @@
 
 @implementation Item
 
+- (instancetype)initWithContent:(NSString *)content priority:(int)priority
+{
+    self = [super init];
+    if (self) {
+        self.content = content;
+        self.priority = priority;
+    }
+    return self;
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"(Priority %@) %@", @(self.priority), self.content];
+}
+
 @end

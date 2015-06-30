@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Item.h"
 
 @interface List : NSObject
+
+@property (nonatomic) NSMutableArray *items;
+@property (nonatomic) NSString *title;
+@property (nonatomic) int priority;
+
+-(Item *)enterItem;
+-(void)showMenu;
 
 @end
