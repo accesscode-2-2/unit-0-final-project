@@ -3,7 +3,7 @@
 //  TodoList
 //
 //  Created by Michael Kavouras on 6/25/15.
-//  Homework by Xiulan and Shena 6/27/15.
+//  Homework by Xiulan and Shena 6/29/15.
 //  Copyright (c) 2015 Mike Kavouras. All rights reserved.
 //
 
@@ -61,7 +61,11 @@
 
 - (void)addPriority {
     // we set the priority level for each inputted item
-    NSLog(@"Enter priority level: 1 = hair on fire urgent, 2, 3, 4 = whatever, later: ");
+    NSLog(@"Enter priority level:");
+    NSLog(@"1 = hair on fire urgent");
+    NSLog(@"2 = important");
+    NSLog(@"3 = don't forget");
+    NSLog(@"4 = whatever, just do it later");
     int inputPriority;
     scanf("%d", &inputPriority);
     
@@ -77,7 +81,9 @@
 
 -(NSMutableArray *)myListedItems;
 -(void)addItem:(ToDoItem *)newItem;
--(void)printList;
+//-(void)editItem:(ToDoItem *)editItem;
+//-(void)deleteItem:(ToDoItem *)deleteItem;
+//-(void)printList;
 -(void)setListName:(NSString *)listName;
 -(NSString *)listName;
 @end
@@ -106,15 +112,21 @@
 //}
 
 - (void)createItems {
-    int add;
+    int choices, itemNo;
     // we started our while loop to add multiple items to the list
+    // when the program runs for the first time, we only want to offer the add item and quit options.
     while (true) {
-        NSLog(@"Enter 1 to add an item or 0 to quit:");
-        scanf("%d", &add);
+        NSLog(@"Enter 1 to add an item.");
+        if ([_myListedItems count] != 0) {
+            NSLog(@"Enter 2 to edit an item.");
+            NSLog(@"Enter 3 to delete an item.");
+        }
+        NSLog(@"Enter 0 to quit.");
+        scanf("%d", &choices);
         // "fpurge" stopped our code from displaying all at once
         fpurge(stdin);
         // added "if" condition to allow the user to stop or continue adding items to list
-        if (add == 1) {
+        if (choices == 1) {
             // created a new Item object and set its item/priority. This addes our item to the memory
             ToDoItem *newItem = [[ToDoItem alloc] init];
             // this sends a message to add an item
@@ -124,17 +136,40 @@
 
             // added the Item to `self`'s myListedItems array
             [self addItem:newItem];
+        } else if (choices == 2) {
+            NSLog(@"Which item no to edit?");
+            scanf("%d", &itemNo);
+            fpurge(stdin);
+            ToDoItem *newItem = [[ToDoItem alloc] init];
+            // this sends a message to add an item
+            // [newItem addNameAndPriority];
+            [newItem addItemName];
+            [newItem addPriority];
+
+            [_myListedItems replaceObjectAtIndex:itemNo-1 withObject:newItem];
+        } else if (choices == 3) {
+            NSLog(@"which item no to delete?");
+            scanf("%d", &itemNo);
+            [_myListedItems removeObjectAtIndex:itemNo-1];
         } else {
             NSLog(@"Your Current List Contains:");
-            
                 for (int i = 0; i < [_myListedItems count]; i++) {
-                    NSLog(@"%@", [[_myListedItems objectAtIndex:i] itemName]);
+                    NSLog(@"%d %@", i+1,[[_myListedItems objectAtIndex:i] itemName]);
                 }
             
             break;
         }
     }
 }
+
+//-(void)editItem:(ToDoItem *)editItem
+//        atIndex:(NSInteger) e {
+//    editItem = e;
+//    [[self _myListedItems]replaceObjectAtIndex:editItem
+//                                    withObject: _editItem];
+//}
+//-(void)deleteItem:(ToDoItem *)deleteItem;
+//
 -(void)setListName:(NSString *)listName {
     _listName = listName;
 }
@@ -191,18 +226,21 @@
             
             ToDoItem *item = [list.myListedItems objectAtIndex:j];
             
-            NSLog(@"%@",item.itemName);
+            NSLog(@"%d %@", j+1, item.itemName);
         }
     }
 }
 
-// extra comment
-
-
+// we set an if statement so that we only run options 2 and 3 once a list exists
 -(void)manageNewList {
     int addList;
     while (true) {
-        NSLog(@"Enter 1 to create a new list or 0 to quit:");
+        NSLog(@"Enter 1 to create a new list.");
+        if ([_manageMyList count] != 0) {
+            NSLog(@"Enter 2 to edit a list.");
+            NSLog(@"Enter 3 to delete a list.");
+        }
+        NSLog(@"Enter 0 to quit.");
         scanf("%d", &addList);
         fpurge(stdin);
         //later we can add more functionality ie edit a list or delete a list
