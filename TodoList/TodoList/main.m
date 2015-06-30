@@ -28,6 +28,7 @@
 @implementation ToDoItem {
     NSString *_itemName;
     int _priority;
+    BOOL _isDone;
 }
 
 - (void)setItem:(NSString *)itemName {
@@ -43,6 +44,14 @@
 - (int) priority {
     return _priority;
 }
+
+- (void)setIsDone:(BOOL)isDone {
+    _isDone = isDone;
+}
+- (BOOL)isDone {
+    return _isDone;
+}
+
 
 //- (void)addNameAndPriority {
 
@@ -83,7 +92,7 @@
 -(void)addItem:(ToDoItem *)newItem;
 //-(void)editItem:(ToDoItem *)editItem;
 //-(void)deleteItem:(ToDoItem *)deleteItem;
-//-(void)printList;
+-(void)printList;
 -(void)setListName:(NSString *)listName;
 -(NSString *)listName;
 @end
@@ -120,6 +129,7 @@
         if ([_myListedItems count] != 0) {
             NSLog(@"Enter 2 to edit an item.");
             NSLog(@"Enter 3 to delete an item.");
+            NSLog(@"Enter 4 to mark item as done.");
         }
         NSLog(@"Enter 0 to quit.");
         scanf("%d", &choices);
@@ -140,17 +150,27 @@
             NSLog(@"Which item no to edit?");
             scanf("%d", &itemNo);
             fpurge(stdin);
-            ToDoItem *newItem = [[ToDoItem alloc] init];
+            ToDoItem *newItem = [_myListedItems objectAtIndex:itemNo-1];
             // this sends a message to add an item
             // [newItem addNameAndPriority];
             [newItem addItemName];
             [newItem addPriority];
-
-            [_myListedItems replaceObjectAtIndex:itemNo-1 withObject:newItem];
         } else if (choices == 3) {
             NSLog(@"which item no to delete?");
             scanf("%d", &itemNo);
             [_myListedItems removeObjectAtIndex:itemNo-1];
+        } else if (choices == 4) {
+            NSLog(@"which item no to mark as done?");
+            scanf("%d", &itemNo);
+            fpurge(stdin);
+            ToDoItem *newItem = [_myListedItems objectAtIndex:itemNo-1];
+            [newItem setIsDone:YES];
+            
+           if([newItem isDone])
+               NSLog(@"%@ done", [newItem itemName]);
+            
+         //   NSLog(@"%@ is %d where 1 = done",[newItem itemName],[newItem isDone]);
+
         } else {
             NSLog(@"Your Current List Contains:");
                 for (int i = 0; i < [_myListedItems count]; i++) {
