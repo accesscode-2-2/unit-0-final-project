@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSArray (LineChecker)
+
+-(BOOL) areAllObjectsAreIdentical;
+
+@end
+
+@implementation NSArray (LineChecker)
+
+-(BOOL) areAllObjectsAreIdentical{ //category method for NSArray
+    NSSet *set = [NSSet setWithArray:self];
+    return ([set count] <= 1);
+}
+@end
+
 @interface Game:NSObject
 
 -(BOOL)checkWin;
@@ -122,25 +136,56 @@
 }
 
 -(void)startGame {
+    //greeting
     NSLog(@"Welcome to Derek's and Eric's TicTacToe!");
     _win = NO;
     
-    BOOL gameSizeSet = NO;
-    while (gameSizeSet == NO) {
-        NSLog(@"Set a game size from 3-10, fool!:");
-        int userGameSize;
-        scanf("%d",&userGameSize);
+    //set game mode
+    BOOL modeSet = NO;
+    while (modeSet == NO) {
+        NSLog(@"Select Game Mode:");
+        NSLog(@"    1) Player vs. Player");
+        NSLog(@"    2) Player vs. Computer");
+        int userGameMode;
+        scanf("%d",&userGameMode);
         fpurge(stdin);
         
-        
-        if (userGameSize >=3 && userGameSize <= 10) {
-            [self setGameSize:userGameSize];
-            gameSizeSet = YES;
+        if (userGameMode == 1) {
+            [self setMode:1];
+            modeSet = YES;
         }
-        else{
-            NSLog(@"Invalid size.");
+        else if (userGameMode == 2){
+            [self setMode:2];
+            modeSet = YES;
+        }
+        else {
+            NSLog(@"Invalid game mode.");
         }
     }
+    
+    //set game size
+    if (_mode == 1) {
+        BOOL gameSizeSet = NO;
+        while (gameSizeSet == NO) {
+            NSLog(@"Set a game size from 3-10, fool!:");
+            int userGameSize;
+            scanf("%d",&userGameSize);
+            fpurge(stdin);
+            
+            
+            if (userGameSize >=3 && userGameSize <= 10) {
+                [self setGameSize:userGameSize];
+                gameSizeSet = YES;
+            }
+            else{
+                NSLog(@"Invalid size.");
+            }
+        }
+    }
+    else{
+        [self setGameSize:3]; //Computer only works with game size of 3
+    }
+
     
     //calculate max index
     _maxIndex = (pow(_gameSize, 2) - 1);
@@ -173,14 +218,34 @@
         
         [self printBoard];
         
+        if ([self checkWin] == TRUE) {
+            _win = TRUE;
+            
+            if (_turnCount % 2 == 0) {
+                
+                if (_mode == 1) {
+                    _winner = @"Player X";
+                }
+                else{
+                    _winner = @"Player";
+                }
+            }
+            else{
+                
+                if (_mode == 1) {
+                    _winner = @"Player O";
+                }
+                else{
+                    _winner = @"Computer";
+                }
+                
+            }
+            NSLog(@"%@ WINS!",_winner);
+        }
+        
         if ([self checkDraw] == TRUE) {
             _win = TRUE; //set win to true to break game loop
             NSLog(@"It's a draw.");
-        }
-        
-        if ([self checkWin] == TRUE) {
-            _win = TRUE;
-            NSLog(@"%@ WINS!",_winner);
         }
     }
 }
@@ -214,24 +279,37 @@
     }
     else{
         while (_playerTurn == 2) {
-            NSLog(@"Player 2, make your move: ");
+            
             int currentMove;
-            scanf("%d",&currentMove);
-            fpurge(stdin);
-            
-            NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%d",currentMove];
-            int lengthOfStringOfCurrentMove = (int)[stringOfCurrentMove length];
-            if (lengthOfStringOfCurrentMove == 1) {
-                NSString *zero = [NSString stringWithFormat:@"0"];
-                stringOfCurrentMove = [zero stringByAppendingString:stringOfCurrentMove];
+            if (_mode == 1) {
+                NSLog(@"Player 2, make your move: ");
+                scanf("%d",&currentMove);
+                fpurge(stdin);
+                
+                NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%d",currentMove];
+                int lengthOfStringOfCurrentMove = (int)[stringOfCurrentMove length];
+                if (lengthOfStringOfCurrentMove == 1) {
+                    NSString *zero = [NSString stringWithFormat:@"0"];
+                    stringOfCurrentMove = [zero stringByAppendingString:stringOfCurrentMove];
+                }
+                
+                if ((currentMove<=_maxIndex) && (currentMove>=0) && ([_gameboard[currentMove] isEqual: stringOfCurrentMove])) {
+                    [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"~O"];
+                    _playerTurn = 1;
+                }
+                else {
+                    NSLog(@"Invalid move. Enter a number from 0-%d.",_maxIndex);
+                }
             }
-            
-            if ((currentMove<=_maxIndex) && (currentMove>=0) && ([_gameboard[currentMove] isEqual: stringOfCurrentMove])) {
-                [_gameboard replaceObjectAtIndex:(NSUInteger)currentMove withObject:@"~O"];
-                _playerTurn = 1;
-            }
-            else {
-                NSLog(@"Invalid move. Enter a number from 0-%d.",_maxIndex);
+            else{
+                int computerMove = arc4random_uniform(_maxIndex + 1);
+                if ((![[_gameboard objectAtIndex:computerMove]  isEqual: @"~X"]) && (![[_gameboard objectAtIndex:computerMove]  isEqual: @"~O"])) {
+                    NSLog(@"Computer is making a move...");
+                    sleep(1.5);
+                    [_gameboard replaceObjectAtIndex:(NSUInteger)computerMove withObject:@"~O"];
+                    _playerTurn = 1;
+                }
+
             }
             
         }
@@ -239,77 +317,175 @@
     _turnCount = _turnCount + 1;
 }
 
+//-(BOOL)checkWin{
+//    
+//    NSString *playerPiece;
+//    
+//    for (int i = 0; i < 2; i++) {
+//        
+//        //sets player piece for each of the two loops
+//        if (i == 1) {
+//            playerPiece = @"~X";
+//            _winner = @"Player 1";
+//        }
+//        else{
+//            playerPiece = @"~O";
+//            _winner = @"Player 2";
+//        }
+//        
+//        // |X|X|X|
+//        // | | | |
+//        // | | | |
+//        if (([_gameboard[0] isEqual:playerPiece]) && ([_gameboard[1] isEqual:playerPiece]) && ([_gameboard[2] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // | | | |
+//        // |X|X|X|
+//        // | | | |
+//        if (([_gameboard[3] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[5] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // | | | |
+//        // | | | |
+//        // |X|X|X|
+//        if (([_gameboard[6] isEqual:playerPiece]) && ([_gameboard[7] isEqual:playerPiece]) && ([_gameboard[8] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // |X| | |
+//        // |X| | |
+//        // |X| | |
+//        if (([_gameboard[0] isEqual:playerPiece]) && ([_gameboard[3] isEqual:playerPiece]) && ([_gameboard[6] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // | |X| |
+//        // | |X| |
+//        // | |X| |
+//        if (([_gameboard[1] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[7] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // | | |X|
+//        // | | |X|
+//        // | | |X|
+//        if (([_gameboard[2] isEqual:playerPiece]) && ([_gameboard[5] isEqual:playerPiece]) && ([_gameboard[8] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // |X| | |
+//        // | |X| |
+//        // | | |X|
+//        if (([_gameboard[0] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[8] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        // | | |X|
+//        // | |X| |
+//        // |X| | |
+//        if (([_gameboard[2] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[6] isEqual:playerPiece])){
+//            return YES;
+//        }
+//        
+//    }
+//    return NO;
+//}
+
 -(BOOL)checkWin{
     
-    NSString *playerPiece;
+    BOOL gameWon = NO;
     
-    for (int i = 0; i < 2; i++) {
+    NSMutableArray *line = [[NSMutableArray alloc] init]; //array of the line we are checking for a win
+    
+    //HORIZONAL WIN TEST
+    for (int i = 0; i < pow(_gameSize, 2); i++) {
         
-        //sets player piece for each of the two loops
-        if (i == 1) {
-            playerPiece = @"~X";
-            _winner = @"Player 1";
+        [line addObject:[_gameboard objectAtIndex:i]];
+        
+        if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
+            gameWon = [line areAllObjectsAreIdentical];
+            
+            if (gameWon == YES) {
+                return YES;
+            }
+            else{
+                [line removeAllObjects]; //empty the line array
+            }
+        }
+    }
+    
+    int currentIndex;
+    int lastIndex;
+    
+    //VERTICAL WIN TEST
+    for (int i = 0; i < _gameSize; i++) {
+        currentIndex = i;
+        lastIndex = 0;
+        
+        for (int i = 0; i < _gameSize; i++) {
+            [line addObject:[_gameboard objectAtIndex:currentIndex]];
+            lastIndex = currentIndex;
+            currentIndex = lastIndex + _gameSize;
+        }
+        
+        if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
+            gameWon = [line areAllObjectsAreIdentical];
+            
+            if (gameWon == YES) {
+                return YES;
+            }
+            else{
+                [line removeAllObjects]; //empty the line array
+            }
+        }
+    }
+    
+    //DIAGONAL WIN TEST
+    
+    // |X| | |
+    // | |X| |
+    // | | |X|
+    currentIndex = 0;
+    lastIndex = 0;
+    for (int i = 0; i < _gameSize; i++) {
+        [line addObject:[_gameboard objectAtIndex:currentIndex]];
+        lastIndex = currentIndex;
+        currentIndex = lastIndex + _gameSize + 1;
+    }
+    
+    if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
+        gameWon = [line areAllObjectsAreIdentical];
+        
+        if (gameWon == YES) {
+            return YES;
         }
         else{
-            playerPiece = @"~O";
-            _winner = @"Player 2";
+            [line removeAllObjects]; //empty the line array
         }
-        
-        // |X|X|X|
-        // | | | |
-        // | | | |
-        if (([_gameboard[0] isEqual:playerPiece]) && ([_gameboard[1] isEqual:playerPiece]) && ([_gameboard[2] isEqual:playerPiece])){
-            return YES;
-        }
-        // | | | |
-        // |X|X|X|
-        // | | | |
-        if (([_gameboard[3] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[5] isEqual:playerPiece])){
-            return YES;
-        }
-        // | | | |
-        // | | | |
-        // |X|X|X|
-        if (([_gameboard[6] isEqual:playerPiece]) && ([_gameboard[7] isEqual:playerPiece]) && ([_gameboard[8] isEqual:playerPiece])){
-            return YES;
-        }
-        // |X| | |
-        // |X| | |
-        // |X| | |
-        if (([_gameboard[0] isEqual:playerPiece]) && ([_gameboard[3] isEqual:playerPiece]) && ([_gameboard[6] isEqual:playerPiece])){
-            return YES;
-        }
-        // | |X| |
-        // | |X| |
-        // | |X| |
-        if (([_gameboard[1] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[7] isEqual:playerPiece])){
-            return YES;
-        }
-        // | | |X|
-        // | | |X|
-        // | | |X|
-        if (([_gameboard[2] isEqual:playerPiece]) && ([_gameboard[5] isEqual:playerPiece]) && ([_gameboard[8] isEqual:playerPiece])){
-            return YES;
-        }
-        // |X| | |
-        // | |X| |
-        // | | |X|
-        if (([_gameboard[0] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[8] isEqual:playerPiece])){
-            return YES;
-        }
-        // | | |X|
-        // | |X| |
-        // |X| | |
-        if (([_gameboard[2] isEqual:playerPiece]) && ([_gameboard[4] isEqual:playerPiece]) && ([_gameboard[6] isEqual:playerPiece])){
-            return YES;
-        }
-        
     }
+    
+    // | | |X|
+    // | |X| |
+    // |X| | |
+    currentIndex = _gameSize - 1;
+    lastIndex = _gameSize - 1;
+    for (int i = 0; i < _gameSize; i++) {
+        [line addObject:[_gameboard objectAtIndex:currentIndex]];
+        lastIndex = currentIndex;
+        currentIndex = lastIndex + _gameSize - 1;
+    }
+    
+    if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
+        gameWon = [line areAllObjectsAreIdentical];
+        
+        if (gameWon == YES) {
+            return YES;
+        }
+        else{
+            [line removeAllObjects]; //empty the line array
+        }
+    }
+    
     return NO;
 }
 
 -(BOOL)checkDraw{
-    if ((_win == NO) && (_turnCount == (_maxIndex + 1))){
+    if ((_win == NO) && (_turnCount == (_maxIndex + 2))){
         return TRUE;
     }
     return FALSE;
