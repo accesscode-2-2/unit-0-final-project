@@ -15,5 +15,7 @@
 -(void) deleteList:(int)index;
 -(void) printLists;
 -(void) printCommands;
+-(BOOL) outOfBounds:(int)index;
+-(int) getIndex;
 
 @end

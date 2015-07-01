@@ -35,4 +35,7 @@
 -(void) printByDueDate;
 -(void) setDate:(int)index;
 
+-(BOOL) outOfBounds:(int)index;
+-(int) getIndex;
+
 @end

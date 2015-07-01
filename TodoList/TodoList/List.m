@@ -61,14 +61,24 @@
     fpurge(stdin);
     
     NSString *info = [NSString stringWithCString:array encoding:NSASCIIStringEncoding];
-    
+    for(int i = 0; i < [info length]; i++){
+        if((!isdigit([info characterAtIndex:i])&& [info characterAtIndex:i]!='/') ||(ispunct([info characterAtIndex:i]) && [info characterAtIndex:i]!='/')){
+            printf("\nInvalid date!\n");
+            return;
+        }
+    }
     NSArray *parts = [info componentsSeparatedByString:@"/"];
     
     NSDateComponents *c = [[NSDateComponents alloc]init];
     
-    NSInteger a = [parts[0] integerValue];
-    NSInteger b = [[parts[1] description] integerValue];
-    NSInteger d = [[parts[2] description] integerValue];
+    int a = [parts[0] intValue];
+    int b = [parts[1] intValue];
+    int d = [parts[2] intValue];
+    
+    if((a<1 || a>12) || (b<1 || b>31) || (d<0) || (a==2 && b>28 && d%4!=0) || (a==2 && b>29 && d%4==0) || ((a==4||a==6||a==9||a==11) && b>30) || [parts count]!=3){
+        printf("\nInvalid Date!\n");
+        return;
+    }
     
     [c setDay:b];
     [c setMonth:a];
@@ -82,7 +92,7 @@
 
 -(void) printItems{
     NSSortDescriptor *sortingMethod = [[NSSortDescriptor alloc] initWithKey:@"idNumber" ascending:YES];
-
+    
     [_items sortUsingDescriptors:@[sortingMethod]];
     int i =1;
     for(ListItem *li in _items){
@@ -130,7 +140,7 @@
             unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
             NSCalendar *gregorian = [NSCalendar currentCalendar];
             NSDateComponents *component = [gregorian components:unitFlags fromDate:li.date];
-            printf("%d. %s |%d/%d/%d\n",i,[li.itemName UTF8String],(int)[component month], (int)[component day], (int)[component year]);
+            printf("%d. %s | %d/%d/%d\n",i,[li.itemName UTF8String],(int)[component month], (int)[component day], (int)[component year]);
         }
         else{
             printf("%d. %s\n",i,[li.itemName UTF8String]);
@@ -203,6 +213,25 @@
     }
 }
 
+-(BOOL) outOfBounds:(int)index{
+    NSInteger arraySize = [_items count];
+    if(index < 1 || index > arraySize){
+        NSString *c = [NSString stringWithFormat:@"%@",index<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
+        printf("%s",[c UTF8String]);
+        return YES;
+    }
+    return NO;
+}
+
+-(int) getIndex{
+    int d;
+    printf("\nIndex number? ");
+    scanf("%d",&d);
+    fpurge(stdin);
+    printf("\n");
+    return d;
+}
+
 -(void) run{
     while(YES){
         char holder[256];
@@ -223,31 +252,20 @@
         NSString *checker = [NSString stringWithCString:holder encoding:NSASCIIStringEncoding];
         
         if([checker isEqualToString:@"e"] || [checker isEqualToString:@"E"]){
-            int d;
-            printf("\nIndex number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            printf("\n");
-            NSInteger arraySize = [_items count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
+            
             [self editItem:d-1];
             continue;
         }
         
         if([checker isEqualToString:@"d"] || [checker isEqualToString:@"D"]){
-            int d;
-            printf("\nIndex number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            printf("\n");
-            NSInteger arraySize = [_items count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
             [self deleteItem:d-1];
@@ -255,15 +273,9 @@
         }
         
         if([checker isEqualToString:@"c"] || [checker isEqualToString:@"C"]){
-            int d;
-            printf("\nIndex number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            printf("\n");
-            NSInteger arraySize = [_items count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
             [self markCompleted:d-1];
@@ -271,15 +283,9 @@
         }
         
         if([checker isEqualToString:@"sd"] || [checker isEqualToString:@"SD"]){
-            int d;
-            printf("\nIndex number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            printf("\n");
-            NSInteger arraySize = [_items count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
             [self setDate:d-1];
@@ -287,17 +293,11 @@
         }
         
         if([checker isEqualToString:@"p"] || [checker isEqualToString:@"P"]){
-            int d;
-            printf("\nIndex number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            NSInteger arraySize = [_items count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
-            
             [self setPriority:d-1];
             continue;
         }
@@ -313,7 +313,7 @@
             [self active];
             continue;
         }
-       
+        
         
         if([checker isEqualToString:@"i"] || [checker isEqualToString:@"I"]){
             
@@ -354,7 +354,7 @@
     printf(" a|add               e|edit            sd|set due date\n");
     printf(" d|delete            p|set priority     c|mark completed\n");
     printf(" t|active            i|inactive         q|quit\n");
-    printf("vp|View by priority(ON/OFF)      vd|View by date(ON/OFF)\n");
+    printf("vp|View by priority(ON/OFF)            vd|View by date(ON/OFF)\n");
     printf("\n\n\n\n\n\n\n\n\n");
     
 }

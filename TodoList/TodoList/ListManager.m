@@ -18,8 +18,8 @@
 
 -(void) printCommands{
     
-        printf("a|add               v|view\n");
-        printf("d|delete            q|quit\n");
+    printf("a|add               v|view\n");
+    printf("d|delete            q|quit\n");
     printf("\n\n\n\n\n\n\n");
 }
 
@@ -55,6 +55,24 @@
     printf("\n");
 }
 
+-(BOOL) outOfBounds:(int)index{
+    NSInteger arraySize = [_listArray count];
+    if(index < 1 || index > arraySize){
+        NSString *c = [NSString stringWithFormat:@"%@",index<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
+        printf("%s",[c UTF8String]);
+        return YES;
+    }
+    return NO;
+}
+
+-(int) getIndex{
+    int d;
+    printf("\nIndex number? ");
+    scanf("%d",&d);
+    fpurge(stdin);
+    printf("\n");
+    return d;
+}
 
 -(void) run{
     while(YES){
@@ -66,20 +84,15 @@
         NSString *userString = [NSString stringWithCString:userIn encoding:NSASCIIStringEncoding];
         
         if([userString isEqualToString:@"a"] || [userString isEqualToString:@"A"]){
-    
+            
             [self addList];
             continue;
         }
-
+        
         if([userString isEqualToString:@"d"] || [userString isEqualToString:@"D"]){
-            int d;
-            printf("\nList Number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            NSInteger arraySize = [_listArray count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1\n":@"out of bounds\n"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
             [self deleteList:d-1];
@@ -87,14 +100,9 @@
         }
         
         if([userString isEqualToString:@"v"] || [userString isEqualToString:@"V"]){
-            int d;
-            printf("\nIndex number? ");
-            scanf("%d",&d);
-            fpurge(stdin);
-            NSInteger arraySize = [_listArray count];
-            if(d < 1 || d > arraySize){
-                NSString *c = [NSString stringWithFormat:@"%@",d<1? @"Must be greater than or equal to 1":@"out of bounds"];
-                printf("%s",[c UTF8String]);
+            int d = [self getIndex];
+            
+            if([self outOfBounds:d]){
                 continue;
             }
             List* temp = [_listArray objectAtIndex:d-1] ;
@@ -105,9 +113,7 @@
             
             break;
         }
-
-        
     }
-    }
+}
 
 @end
