@@ -74,6 +74,14 @@
     
 }
 
+-(void)markDone {
+    [self printList];
+    [Manager printString:@"Chose the index to Mark Done:"];
+    int markIndex = [Manager getInputString].intValue-1;
+    Item *markItem = [self.items objectAtIndex:markIndex];
+    markItem.done = YES;
+}
+
 -(void)printList {
     [Manager printString:[NSString stringWithFormat:@"Title: %@", self.title]];
     [Manager printString:self.description];
@@ -98,6 +106,7 @@
     [Manager printString:@"2. Add Item"];
     [Manager printString:@"3. Remove Item"];
     [Manager printString:@"4. Edit Item"];
+    [Manager printString:@"5. Mark Done"];
     [Manager printString:@"99. Main menu"];
 }
 
@@ -120,6 +129,9 @@
         }
         else if (input == 4) {
             [self editItem];
+        }
+        else if (input == 5) {
+            [self markDone];
         }
         else if (input == 99) {
             break;

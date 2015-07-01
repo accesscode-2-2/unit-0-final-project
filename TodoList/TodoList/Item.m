@@ -10,19 +10,25 @@
 
 @implementation Item
 
-- (instancetype)initWithContent:(NSString *)content priority:(int)priority
+- (instancetype)initWithContent:(NSString *)content priority:(int)priority 
 {
     self = [super init];
     if (self) {
         self.content = content;
         self.priority = priority;
+        self.done = NO;
     }
     return self;
 }
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"(Priority %@) %@", @(self.priority), self.content];
+    if (self.done) {
+        return [NSString stringWithFormat:@"(Priority %@) [X] %@ ", @(self.priority), self.content];
+    } else {
+        return [NSString stringWithFormat:@"(Priority %@) [ ] %@ ", @(self.priority), self.content];
+    }
+    
 }
 
 @end
