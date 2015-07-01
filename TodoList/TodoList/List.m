@@ -93,7 +93,7 @@
 
 
 -(void)printMenu {
-    [Manager printString:[NSString stringWithFormat:@"Submenu for %@ list. Choose form the following:", self.title]];
+    [Manager printString:[NSString stringWithFormat:@"\n\n~[%@]~\n \nChoose form the following:", self.title]];
     [Manager printString:@"1. Print list"];
     [Manager printString:@"2. Add Item"];
     [Manager printString:@"3. Remove Item"];
