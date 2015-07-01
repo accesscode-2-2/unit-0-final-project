@@ -62,6 +62,7 @@
 
 -(void)printLists {
     for (List *list in self.lists) {
+        [Manager printString:list.title];
         [Manager printString:list.description];
     }
 }

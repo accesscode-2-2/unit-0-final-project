@@ -75,6 +75,7 @@
 }
 
 -(void)printList {
+    [Manager printString:[NSString stringWithFormat:@"Title: %@", self.title]];
     [Manager printString:self.description];
 }
 
@@ -84,7 +85,7 @@
     NSMutableString *desc = [[NSMutableString alloc] init];
     [desc appendString:@"\n"];
     for (int i = 0; i < self.items.count; i++) {
-        NSString *newLine = [NSString stringWithFormat:@"%@ %@: %@\n", self.title, @(i+1), self.items[i]];
+        NSString *newLine = [NSString stringWithFormat:@"%@: %@\n",@(i+1), self.items[i]];
         [desc appendString:newLine];
     }
     return desc;
