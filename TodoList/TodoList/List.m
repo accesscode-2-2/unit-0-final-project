@@ -23,10 +23,6 @@
 -(Item *)addItem {
     [Manager printString:@"Enter task:"];
     NSString *task = [Manager getInputString];
-    // If the user inputs nothing, return no item (nil)
-    if (task.length == 0) {
-        return nil;
-    }
     
     [Manager printString:@"Enter priority (1 - 4):"];
     int priority = [Manager getInputString].intValue;
@@ -34,14 +30,36 @@
     Item *newItem = [[Item alloc] initWithContent:task priority:priority];
     [self.items addObject:newItem];
     
+    [self printList];
     return newItem;
+    
 }
 
 -(void)removeItem {
     [self printList];
     [Manager printString:@"Choose the index to remove:"];
     int removeIndex = [Manager getInputString].intValue-1;
-    // TODO Implement this!
+    [self.items removeObjectAtIndex:removeIndex];
+    [self printList];
+}
+
+-(void)editItem {
+    [self printList];
+    [Manager printString:@"Choose the index to edit:"];
+    int editIndex = [Manager getInputString].intValue-1;
+    Item *item = [self.items objectAtIndex:editIndex];
+    
+    [Manager printString:@"Enter task:"];
+    NSString *task = [Manager getInputString];
+    
+    [Manager printString:@"Enter priority (1 - 4):"];
+    int priority = [Manager getInputString].intValue;
+
+    
+    item.content = task;
+    item.priority = priority;
+    [self printList];
+    
 }
 
 -(void)printList {
@@ -66,6 +84,7 @@
     [Manager printString:@"1. Print list"];
     [Manager printString:@"2. Add Item"];
     [Manager printString:@"3. Remove Item"];
+    [Manager printString:@"4. Edit Item"];
     [Manager printString:@"99. Main menu"];
 }
 
@@ -85,6 +104,9 @@
         }
         else if (input == 3) {
             [self removeItem];
+        }
+        else if (input == 4) {
+            [self editItem];
         }
         else if (input == 99) {
             break;

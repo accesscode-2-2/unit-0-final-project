@@ -32,8 +32,7 @@
     if (input[length] == '\n')
         input[length] = '\0';
     
-    NSString *output = [NSString stringWithUTF8String:input];
-    return output;
+    return [NSString stringWithUTF8String:input];
 }
 
 +(void)printString:(NSString *)string {
