@@ -18,8 +18,8 @@
 
 -(void) printCommands{
     
-    printf("a|add               v|view\n");
-    printf("d|delete            q|quit\n");
+    printf("a|Add List          v|View List\n");
+    printf("d|Delete List       q|Quit\n");
     printf("\n\n\n\n\n\n\n");
 }
 

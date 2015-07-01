@@ -14,7 +14,7 @@
     
 }
 -(instancetype)initWithRows:(int)rows columns:(int)columns{
-    if(self =[self init]){
+    if(self = [self init]){
         Rows = [[NSMutableArray alloc] initWithCapacity:rows];
         for(int i=0; i < columns; i++){
             NSMutableArray *a = [NSMutableArray arrayWithCapacity:columns];
