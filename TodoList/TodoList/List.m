@@ -20,12 +20,26 @@
     return self;
 }
 
+-(int)getPriority {
+    [Manager printString:@"Enter priority (1 - 4):"];
+    int priority = [Manager getInputString].intValue;
+    if (priority < 1 || priority > 4) {
+        [Manager printString:@"Outside limits! 1 is min, 4 is max."];
+        //instead of making the worlds saddest loop; recursion
+//        while (priority < 1 || priority > 4) {
+//            [Manager printString:@"Enter priority (1 - 4):"];
+//            priority = [Manager getInputString].intValue;
+//        }
+        return [self getPriority];
+    }
+    return priority;
+}
+
 -(Item *)addItem {
     [Manager printString:@"Enter task:"];
     NSString *task = [Manager getInputString];
     
-    [Manager printString:@"Enter priority (1 - 4):"];
-    int priority = [Manager getInputString].intValue;
+    int priority = [self getPriority];
     
     Item *newItem = [[Item alloc] initWithContent:task priority:priority];
     [self.items addObject:newItem];
@@ -52,9 +66,7 @@
     [Manager printString:@"Enter task:"];
     NSString *task = [Manager getInputString];
     
-    [Manager printString:@"Enter priority (1 - 4):"];
-    int priority = [Manager getInputString].intValue;
-
+    int priority = [self getPriority];
     
     item.content = task;
     item.priority = priority;
