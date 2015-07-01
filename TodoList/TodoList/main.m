@@ -101,9 +101,6 @@ int main(int argc, const char * argv[]) {
         
         [lmanage addList:list];
         
-        //list = [NSMutableArray arrayWithObjects:@"shopping, boxing, biking, eating", nil];
-        
-        //[list addItem:@"go swimming"];
         
         printf("To-Do List App\n\n\n");
 
@@ -113,7 +110,7 @@ int main(int argc, const char * argv[]) {
         {
             tasks++;
             
-            printf("a) Add Item\n\nb) Delete Item\n\nc) Edit Item\n\nd) Mark Item Done\n\ne) Show Active List \n\nq) Quit\n");
+            printf("a) Add Item           b) Delete Item\n\nc) Edit Item          d) Mark Item Done\n\ne) Show Active List   q) Quit\n");
             
             char option;
             scanf("%c", &option);
@@ -130,7 +127,7 @@ int main(int argc, const char * argv[]) {
                 //get input here
                 [list addItem:input];
                 
-                NSLog(@"\n\n Your list: %@", list.contents);
+                NSLog(@"\n\n Your list: %@", list.contents); // ask cam tomorrow about fixing line output
                 
             } else if (option == 'b') {
                 
@@ -142,13 +139,13 @@ int main(int argc, const char * argv[]) {
                  NSString *input = scanUserInput();
             } else if (option == 'd') {
                 
-                NSLog(@"blank is done", option);
+                NSLog(@" Blank is done", option); // why is this breaking?
                  NSString *input = scanUserInput();
             } else if (option == 'e') {
                 
                 NSLog(@"This is your current list: ", option);
             } else if (option == 'q') {
-                NSLog(@"See Ya!!!");
+                NSLog(@"See you next time!");
                 break;
             }
              else  {
@@ -165,5 +162,11 @@ int main(int argc, const char * argv[]) {
 
 
 
+// what we still need
+// editing items
+// deleting items
+// marking items done
+// showing active list
+//
 
-
+// done: adding items, quitting program
