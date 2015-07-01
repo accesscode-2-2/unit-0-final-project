@@ -124,9 +124,9 @@ NSString * scanUserInput(void) {
 
 - (List *)activeTasks;
 
--(void)deleteTask:(NSInteger *)index from: (List *)list;
+-(void)deleteTask:(NSInteger)index from: (List *)list;
 
--(void)markTaskAsDone:(NSInteger *)index fromList: (List *)list;
+-(void)markTaskAsDone:(NSInteger)index fromList: (List *)list;
 
 
 @end
@@ -134,7 +134,7 @@ NSString * scanUserInput(void) {
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 @implementation Manager{
-    //NSMutableArray* _listOfDoneTasks;
+    
     List *_doneTasks;
     List *_activeTasks;
 }
@@ -157,7 +157,7 @@ NSString * scanUserInput(void) {
 }
 
 
--(void)deleteTask:(NSInteger *)index from: (List *)list {
+-(void)deleteTask:(NSInteger)index from: (List *)list {
     
     NSMutableArray *tempArrayOfTasks = [list listOfTasks];
     Task *taskToBeDeleted = [[list listOfTasks] objectAtIndex:index];
@@ -182,7 +182,7 @@ NSString * scanUserInput(void) {
 //    }
 }
 
--(void)markTaskAsDone:(NSInteger *)index fromList:(List *)list{
+-(void)markTaskAsDone:(NSInteger)index fromList:(List *)list{
     
     // take task from active list, hold it in a variable, add to done list
     
@@ -244,7 +244,9 @@ int main(int argc, const char * argv[]) {
                 
                 NSLog(@"Enter the title of the task you'd like to add:");
                 
-                NSString *newUserTask = scanUserInput();
+                NSString *newUserTaskTitle = scanUserInput();
+                
+                Task *newUserTask = [[Task alloc] initWithTaskName: newUserTaskTitle];
                 
                 [al addTaskToList:newUserTask];
                 
@@ -257,9 +259,10 @@ int main(int argc, const char * argv[]) {
                 
                 NSLog(@"Enter the # of the task you'd like to delete:");
                 
-                NSInteger newUserInput = scanUserInput();
+                NSString *newUserInput = scanUserInput();
+                NSInteger inputAsInteger = [newUserInput integerValue];
                 
-                [listManager deleteTask:newUserInput from:al];
+                [listManager deleteTask:inputAsInteger from:al];
                 
                 NSLog(@"Your TO DO list:");
                 
@@ -269,11 +272,16 @@ int main(int argc, const char * argv[]) {
             
             if (userInput == 2) {
                 
+                NSLog(@"Your TO DO list:");
+                
+                [al displayTasks:al];
+                
                 NSLog(@"Enter the # of the task you'd like to mark DONE:");
                 
-                NSInteger newUserInput = scanUserInput();
+                NSString *newUserInput = scanUserInput();
+                NSInteger inputAsInteger = [newUserInput integerValue];
                 
-                [listManager markTaskAsDone:newUserInput fromList:al];
+                [listManager markTaskAsDone: inputAsInteger fromList:al];
                 
                 NSLog(@"Your COMPLETED TASKS list:");
                 
