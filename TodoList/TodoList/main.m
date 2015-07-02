@@ -1,122 +1,383 @@
 //
 //  main.m
-//  TodoList
+//  3rdRoundTodoList
 //
-//  Created by Michael Kavouras on 6/25/15.
-//  Copyright (c) 2015 Mike Kavouras. All rights reserved.
+//  Created by Bereket  on 6/29/15.
+//  Copyright (c) 2015 Bereket . All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface ToDoListApp : NSObject
+@interface Item : NSObject
 
-@property NSMutableArray *_listMenu;
+-(void)setPriorityValue:(NSInteger)priorityValue;
+- (NSInteger)priorityValue;
 
-@end
 
-@implementation ToDoListApp {
-    
-}
+-(void)setTask:(NSString *)task;
+- (NSString*) task;
 
--(void)addList:(NSMutableArray *)addList; {// adds list to ToDoListApp
-}
-
--(void)removeList:(NSMutableArray *)removeList; {// removes list from ToDoListApp
-}
-
--(void)completedLists:(NSMutableArray *)completedList; {// prints completed list to ToDoListApp
-}
-
--(void) printList:(NSMutableArray *)printList; {// adds list to ToDoListApp
-}
-
+-(void)setIsDone:(BOOL)isDone;
+-(BOOL)isDone;                              //<-------property will inform us whether task is completed.
 
 @end
 
+@implementation Item {
+    NSInteger _priorityValue;
+    NSString* _task;
+    BOOL _isDone;
+}
 
+-(void)setPriorityValue:(NSInteger)priorityValue{
+    _priorityValue=priorityValue;
+}
 
-@interface list: NSObject
+-(NSInteger)priorityValue{
+    return _priorityValue;
+}
+-(void)setTask:(NSString *)task{
+    _task=task;
+}
+-(NSString*)task{
+    return _task;
+}
 
-@property NSMutableArray *_listItem;
-@property NSString *_name;
+-(void)setIsDone:(BOOL)isDone{
+    _isDone=isDone;
+}
+-(BOOL)isDone{
+    return _isDone;
+}
 
 @end
 
+//-------------------------------------------------------------------------------------------------------------------------------------//
 
-@implementation list {
-    
-    
-    for(int i=0;i<=[listItem count];i++)
-    {
-        listItem[i]= [[item alloc] init];
-         scanf("%@",&ListItem[i])
-    }
-    
-    
+//-------------------------------------------CLASS THAT DEFINES A LIST----------------------------------------------------------------//
+
+@interface List : NSObject
+
+-(void)setListName:(NSString*)listName;
+-(NSString*)listName;
+-(void)printListItems;
+-(void)addItem;
+-(void)addItemWithName:(NSString *)name withPriority:(NSInteger)priority;
+-(void)printCompletedItems;
+-(void)printIncompletedItems;
+-(void)removeItemFromList;
+-(void)setlistIsDone:(BOOL)value;
+-(BOOL)listIsDone;
+-(void)manageList;
+
+
+@end
+
+@implementation List{
+    NSString* _listName;
+    NSMutableArray* _listItems;
+    BOOL listIsDone;
 }
 
--(void)addItem:(NSMutableArray *)addList {
-    
-
-    char word;
-    scanf("%s", &word);
-    NSString *_newItem = [NSString stringWithUTF8String:&word];
-    
-    [__listItem addObject:_newItem];
-    
-    
-}
-
--(void)removeItem:(NSMutableArray *)removeListItem; {
-}
-
--(void)listCompletedItems:(NSMutableArray *)completedListItem; {
-}
-
--(void)markItemDone :(NSMutableArray *)printListItem; {
-}
-
--(void)priorityValueForItem :(NSMutableArray *)priorityValueItem; {
-    
-    for (int counter=0; counter<=[__listItem count]; counter++) {
-        scanf("%d",__listItem[counter]);
+-(void)manageList{
+    while (true) {
+        
+        
+        NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
+        NSString *inputLine = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        NSInteger input=[inputLine integerValue];
+        
+        NSLog(@"What would you like to do? PRESS 1 to add a list\n 2 to remove a list\n 3 to mark a list as done\n 4 to show completed lists\n  5 to show incompleted lists");
+        switch (input) {
+            case 0:
+                NSLog(@"NICE JOB ORGANIZING THIS LIST");
+                break;
+            case 1:
+                [self printListItems];
+            case 2:
+                [self addItem];
+                
+            case 3:
+                [self listIsDone];
+            case 4:
+                [self removeItemFromList];
+                
+            case 5:
+                //                [self showIncompletedLists];
+                
+                break;
+                
+            default:
+                NSLog(@"YO you messed up ma G");
+        }
         
     }
-
+    
+    
+    
     
 }
--(void)printAllItems:(NSMutableArray *)entirelist; {
+
+
+-(void)addItemWithName:(NSString *)name withPriority:(NSInteger)priority{
     
-    for (int counter=0; counter<=[__listItem count]; counter++) {
-        NSLog(@"%@",__listItem[counter]);
+}
+
+
+-(void)setListName:(NSString *)listName{
+    _listName=listName;
+}
+
+-(NSString*)listName{
+    return _listName;
+}
+
+-(void)printListItems{
+    for(int count=0;count<[_listItems count]; count++)
+    {
+        NSLog(@"%@, %ld", [_listItems[count] task],[_listItems[count] priorityValue]);
     }
 }
 
-@end
-
-@interface item: NSObject
-
-@property int priority;
-@property NSString *task;
-
-@end
-
-@implementation item {
+-(void)addItem {           //the AddItem Function will accept two values because the "Item" class has 2 properties
+    if (_listItems==nil) {                              //<----this conditional exists because the first time the method is called it wont be able
+        _listItems = [[NSMutableArray alloc] init];    //to return an array. Essentially, it says, "If there is no array, make one!"
+    }
     
+    NSLog(@"What do you want to call this item?");
+    
+    NSFileHandle *firstInput = [NSFileHandle fileHandleWithStandardInput];
+    NSString *name = [[[NSString alloc] initWithData:firstInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSLog(@"What is this items priority?");
+    
+    NSFileHandle *secondInput = [NSFileHandle fileHandleWithStandardInput];
+    NSString *priority = [[[NSString alloc] initWithData:secondInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSInteger priorityIntegerValue = [priority integerValue];
+    
+    
+    Item* newItem= [[Item alloc] init];
+    [newItem setTask:name];
+    [newItem setPriorityValue:priorityIntegerValue];
+    
+    [_listItems addObject:newItem];
     
 }
+
+-(void)printCompletedItems{
+    for(int count=0;count<[_listItems count]; count++)
+    {
+        if([_listItems[count] isDone]) {                             //BOOLS default to false so it should print out all completed tasks
+            NSLog(@"%@, %ld", [_listItems[count] task],(long)[_listItems[count] priorityValue]);
+        }//
+    }
+}
+
+-(void)printIncompletedItems{
+    for(int count=0;count<[_listItems count]; count++)
+    {
+        if(![_listItems[count] isDone]) {                           //Just like in the previous methodsthe "!" tells us if it is not done
+            NSLog(@"%@, %ld", [_listItems[count] task],[_listItems[count] priorityValue]);
+        }//
+    }
+}
+
+-(void)removeItemFromList{
+    
+    NSFileHandle *input = [NSFileHandle fileHandleWithStandardInput];
+    NSString *indexString = [[[NSString alloc] initWithData:input.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSInteger index = [indexString integerValue];
+    
+    [_listItems removeObjectAtIndex:index];
+}
+
+-(void)setlistIsDone:(BOOL)value{
+    listIsDone=value;
+}
+
+-(BOOL)listIsDone{
+    return listIsDone;
+}
+
+@end
+
+//---------------------------------------------------------------------------------------------------------------------------------------------//
+
+//------------------------------CLASS THAT DEFINES THE TASK MANAGER (or the list of lists)---------------------------------------------------//
+
+//
+@interface TaskManager : NSObject
+-(void)addList;
+-(NSMutableArray*)getLists;
+-(void)printLists;
+-(void)markListAsDone;
+-(void)removeList;
+-(void)showCompletedLists;
+-(void)showIncompletedLists;
+@end
+
+@implementation TaskManager
+{
+    //char input;
+    NSMutableArray* _listItems;
+    
+}
+-(void)addList{
+    NSLog(@"name your list!");
+    
+    
+    int i=0;
+    if (_listItems==nil) {  //<--------------------------conditional exists becuase the 1st time addlist is called it wont be able to return one
+        _listItems = [[NSMutableArray alloc] init];
+    }
+    
+    List* myList=[[List alloc] init];//<-----------called the "List" class to instantiate a list
+    char myListName[200];
+    scanf("%s",myListName);
+    NSString *newListName = [NSString stringWithUTF8String:myListName];
+    [myList setListName: newListName];
+    [_listItems addObject:myList];//<-------------------------------------The myList array gets stored into _listItems
+    
+    NSLog(@"set your items in your list!");
+    
+    while(true)
+        
+    {
+        
+        char itemName[256];
+        scanf("%s",itemName);
+        NSString *myItem = [NSString stringWithUTF8String:itemName]; //<-------scanf cant accept an NSString, so we convert it into "myItem."
+        if([myItem isEqual:@"nil"])
+        {
+            break;
+        }
+        [myList addItemWithName:myItem withPriority:1];   //<---calls the "myItem" method in the Item class and defaults the priority to 1.
+        
+        i++;
+        
+    }
+    
+    NSLog(@"Good Job!");
+    
+}
+
+-(NSMutableArray*)getLists{
+    return _listItems;
+}
+
+- (void)printLists{
+    for(int counter=0; counter<[_listItems count]; counter++){
+        NSLog(@"%@", [_listItems[counter] listName]);
+    }
+}
+
+-(void)markListAsDone {
+    NSLog(@"Enter List name you want to mark as Done!");
+    char doneList[200];
+    scanf("%s",doneList);
+    NSString *markedName = [NSString stringWithUTF8String:doneList];
+    for(int counter=0; counter< [_listItems count]; counter++){
+        if ([[_listItems[counter] name] isEqualToString: markedName]) {
+            [_listItems[counter] setlistIsDone:YES];
+        }
+    }
+}
+
+-(void)removeList{
+    NSLog(@"Enter List you want to remove!");
+    char doneList[200];
+    scanf("%s",doneList);
+    NSString *markedName = [NSString stringWithUTF8String:doneList];
+    for(int counter=0; counter< [_listItems count]; counter++){
+        if ([[_listItems[counter] name] isEqualToString: markedName]){
+            [ _listItems removeObjectAtIndex:counter];
+            counter--;
+        }
+    }
+}
+
+-(void)showCompletedLists{
+    for(int counter=0;counter<[_listItems count]; counter++)
+    {
+        if([_listItems[counter] listIsDone] == YES) {
+            NSLog(@"%@", [_listItems[counter] name]);
+            
+        }
+        
+    }
+}
+
+
+-(void)showIncompletedLists{
+    for(int counter=0;counter<[_listItems count]; counter++)
+    {
+        if([_listItems[counter] listIsDone] == NO) {
+            NSLog(@"%@", [_listItems[counter] name]);
+            
+        }
+        
+    }
+}
+
+
 @end
 
 
 
 
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------//
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-      
-        
-
         
         
+        while (true) {
+            
+            NSLog(@"Input stuff bro!");
+            
+            NSFileHandle *standardInput = [NSFileHandle fileHandleWithStandardInput];
+            NSString *inputLine = [[[NSString alloc] initWithData:standardInput.availableData encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+            NSInteger input=[inputLine integerValue];
+            
+            
+            TaskManager* myFirstApp = [[TaskManager alloc] init];
+            NSLog(@"What would you like to do?\n PRESS 1 to add a list\n 2 to remove a list\n 3 to mark a list as done\n 4 to show completed lists\n 5 to show incompleted lists");
+            switch (input) {
+                case 0:
+                    NSLog(@"NICE JOB ORGANIZING YOUR LIFE!");
+                    break;
+                case 1:
+                    [myFirstApp addList];
+                case 2:
+                    [myFirstApp removeList];
+                case 3:
+                    [myFirstApp markListAsDone];
+                case 4:
+                    [myFirstApp showCompletedLists];
+                case 5:
+                    [myFirstApp showIncompletedLists];
+                    
+                    break;
+                    
+                default:
+                    NSLog(@"YO you messed up ma G");
+            }
+            
+        }
+        
+        
+        
+        
+        return 0;
     }
-    return 0;
 }
+
+
