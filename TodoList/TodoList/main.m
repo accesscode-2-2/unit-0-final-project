@@ -60,7 +60,7 @@
     char name[256];
     fgets(name, 256, stdin); // "fgets" allows the user to input an item with more than one word ie: "cat food"
     NSString *item1 = [NSString stringWithUTF8String:name]; // we used "stringWithUTF8String" to convert char to string
-    item1 = [item1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    item1 = [item1 stringByReplacingOccurrencesOfString:@"\n" withString:@""]; // this line eliminated the automatic linebreak that was caused by the stringWithUTF8 function
     [self setItem: item1];
 }
 
@@ -87,7 +87,6 @@
 
 -(NSMutableArray *)myListedItems;
 -(void)addItem:(ToDoItem *)newItem;
-//-(void)printList;
 -(void)setListName:(NSString *)listName;
 -(NSString *)listName;
 - (void)printAllListItems;
@@ -101,7 +100,7 @@
 
 -(NSMutableArray *)myListedItems {
     if (_myListedItems == nil) {
-        _myListedItems = [[NSMutableArray alloc] init]; //initialize our list of items:
+        _myListedItems = [[NSMutableArray alloc] init]; // initialize our list of items:
     }
     return _myListedItems;
 }
@@ -110,16 +109,9 @@
     [[self myListedItems] addObject:newItem];
 }
 
-// uncommented this, maybe test it
-//-(void)printList {
-//    for (int i = 0; i < [_myListedItems count]; i++) {
-//        NSLog(@"print test:%@", [[_myListedItems objectAtIndex:i] itemName]);
-//    }
-//}
-
 - (void)printAllListItems {
     NSLog(@"Your Current List Contains:");
-    for (int i = 0; i < [_myListedItems count]; i++) {
+    for (int i = 0; i < [_myListedItems count]; i++) { // created a for loop to display each item in the list
         NSLog(@"%d. %@", i+1, [_myListedItems objectAtIndex:i] );
     }
 }
@@ -128,7 +120,7 @@
     int choices, itemNo;
     while (true) { // we started our while loop to add multiple items to the list
         NSLog(@"Enter 1 to add an item.");
-        if ([_myListedItems count] != 0) { // when the program runs for the first time, we only want to offer the add item and quit options.
+        if ([_myListedItems count] != 0) { // when list is empty, we don't want all 5 options to be displayed
             NSLog(@"Enter 2 to edit an item.");
             NSLog(@"Enter 3 to delete an item.");
             NSLog(@"Enter 4 to mark item as done.");
@@ -172,7 +164,7 @@
             NSLog(@"End of list.\n");
             break;
         } else {
-            NSLog(@"Please enter 0 - 4");
+            NSLog(@"Please enter 0 - 4"); // controls incorrect user input
         }
     }
 }
@@ -187,8 +179,8 @@
     NSLog(@"Please name your list:");
     char name[256];
     fgets(name, 256, stdin);
-    NSString *item2 = [NSString stringWithUTF8String:name];
-    item2 = [item2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *item2 = [NSString stringWithUTF8String:name]; // converted char to NSString with the "stringWithUTF8Stirng" function
+    item2 = [item2 stringByReplacingOccurrencesOfString:@"\n" withString:@""]; // this line corrects spacing issues
     [self setListName: item2];
     NSLog(@"Now, let's add items to %s list!", name);
 }
@@ -223,13 +215,9 @@
 -(void)managePrintList {
     for (int i = 0; i < [_manageMyList count]; i++) {
         NSLog(@"Your %@ List:", [[_manageMyList objectAtIndex:i] listName]); // this displays list categories, add items too - loop again
-        
         ToDoList *list = [_manageMyList objectAtIndex:i];
-        
         for (int j=0; j< [list.myListedItems count]; j++) {
-            
             ToDoItem *item = [list.myListedItems objectAtIndex:j];
-            
             NSLog(@"%d. %@", j+1, item);
         }
     }
