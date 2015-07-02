@@ -7,27 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#//import "ListManager.h"
-//#import "List.h"
-//#import "ListItem.h"
 
-@interface Item: NSObject
+
+@interface Item: NSObject // making an item class
 
 @end
 
-@implementation Item
-
-@end
+@interface List: NSObject // making a list class
 
 
-@interface List: NSObject
+- (void) addItem:(NSString *)item; // declaring method of additem
 
-- (void) addItem:(NSString *)item;
 - (NSArray *)contents;
 
 @end
 
-@implementation List{
+@implementation List {
     NSMutableArray *_contents;
 }
 
@@ -40,19 +35,22 @@
     [_contents addObject:item];
 }
 
+// returns current list
 - (NSArray *)contents {
     return _contents;
 }
+
 
 @end
 
 
 @interface ToDoList: NSObject
+
 -(void) listItems : (NSMutableArray *) items;
 -(NSMutableArray *) items;
 
--(void) setListManger: (NSArray *) lmanage;
--(NSMutableArray *) lmanage;
+-(void) setListManger: (NSArray *) listManage;
+-(NSMutableArray *) listManage;
 
 -(void) addList: (List *) list;
 
@@ -60,7 +58,7 @@
 
 @implementation ToDoList {
     NSMutableArray *_items;
-    NSMutableArray *_lmanage;
+    NSMutableArray *_listManage;
 }
 
 -(void) listItems : (NSMutableArray *) items{
@@ -68,22 +66,24 @@
 }
 
 -(NSMutableArray *) items {
-    if (_lmanage == nil) {
-        _lmanage = [[NSMutableArray alloc] init];
+    if (_listManage == nil) {
+        _listManage = [[NSMutableArray alloc] init];
     }
-    return _lmanage;
+    return _listManage;
 }
 
--(void) setListManager: (NSMutableArray *) lmanage {
-    _lmanage = lmanage;
+-(void) setListManager: (NSMutableArray *) listManage {
+    _listManage = _listManage;
 }
 
 -(void) addList: (List *) list {
     [_items addObject:list];
 }
 
+
 @end
 
+// this lets the program know to take user input
 NSString * scanUserInput(void) {
     char inputUTF8String[256];
     scanf("%s", inputUTF8String);
@@ -91,19 +91,20 @@ NSString * scanUserInput(void) {
     
     NSString *input = [NSString stringWithUTF8String:inputUTF8String];
     return input;
+    // this returns whatever the person inputs
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        ToDoList *lmanage = [[ToDoList alloc]init];
-        List *list = [[List alloc] init];
+        ToDoList *listManage = [[ToDoList alloc]init];
+        List *list = [[List alloc] init]; // initializing instance of ToDoList and List
         
-        [lmanage addList:list];
+        [listManage addList:list]; // communicating with class
         
         
         printf("To-Do List App\n\n\n");
-
+        
         int tasks = 0;
         
         while (tasks <=1000)
@@ -117,30 +118,30 @@ int main(int argc, const char * argv[]) {
             fpurge(stdin);
             
             if (option == 'a') {
-                // ask for a title
-                // create a list item instance
-                // set the itemName of the list item instance
-                // add list item to list
-                NSLog(@"What would you like to add?\n");
+                
+                NSLog(@"What would you like to add?");
+                NSLog(@"Your list: %@", list.contents);
                 
                 NSString *input = scanUserInput();
-                //get input here
+                
                 [list addItem:input];
                 
-                NSLog(@"\n\n Your list: %@", list.contents); // ask cam tomorrow about fixing line output
+                
                 
             } else if (option == 'b') {
                 
                 NSLog(@"Delete which task?", option);
-                 NSString *input = scanUserInput();
+                //                 NSString *input = scanUserInput();
             } else if (option == 'c') {
                 
                 NSLog(@"What would you like to edit?", option);
-                 NSString *input = scanUserInput();
+                //                 NSString *input = scanUserInput();
+                NSLog(@" %@ is done", option);
+                
             } else if (option == 'd') {
                 
-                NSLog(@" Blank is done", option); // why is this breaking?
-                 NSString *input = scanUserInput();
+                NSLog(@" %@ is done", option); // why is this breaking?
+                //                 NSString *input = scanUserInput();
             } else if (option == 'e') {
                 
                 NSLog(@"This is your current list: ", option);
@@ -148,25 +149,10 @@ int main(int argc, const char * argv[]) {
                 NSLog(@"See you next time!");
                 break;
             }
-             else  {
-                NSLog(@"Invalid Option! \n\na)Add Item        b)Delete Item \n\nc)Edit\n\n", option);
+            else  {
+                NSLog(@"Invalid Option!\n", option);
             }
-            
         }
-        
-        
     }
     return 0;
 }
-
-
-
-
-// what we still need
-// editing items
-// deleting items
-// marking items done
-// showing active list
-//
-
-// done: adding items, quitting program
