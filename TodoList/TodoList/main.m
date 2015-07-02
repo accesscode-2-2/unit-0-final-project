@@ -76,6 +76,7 @@ NSString * scanUserInput(void) {
 -(void)displayTasks:(List *)list;
 
 
+
 @end
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -167,25 +168,8 @@ NSString * scanUserInput(void) {
     NSMutableArray *tempArrayOfTasks = [list listOfTasks];
     Task *taskToBeDeleted = [[list listOfTasks] objectAtIndex:index];
     [tempArrayOfTasks removeObjectAtIndex:index];
-    
-//    [self displayTasks: list];
-//    NSLog(@"Which task would you like to remove?");
-//    
-//    NSString *objectToBeRemoved = scanUserInput();
-//    
-//    NSMutableArray *myListOfTasks = [list listOfTasks];
-//    
-//    for (int i = 0; i < [myListOfTasks count]; i++) {
-//        
-//        if ([objectToBeRemoved isEqualToString: [myListOfTasks[i] getTaskName]]){
-//            
-//            [list removeObject: myListOfTasks[i]];
-//            NSLog(@"Your new list:");
-//            [self displayTasks: list];
-//            
-//        }
-//    }
 }
+
 
 -(void)markTaskAsDone:(NSInteger)index fromList:(List *)list{
     
@@ -195,7 +179,6 @@ NSString * scanUserInput(void) {
     Task *doneTask = [[list listOfTasks] objectAtIndex:index];
     [tempArrayOfTasks removeObjectAtIndex:index];
     [[self doneTasks] addTaskToList:doneTask];
-   
 }
 
 
@@ -211,6 +194,8 @@ NSString * scanUserInput(void) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        
+        //Ready-made List Manager, Active and Completed Lists, as well as a List of Features
         
         Manager *listManager = [[Manager alloc] init];
         
@@ -228,15 +213,11 @@ int main(int argc, const char * argv[]) {
         [mainFeatures addTaskToList:delete];
         [mainFeatures addTaskToList:markDone];
         [mainFeatures addTaskToList:editTask];
-
+        
+        
+        //Program begins:
+        
         NSLog(@"Hello!");
-        //
-        //        while (true) {
-        //            // print list of actions
-        //            // user selects actions
-        //            // perform task based on user action
-        //
-        //        }
         
         while (true) {
             
@@ -246,10 +227,9 @@ int main(int argc, const char * argv[]) {
             
             NSLog(@"Enter a # here:");
             
-            NSInteger userInput;
-            scanf("%ld", &userInput);
+            NSString *input = scanUserInput();
             
-            if (userInput == 0){
+            if ([input isEqualToString: @"0"]){
                 
                 NSLog(@"Enter the title of the task you'd like to add:");
                 
@@ -262,9 +242,15 @@ int main(int argc, const char * argv[]) {
                 NSLog(@"Your TO DO list:");
                 
                 [al displayTasks:al];
+                
+                NSLog(@"\n");
             }
             
-            else if (userInput == 1) {
+            else if ([input isEqualToString: @"1"]) {
+                
+                NSLog(@"Your TO DO list:");
+                
+                [al displayTasks:al];
                 
                 NSLog(@"Enter the # of the task you'd like to delete:");
                 
@@ -277,9 +263,11 @@ int main(int argc, const char * argv[]) {
                 
                 [al displayTasks:al];
                 
+                NSLog(@"\n");
+                
             }
             
-            else if (userInput == 2) {
+            else if ([input isEqualToString: @"2"]) {
                 
                 NSLog(@"Your TO DO list:");
                 
@@ -296,9 +284,16 @@ int main(int argc, const char * argv[]) {
                 
                 [dl displayTasks:dl];
                 
+                NSLog(@"Your TO DO list:");
+                
+                [al displayTasks:al];
+                
+                NSLog(@"\n");
+                
             }
             
-            else if (userInput == 3) {
+            else if ([input isEqualToString: @"3"]) {
+                
                 NSLog(@"Which task would you like to edit?");
                 
                 [al displayTasks:al];
@@ -312,38 +307,27 @@ int main(int argc, const char * argv[]) {
                 
                 NSString *newUserTaskTitle = scanUserInput();
                 
-                
                 [[[al listOfTasks] objectAtIndex:inputAsInteger] setTaskName:newUserTaskTitle];
                 
-//               [[al listOfTasks[newUserInput]] setTaskName: newUserTaskTitle];
-
-
+                NSLog(@"Your TO DO list:");
+                
+                [al displayTasks:al];
+                
+                NSLog(@"\n");
             }
             
             else {
-                NSLog(@"Invalid #. Please try again.");
+                NSLog(@"Does not compute. Please try again.");
+                
+                NSLog(@"\n");
             }
             
             
         }
         
-        //        Task *practiceGuitar = [[Task alloc] initWithTaskName:@"practice guitar"];
-        //        Task *swim = [[Task alloc] initWithTaskName:@"swim"];
-        //        Task *yoga = [[Task alloc] initWithTaskName:@"yoga"];
-        //
-        //
-        //        [al addTaskToList:practiceGuitar];
-        //        [al addTaskToList:swim];
-        //        [al addTaskToList:yoga];
-        //
-        //
-        //
-        //        [listManager markTaskAsDone:1 fromList:al];
-        //        [listManager markTaskAsDone:0 fromList:al];
-        //
-        //        
-        //        [al displayTasks:al];
-        //        [dl displayTasks:dl];
+        
+        
+        
         
     }
     return 0;
