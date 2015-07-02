@@ -29,6 +29,8 @@ NSString * scanUserInput(void) {
 
 - (NSString *) getTaskName;
 
+- (void) setTaskName: (NSString *)taskName;
+
 @end
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -49,6 +51,10 @@ NSString * scanUserInput(void) {
 
 -(NSString *)getTaskName{
     return _taskName;
+}
+
+- (void) setTaskName: (NSString *)taskName{
+    _taskName = taskName;
 }
 
 
@@ -128,7 +134,6 @@ NSString * scanUserInput(void) {
 
 -(void)markTaskAsDone:(NSInteger)index fromList: (List *)list;
 
-
 @end
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -194,6 +199,8 @@ NSString * scanUserInput(void) {
 }
 
 
+
+
 @end
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -215,19 +222,21 @@ int main(int argc, const char * argv[]) {
         Task *add = [[Task alloc] initWithTaskName: @"Add a task to the To Do list"];
         Task *delete = [[Task alloc] initWithTaskName: @"Delete a task from the To Do list"];
         Task *markDone = [[Task alloc] initWithTaskName: @"Mark a task as done"];
+        Task *editTask = [[Task alloc] initWithTaskName: @"Edit a task"];
         
         [mainFeatures addTaskToList:add];
         [mainFeatures addTaskToList:delete];
         [mainFeatures addTaskToList:markDone];
-        
+        [mainFeatures addTaskToList:editTask];
+
         NSLog(@"Hello!");
-//        
-//        while (true) {
-//            // print list of actions
-//            // user selects actions
-//            // perform task based on user action
-//            
-//        }
+        //
+        //        while (true) {
+        //            // print list of actions
+        //            // user selects actions
+        //            // perform task based on user action
+        //
+        //        }
         
         while (true) {
             
@@ -255,7 +264,7 @@ int main(int argc, const char * argv[]) {
                 [al displayTasks:al];
             }
             
-            if (userInput == 1) {
+            else if (userInput == 1) {
                 
                 NSLog(@"Enter the # of the task you'd like to delete:");
                 
@@ -270,7 +279,7 @@ int main(int argc, const char * argv[]) {
                 
             }
             
-            if (userInput == 2) {
+            else if (userInput == 2) {
                 
                 NSLog(@"Your TO DO list:");
                 
@@ -289,30 +298,52 @@ int main(int argc, const char * argv[]) {
                 
             }
             
-//            if (userInput < [mainFeatures count] || userInput > [mainFeatures count]) {
-//                NSLog(@"Invalid #. Please try again.");
-//            }
+            else if (userInput == 3) {
+                NSLog(@"Which task would you like to edit?");
+                
+                [al displayTasks:al];
+                
+                NSLog(@"Enter the # here:");
+                
+                NSString *newUserInput = scanUserInput();
+                NSInteger inputAsInteger = [newUserInput integerValue];
+                
+                NSLog(@"What do you want to replace it with?");
+                
+                NSString *newUserTaskTitle = scanUserInput();
+                
+                
+                [[[al listOfTasks] objectAtIndex:inputAsInteger] setTaskName:newUserTaskTitle];
+                
+//               [[al listOfTasks[newUserInput]] setTaskName: newUserTaskTitle];
+
+
+            }
+            
+            else {
+                NSLog(@"Invalid #. Please try again.");
+            }
             
             
         }
         
-//        Task *practiceGuitar = [[Task alloc] initWithTaskName:@"practice guitar"];
-//        Task *swim = [[Task alloc] initWithTaskName:@"swim"];
-//        Task *yoga = [[Task alloc] initWithTaskName:@"yoga"];
-//        
-//        
-//        [al addTaskToList:practiceGuitar];
-//        [al addTaskToList:swim];
-//        [al addTaskToList:yoga];
-//        
-//        
-//        
-//        [listManager markTaskAsDone:1 fromList:al];
-//        [listManager markTaskAsDone:0 fromList:al];
-//
-//        
-//        [al displayTasks:al];
-//        [dl displayTasks:dl];
+        //        Task *practiceGuitar = [[Task alloc] initWithTaskName:@"practice guitar"];
+        //        Task *swim = [[Task alloc] initWithTaskName:@"swim"];
+        //        Task *yoga = [[Task alloc] initWithTaskName:@"yoga"];
+        //
+        //
+        //        [al addTaskToList:practiceGuitar];
+        //        [al addTaskToList:swim];
+        //        [al addTaskToList:yoga];
+        //
+        //
+        //
+        //        [listManager markTaskAsDone:1 fromList:al];
+        //        [listManager markTaskAsDone:0 fromList:al];
+        //
+        //        
+        //        [al displayTasks:al];
+        //        [dl displayTasks:dl];
         
     }
     return 0;
