@@ -1,17 +1,18 @@
 //
 //  main.m
-//  TodoList
+//  Natalias_ToDo
 //
-//  Created by Michael Kavouras on 6/25/15.
-//  Copyright (c) 2015 Mike Kavouras. All rights reserved.
+//  Created by Natalia Estrella on 6/28/15.
+//  Copyright (c) 2015 Natalia Estrella. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "Manager.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+        Manager *manager = [[Manager alloc] init];
+        [manager showMenu];
     }
     return 0;
 }
