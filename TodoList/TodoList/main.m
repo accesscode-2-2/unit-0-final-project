@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Manager.h"
+
+
+
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+ 
+        Manager *manager = [[Manager alloc] init];
+        [manager start];
     }
     return 0;
 }
