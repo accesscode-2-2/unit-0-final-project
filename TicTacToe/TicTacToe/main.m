@@ -12,7 +12,7 @@
 /////// TIC TAC TOE DECLATRATION ///////
 @interface TicTacToe :NSObject;
 
-- (void)printIntroudction;
+- (void)printIntroduction;
 
 - (int)introMessage;
 
@@ -142,7 +142,7 @@
     printf(" .8'      `8.`8888.                   `8.`   `8'          8 8888 8            `Yo  `Y8888P ,88P'\n");
 }
 
-- (void)PrinterWinnerO {
+- (void)printWinnerO {
     
     
     printf("     ,o888888o.              `8.`888b                 ,8' 8 8888 b.             8    d888888o.\n");
@@ -345,6 +345,7 @@
     
     [self board]; // array
     
+
     int tries = 0;
     int maxTries = 20;
     while (tries < maxTries){
@@ -380,6 +381,7 @@
         
         
     }
+
     
     
     
@@ -599,34 +601,44 @@ int main(int argc, const char * argv[]) {
         
         TicTacToe *tictactoe = [[TicTacToe alloc]init];
         
-        
-        
-        int playerChoose = [tictactoe introMessage];
-        
-        if (playerChoose == 2){
+        int playAgain;
+        do {
             
-            char coinSide = [tictactoe headsOrtails];
             
-            NSArray *cointItself = [tictactoe coinFaces];
+            int playerChoose = [tictactoe introMessage];
             
-            [tictactoe returnCoin:coinSide];
+            if (playerChoose == 2){
+                
+                char coinSide = [tictactoe headsOrtails];
+                
+                NSArray *cointItself = [tictactoe coinFaces];
+                
+                [tictactoe returnCoin:coinSide];
+                
+                [tictactoe coinCalculating: cointItself];
+                
+                [tictactoe printIntroduction];
+                
+                [tictactoe oneVoneGameState:0];}
             
-            [tictactoe coinCalculating: cointItself];
             
-            [tictactoe printIntroduction];
             
-            [tictactoe oneVoneGameState:0];}
-        
-        
-        
-        else if (playerChoose == 1){
+            else if (playerChoose == 1){
+                
+                [tictactoe printIntroduction];
+                
+                [tictactoe onePlayerGameState:0];
+            }
             
-            [tictactoe printIntroduction];
             
-            [tictactoe onePlayerGameState:0];
-        }
-        
-        
+            printf("\n\nDo you want to play again?\n\n");
+            printf("PRESS 1 for YES or PRESS 2 for NO\n\n");
+            printf("ENTER: ");
+            scanf("%d", &playAgain);
+            fpurge(stdin);
+            
+            
+        } while (playAgain == 1);
         
         
     }
