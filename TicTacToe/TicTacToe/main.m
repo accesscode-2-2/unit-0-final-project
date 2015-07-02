@@ -2,9 +2,8 @@
 //  main.m
 //  TicTacToe
 //
-//  Created by Michael Kavouras on 6/25/15.
-//  Copyright (c) 2015 Mike Kavouras. All rights reserved.
-//
+// Kaira and Christella
+// Tic Tac Toe Project
 
 #import <Foundation/Foundation.h>
 
@@ -25,6 +24,12 @@
 
 - (NSMutableArray *)board;
 
+- (NSString *)returnCoin:(char)headsTails;
+
+- (NSArray *)coinFaces;
+
+- (NSString *)playerSelection;
+
 - (BOOL)correctCheck;
 
 - (BOOL)oneVoneGameState:(int)num;
@@ -37,6 +42,12 @@
 
 - (void)printWinnerO;
 
+- (void)coinCalculating:(NSArray *)coins;
+
+- (char)headsOrtails;
+
+- (BOOL)draw;
+
 
 @end
 
@@ -44,10 +55,80 @@
 /////// TIC TAC TOE DEFINITION ///////
 @implementation TicTacToe {
     NSMutableArray * _board;
+    NSArray * _coinFaces;
+    NSString * _playerSelection;
+    char _headsTails;
+}
+
+
+
+- (NSArray *)coinFaces{
+    
+    _coinFaces = @[@"h",@"t"];
+    
+    return _coinFaces;
+    
+}
+- (NSString *)playerSelection {
+    
+    return _playerSelection;
+}
+
+- (char)headsOrtails {
+    
+    do
+    {
+        printf("\nChoose heads(h) or tails(t): ");
+        scanf("%c", &_headsTails);
+        fpurge(stdin);
+        if(_headsTails == 'h') {
+            printf("\nYou chose Heads\n");
+        } else if (_headsTails == 't'){
+            printf("You chose Tails\n");
+        }
+        
+    } while (_headsTails != 'h' && _headsTails != 't');
+    return _headsTails;
+    
+}
+- (NSString *)returnCoin:(char)coin {
+    
+    _playerSelection = [NSString stringWithFormat:@"%c", _headsTails];
+    
+    return _playerSelection;
+    
+    
+}
+
+- (void)coinCalculating:(NSArray *)coins {
+    
+    NSUInteger randomNumber = arc4random_uniform((int)[_coinFaces count]);
+    
+    NSString *result = [_coinFaces objectAtIndex:randomNumber];
+    
+    if ([result isEqualToString:[_coinFaces firstObject]]) {
+        printf("\nCoin is on Heads\n\n");
+    } else if ([result isEqualToString:[_coinFaces lastObject]]) {
+        printf("\nCoin is on Tails\n\n");
+    }
+    
+    
+    if([result isEqualToString: _playerSelection]) {
+        printf("Nice! you are Player 1. You get to go first. :D\n\n");
+    } else {
+        printf("Bummer, Looks like you are Player 2\n\n");
+    }
+    
+    const char *c = [_playerSelection UTF8String];
+    const char *results = [result UTF8String];
+    
+    printf("PLAYER INPUT: %s\n", c);
+    
+    printf("RANDOM TOSS: %s\n", results);
 }
 
 - (void)printWinnerX {
-  
+    
     
     printf(" `8.`8888.      ,8'          `8.`888b                 ,8' 8 8888 b.             8    d888888o.\n");
     printf("  `8.`8888.    ,8'            `8.`888b               ,8'  8 8888 888o.          8  .`8888:' `88.\n");
@@ -64,17 +145,17 @@
 - (void)PrinterWinnerO {
     
     
-   printf("     ,o888888o.              `8.`888b                 ,8' 8 8888 b.             8    d888888o.\n");
-   printf("  . 8888     `88.             `8.`888b               ,8'  8 8888 888o.          8  .`8888:' `88.\n");
-   printf(" ,8 8888       `8b             `8.`888b             ,8'   8 8888 Y88888o.       8  8.`8888.   Y8\n");
-   printf(" 88 8888        `8b             `8.`888b     .b    ,8'    8 8888 .`Y888888o.    8  `8.`8888.\n");
-   printf(" 88 8888         88              `8.`888b    88b  ,8'     8 8888 8o. `Y888888o. 8   `8.`8888.\n");
-   printf(" 88 8888         88               `8.`888b .`888b,8'      8 8888 8`Y8o. `Y88888o8    `8.`8888.\n");
-   printf(" 88 8888        ,8P                `8.`888b8.`8888'       8 8888 8   `Y8o. `Y8888     `8.`8888.\n");
-   printf(" `8 8888       ,8P                  `8.`888`8.`88'        8 8888 8      `Y8o. `Y8 8b   `8.`8888.\n");
-   printf("  ` 8888     ,88'                    `8.`8' `8,`'         8 8888 8         `Y8o.` `8b.  ;8.`8888\n");
-   printf("     `8888888P'                       `8.`   `8'          8 8888 8            `Yo  `Y8888P ,88P'\n");
-
+    printf("     ,o888888o.              `8.`888b                 ,8' 8 8888 b.             8    d888888o.\n");
+    printf("  . 8888     `88.             `8.`888b               ,8'  8 8888 888o.          8  .`8888:' `88.\n");
+    printf(" ,8 8888       `8b             `8.`888b             ,8'   8 8888 Y88888o.       8  8.`8888.   Y8\n");
+    printf(" 88 8888        `8b             `8.`888b     .b    ,8'    8 8888 .`Y888888o.    8  `8.`8888.\n");
+    printf(" 88 8888         88              `8.`888b    88b  ,8'     8 8888 8o. `Y888888o. 8   `8.`8888.\n");
+    printf(" 88 8888         88               `8.`888b .`888b,8'      8 8888 8`Y8o. `Y88888o8    `8.`8888.\n");
+    printf(" 88 8888        ,8P                `8.`888b8.`8888'       8 8888 8   `Y8o. `Y8888     `8.`8888.\n");
+    printf(" `8 8888       ,8P                  `8.`888`8.`88'        8 8888 8      `Y8o. `Y8 8b   `8.`8888.\n");
+    printf("  ` 8888     ,88'                    `8.`8' `8,`'         8 8888 8         `Y8o.` `8b.  ;8.`8888\n");
+    printf("     `8888888P'                       `8.`   `8'          8 8888 8            `Yo  `Y8888P ,88P'\n");
+    
     
 }
 
@@ -119,6 +200,7 @@
     int playerMode;
     printf("ENTER: ");
     scanf("%d", &playerMode);
+    fpurge(stdin);
     
     
     int mode;
@@ -177,7 +259,7 @@
                 wrongMove = true;
             }
         }
-                      
+        
     } while (wrongMove);
     
 }
@@ -237,10 +319,7 @@
     int computerSelection = [[emptySpaces objectAtIndex:randomNumber] integerValue];
     _board[computerSelection] = @"o";
     
-    
-    
 }
-
 
 
 - (void)printBoard {
@@ -263,7 +342,9 @@
 
 - (BOOL)oneVoneGameState:(int)num{
     
+    
     [self board]; // array
+    
     int tries = 0;
     int maxTries = 20;
     while (tries < maxTries){
@@ -276,6 +357,11 @@
             break;
         }
         
+        if ([self draw] == true){
+            printf("It's a draw!");
+            break;
+        }
+        
         
         [self playerTwo];
         
@@ -285,9 +371,17 @@
             break;
         }
         
+        if ([self draw] == true){
+            printf("It's a draw!");
+            break;
+        }
+        
         tries++;
         
+        
     }
+    
+    
     
     return true;
 }
@@ -472,6 +566,30 @@
     return true;
 }
 
+- (BOOL)draw {
+    
+    BOOL gameDraw = false;
+    NSMutableArray *emptySpaces = [[NSMutableArray alloc]init];
+    for (int i = 0; i < [_board count]; i++){
+        NSString *currentVal = [_board objectAtIndex:i];
+        
+        if (![currentVal isEqualToString:@"x"] && ![currentVal isEqualToString:@"o"]){
+            
+            [emptySpaces addObject:@(i)];
+            
+            
+        }
+    }
+    
+    int toNumber = (int)[emptySpaces count];
+    
+    if (toNumber == 0){
+        gameDraw = true;
+    }
+    
+    return gameDraw;
+}
+
 @end
 
 
@@ -481,14 +599,25 @@ int main(int argc, const char * argv[]) {
         
         TicTacToe *tictactoe = [[TicTacToe alloc]init];
         
+        
+        
         int playerChoose = [tictactoe introMessage];
         
         if (playerChoose == 2){
             
+            char coinSide = [tictactoe headsOrtails];
+            
+            NSArray *cointItself = [tictactoe coinFaces];
+            
+            [tictactoe returnCoin:coinSide];
+            
+            [tictactoe coinCalculating: cointItself];
+            
             [tictactoe printIntroduction];
             
-            [tictactoe oneVoneGameState:0];
-        }
+            [tictactoe oneVoneGameState:0];}
+        
+        
         
         else if (playerChoose == 1){
             
@@ -496,6 +625,7 @@ int main(int argc, const char * argv[]) {
             
             [tictactoe onePlayerGameState:0];
         }
+        
         
         
         
