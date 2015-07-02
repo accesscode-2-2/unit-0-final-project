@@ -28,6 +28,7 @@
         _listArray = [[NSMutableArray alloc]init];
     }
     char temp[256];
+    memset(temp, '\0',256);
     printf("\n Add title of Todo-List: ");
     scanf("%255[^\n]%*c",temp);
     fpurge(stdin);
@@ -77,10 +78,12 @@
 -(void) run{
     while(YES){
         char userIn[256];
+        memset(userIn, '\0', 256);
         [self printLists];
         [self printCommands];
         printf("\n:");
         scanf("%255[^\n]%*c",userIn);
+        fpurge(stdin);
         NSString *userString = [NSString stringWithCString:userIn encoding:NSASCIIStringEncoding];
         
         if([userString isEqualToString:@"a"] || [userString isEqualToString:@"A"]){
@@ -95,6 +98,7 @@
             if([self outOfBounds:d]){
                 continue;
             }
+            
             [self deleteList:d-1];
             continue;
         }
