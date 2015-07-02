@@ -271,6 +271,7 @@ int main(int argc, const char * argv[]) {
                 
                 else{
                     
+                    NSLog(@"%c's turn", xOrO);
                     NSLog(@"Choose your horizontal position (1-3): ");
                     fpurge(stdin);
                     scanf("%d", &hPosition);
