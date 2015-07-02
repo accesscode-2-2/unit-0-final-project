@@ -5,6 +5,8 @@
 //  Created by Michael Kavouras on 6/25/15.
 //  Copyright (c) 2015 Mike Kavouras. All rights reserved.
 //
+//  Project by Christian😎 & Justine🙏🏼
+//
 
 #import <Foundation/Foundation.h>
 
@@ -14,8 +16,8 @@ NSString * scanUserInput(void) {
     return userInput;
 }
 
-@class List;
 @class Task;
+@class List;
 @class Manager;
 
 
@@ -172,8 +174,6 @@ NSString * scanUserInput(void) {
 
 
 -(void)markTaskAsDone:(NSInteger)index fromList:(List *)list{
-    
-    // take task from active list, hold it in a variable, add to done list
     
     NSMutableArray *tempArrayOfTasks = [list listOfTasks];
     Task *doneTask = [[list listOfTasks] objectAtIndex:index];
