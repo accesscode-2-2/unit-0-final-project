@@ -21,12 +21,10 @@
 
 - (void)setItem:(NSString *)itemName;
 - (NSString *)itemName;
-//- (void)addNameAndPriority;
 - (void)addItemName;
 - (void)addPriority;
 - (BOOL)isDone;
-- (void)makeAsDone:(BOOL)isDone;
-- (void)setCompletionDate;
+
 
 @end
 
@@ -34,7 +32,6 @@
     NSString *_itemName;
     int _priority;
     BOOL _isDone;
-    NSDate *_completionDate;
 }
 
 - (void)setItem:(NSString *)itemName {
@@ -44,10 +41,10 @@
     return _itemName;
 }
 
-- (void)setPriority: (int) priority {
-    _priority = priority;
+- (void)setPriority: (int)itemPriority {
+    _priority = itemPriority;
 }
-- (int) priority {
+- (int)itemPriority {
     return _priority;
 }
 
@@ -57,21 +54,6 @@
 - (BOOL)isDone {
     return _isDone;
 }
-- (void)makeAsDone:(BOOL)isDone {
-    self.isDone = isDone;
-    [self setCompletionDate];
-}
-- (void)setCompletionDate {
-    if (self.isDone){
-        _completionDate = [NSDate date];
-    } else {
-        _completionDate = nil;
-    }
-}
-
-
-
-//- (void)addNameAndPriority {
 
 - (void)addItemName {
     NSLog(@"Enter item: ");
@@ -82,13 +64,22 @@
     //  NSLog(@"item added: %s", name); // we test our work above here
     // we used "stringWithUTF8String" to convert char to string
     NSString *item1 = [NSString stringWithUTF8String:name];
+    item1 = [item1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     //    NSLog(@"string test: %@", item1);
     [self setItem: item1];
 }
 
+- (NSString *) description {
+    NSString* done = @"Not Done";
+    if (self.isDone) {
+        done = @"Done!";
+    }
+    return [[NSString alloc] initWithFormat:@"%@ with priority level %d %@.", _itemName, _priority, done];
+}
+
 - (void)addPriority {
     // we set the priority level for each inputted item
-    NSLog(@"Enter priority level 1-4:");
+    NSLog(@"New priority level 1-4:");
     int inputPriority;
     scanf("%d", &inputPriority);
     
@@ -110,6 +101,8 @@
 -(void)printList;
 -(void)setListName:(NSString *)listName;
 -(NSString *)listName;
+- (void)printAllListItems;
+
 @end
 
 @implementation ToDoList {
@@ -136,6 +129,16 @@
     }
 }
 
+- (void)printAllListItems {
+    NSLog(@"Your Current List Contains:");
+
+        
+    for (int i = 0; i < [_myListedItems count]; i++) {
+        NSLog(@"%d. %@", i+1, [_myListedItems objectAtIndex:i] );
+    }
+}
+
+
 - (void)createItems {
     int choices, itemNo;
     // we started our while loop to add multiple items to the list
@@ -155,14 +158,16 @@
         if (choices == 1) {
             // created a new Item object and set its item/priority. This addes our item to the memory
             ToDoItem *newItem = [[ToDoItem alloc] init];
+            [newItem setPriority:1];
             // this sends a message to add an item
             // [newItem addNameAndPriority];
             [newItem addItemName];
-            [newItem addPriority];
+         //   [newItem addPriority];
             
             // added the Item to `self`'s myListedItems array
             [self addItem:newItem];
         } else if (choices == 2) {
+            [self printAllListItems];
             NSLog(@"Enter item number to edit:");
             scanf("%d", &itemNo);
             fpurge(stdin);
@@ -172,10 +177,12 @@
             [newItem addItemName];
             [newItem addPriority];
         } else if (choices == 3) {
+            [self printAllListItems];
             NSLog(@"Enter item number to delete:");
             scanf("%d", &itemNo);
             [_myListedItems removeObjectAtIndex:itemNo-1];
         } else if (choices == 4) {
+            [self printAllListItems];
             NSLog(@"Enter item number to mark as done:");
             scanf("%d", &itemNo);
             fpurge(stdin);
@@ -187,15 +194,19 @@
             
             //   NSLog(@"%@ is %d where 1 = done",[newItem itemName],[newItem isDone]);
             
-        } else {
-            NSLog(@"Your Current List Contains:");
-            for (int i = 0; i < [_myListedItems count]; i++) {
-                NSLog(@"%d %@", i+1,[[_myListedItems objectAtIndex:i] itemName]);
-                // NSLog(@"priority level: %d %@ %@", inputPriority, _itemName, _completionDate);
-            }
-            
+        } else if (choices == 0){
+//            NSLog(@"Your Current List Contains:");
+//            for (int i = 0; i < [_myListedItems count]; i++) {
+//                NSLog(@"%d %@", i+1,[[_myListedItems objectAtIndex:i] itemName]);
+//                // NSLog(@"priority level: %d %@ %@", inputPriority, _itemName, _completionDate);
+//            }
+            //a quit message
+            [self printAllListItems];
             break;
+        } else {
+            NSLog(@"Please enter 0 - 4");
         }
+        
     }
 }
 
