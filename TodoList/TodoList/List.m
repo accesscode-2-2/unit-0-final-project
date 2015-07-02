@@ -181,6 +181,7 @@
             i++;
         }
     }
+    printf("\n");
     while(YES){
         char exitKey[256];
         printf("To exit press q: ");
@@ -203,6 +204,7 @@
             i++;
         }
     }
+    printf("\n");
     while(YES){
         char exitKey[1];
         printf("To exit press q: ");
