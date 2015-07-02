@@ -53,7 +53,7 @@
 -(void) setDate:(int)index{
     ListItem *item = [_items objectAtIndex:index];
     
-    item.hasDate = YES;
+    
     
     char array[256];
     printf("Enter date mm/dd/yyyy: ");
@@ -88,6 +88,7 @@
     
     NSDate *date = [calendar dateFromComponents:c];
     item.date = date;
+    item.hasDate = YES;
 }
 
 -(void) printItems{
@@ -184,6 +185,7 @@
         char exitKey[256];
         printf("To exit press q: ");
         scanf("%255[^\n]%*c",exitKey);
+        fpurge(stdin);
         NSString *c = [NSString stringWithCString:exitKey encoding:NSASCIIStringEncoding];
         if ([c isEqualToString:@"q"] || [c isEqualToString:@"Q"]){
             printf("\n\n\n");
@@ -202,9 +204,10 @@
         }
     }
     while(YES){
-        char exitKey[256];
+        char exitKey[1];
         printf("To exit press q: ");
-        scanf("%255[^\n]%*c",exitKey);
+        scanf("%1[^\n]%*c",exitKey);
+        fpurge(stdin);
         NSString *c = [NSString stringWithCString:exitKey encoding:NSASCIIStringEncoding];
         if ([c isEqualToString:@"q"] || [c isEqualToString:@"Q"]){
             printf("\n\n\n");
@@ -248,6 +251,7 @@
         printf("\n:");
         scanf("%255[^\n]%*c",holder);
         fpurge(stdin);
+        printf("\n");
         
         NSString *checker = [NSString stringWithCString:holder encoding:NSASCIIStringEncoding];
         
