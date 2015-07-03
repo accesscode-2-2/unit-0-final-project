@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Mike Kavouras. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import <unistd.h>
 
 
 @interface TicTacToe : NSObject
@@ -50,6 +51,7 @@
     _gridSize = gridSize;
     
     if ([_gridSize  isEqual: @"1"]) {
+        
         NSLog (@" %@ | %@ | %@ ", boxes[0],boxes[1],boxes[2]);
         NSLog (@"-----------");
         NSLog (@" %@ | %@ | %@ ", boxes[3],boxes[4],boxes[5]);
@@ -57,7 +59,6 @@
         NSLog (@" %@ | %@ | %@ ", boxes[6],boxes[7],boxes[8]);
         NSLog (@"\n\n\n\n");
     }
-    
     else  if ([_gridSize  isEqual: @"2"]) {
         //working grid for playing the game
         NSLog (@"  %@  |  %@  |  %@  | %@ ", boxes[0],boxes[1],boxes[2],boxes[3]);
@@ -72,7 +73,7 @@
     }
     
     else if ([_gridSize  isEqual: @"3"]) {
-        NSLog (@"Don't forget to write the code");
+        printf("\nDon't forget to write the code");
         // write codeeeeeeeeee
     }
     
@@ -109,12 +110,12 @@
                 }
                 else {
                     
-                    NSLog(@"Enter a number ");
+                    printf("\nEnter a number \n");
                     scanf("%d", &number);
                     fpurge(stdin);
                     
                     if ((number <1) || (number > (*_boardSize + 1) )) {
-                        NSLog(@"Wrong choice! ");
+                        printf("\nWrong choice! ");
                         continue;
                     }
                 }
@@ -124,7 +125,7 @@
                 
                 adjInputForOffset = number-1;
                 if ([boxes[adjInputForOffset] isNotEqualTo:@" "]){
-                    NSLog(@"please choose another box");
+                    printf("\nPlease choose another box\n");
                     //  transpose x's and o's
                     if ([_oXchoice isEqualToString:@"x"]){
                         _oXchoice = @"o";
@@ -287,22 +288,21 @@
                 }
                 else {
                     
-                    NSLog(@"Enter a number ");
+                    printf("\nEnter a number \n");
                     scanf("%d", &number);
                     fpurge(stdin);
                     
                     if ((number <1) || (number > (*_boardSize + 1) )) {
-                        NSLog(@"Wrong choice! ");
+                        printf("\nWrong choice! ");
                         continue;
                     }
                 }
                 
                 /* variable for storing offset (better to fix it once here than possibly 100 other palces later )
                  check for empty boxes before entering user selected option if box is NOT "empty" tell user to slect a different box */
-                NSLog(@"%d number nowwww", number);
                 adjInputForOffset = number-1;
                 if ([boxes[adjInputForOffset] isNotEqualTo:@" "]){
-                    NSLog(@"please choose another box");
+                    printf("\nPlease choose another box \n");
                     //  transpose x's and o's
                     if ([_oXchoice isEqualToString:@"x"]){
                         _oXchoice = @"o";
@@ -369,12 +369,12 @@
             
             //run game until all boxes are filled up
             while ([boxes[i] isEqualTo:@" "]) {
-                NSLog(@"Enter a number ");
+                printf("\nEnter a number \n");
                 scanf("%d", &number);
                 fpurge(stdin);
                 
                 if ((number <1) || (number > (*_boardSize + 1) )) {
-                    NSLog(@"Wrong choice! ");
+                    printf("\nWrong choice! ");
                     continue;
                 }
                 
@@ -384,7 +384,7 @@
                 
                 adjInputForOffset = number-1;
                 if ([boxes[adjInputForOffset] isNotEqualTo:@" "]){
-                    NSLog(@"please choose another box");
+                    printf("\nPlease choose another box\n");
                     //  transpose x's and o's
                     
                     
@@ -466,7 +466,47 @@
              
              theWinner = i;
              
-             NSLog(@"%@ won this round!", theWinner);
+             NSLog (@"* * * *  %@  * * * *", theWinner);
+             usleep(100000);
+             printf("W ");
+             usleep(100000);
+             printf("O ");
+             
+             usleep(100000);
+             printf("N   ");
+             
+             usleep(100000);
+             printf("T ");
+             
+             usleep(100000);
+             printf("H ");
+             
+             usleep(100000);
+             printf("I ");
+             
+             usleep(100000);
+             printf("S    ");
+             
+             usleep(100000);
+             printf("R ");
+             
+             usleep(100000);
+             printf("O ");
+             
+             usleep(100000);
+             printf("U ");
+             
+             usleep(100000);
+             printf("N ");
+             
+             usleep(100000);
+             printf("D ");
+             
+             usleep(100000);
+             printf(" ! !");
+             
+             
+             
              return YES;
          }
     
@@ -488,7 +528,45 @@
         
         theWinner = j;
         
-        NSLog(@"%@ won this round!", theWinner);
+        NSLog (@"* * * *  %@  * * * *", theWinner);
+        usleep(100000);
+        printf("W ");
+        usleep(100000);
+        printf("O ");
+        
+        usleep(100000);
+        printf("N   ");
+        
+        usleep(100000);
+        printf("T ");
+        
+        usleep(100000);
+        printf("H ");
+        
+        usleep(100000);
+        printf("I ");
+        
+        usleep(100000);
+        printf("S    ");
+        
+        usleep(100000);
+        printf("R ");
+        
+        usleep(100000);
+        printf("O ");
+        
+        usleep(100000);
+        printf("U ");
+        
+        usleep(100000);
+        printf("N ");
+        
+        usleep(100000);
+        printf("D ");
+        
+        usleep(100000);
+        printf(" ! !");
+        
         return YES;
     }
     
@@ -521,7 +599,45 @@
         
         theWinner = i;
         
-        NSLog(@"%@ won this round!", theWinner);
+        NSLog (@"* * * *  %@  * * * *", theWinner);
+        usleep(100000);
+        printf("W ");
+        usleep(100000);
+        printf("O ");
+        
+        usleep(100000);
+        printf("N   ");
+        
+        usleep(100000);
+        printf("T ");
+        
+        usleep(100000);
+        printf("H ");
+        
+        usleep(100000);
+        printf("I ");
+        
+        usleep(100000);
+        printf("S    ");
+        
+        usleep(100000);
+        printf("R ");
+        
+        usleep(100000);
+        printf("O ");
+        
+        usleep(100000);
+        printf("U ");
+        
+        usleep(100000);
+        printf("N ");
+        
+        usleep(100000);
+        printf("D ");
+        
+        usleep(100000);
+        printf(" ! !");
+        
         return YES;
     }
     
@@ -554,7 +670,45 @@
         
         theWinner = j;
         
-        NSLog(@"%@ won this round!", theWinner);
+        NSLog (@"* * * *  %@  * * * *", theWinner);
+        usleep(100000);
+        printf("W ");
+        usleep(100000);
+        printf("O ");
+        
+        usleep(100000);
+        printf("N   ");
+        
+        usleep(100000);
+        printf("T ");
+        
+        usleep(100000);
+        printf("H ");
+        
+        usleep(100000);
+        printf("I ");
+        
+        usleep(100000);
+        printf("S    ");
+        
+        usleep(100000);
+        printf("R ");
+        
+        usleep(100000);
+        printf("O ");
+        
+        usleep(100000);
+        printf("U ");
+        
+        usleep(100000);
+        printf("N ");
+        
+        usleep(100000);
+        printf("D ");
+        
+        usleep(100000);
+        printf(" ! !");
+        
         return YES;
     }
     else
@@ -601,7 +755,7 @@ int main(int argc, const char * argv[]) {
             
             while (true) {
                 
-                NSLog(@"Choose x or o: ");
+                printf("Choose x or o: \n");
                 scanf("%s", oXchoice);
                 fpurge(stdin);
                 
@@ -610,11 +764,11 @@ int main(int argc, const char * argv[]) {
                 
                 //check nsConversion for good input x/o, reject everything else
                 if ([ns_oXchoice length] == 1 && ([ns_oXchoice isEqualToString:@"x"] || [ns_oXchoice isEqualToString:@"X"] || [ns_oXchoice isEqualToString:@"o"] || [ns_oXchoice isEqualToString:@"O"])) {
-                    NSLog(@"This is your choice: %@",ns_oXchoice);
                     break;
                 }
                 else  {
-                    NSLog (@"Wrong choice! ");
+              
+                    printf("\nWrong choice! ");
                     continue;
                 } //end nsConversion filter check
                 
@@ -626,7 +780,7 @@ int main(int argc, const char * argv[]) {
             
             //ask user for board size
             while (true) {
-                NSLog(@"Choose board size:\n 1:: Play On 3x3 Grid \n 2:: Play On 4x4 grid \n 3:: Mega tt");
+                printf("\nChoose board size:\n 1:: Play On 3x3 Grid \n 2:: Play On 4x4 grid \n 3:: Mega ttt\n");
                 scanf("%s", gridSize);
                 fpurge(stdin);
                 
@@ -635,7 +789,7 @@ int main(int argc, const char * argv[]) {
                 if ([ns_gridSize length] == 1 && ([ns_gridSize isEqualToString:@"1"] || [ns_gridSize isEqualToString:@"2"] || [ns_gridSize isEqualToString:@"3"]))
                     break;
                 else {
-                    NSLog (@"Wrong choice! ");
+                    printf("\nWrong choice! ");
                     continue;
                 }
             }//end of while loop
@@ -644,7 +798,7 @@ int main(int argc, const char * argv[]) {
             
             //ask user for single or multiplayer mode
             while (true) {
-                NSLog(@"Choose playerMode: 1 - Single Player \n2 - 2 Players ");
+                printf("\nChoose playerMode: \n 1:: Player Vs CPU \n 2:: Player Vs Player \n");
                 scanf("%s", singleOrMultiMode);
                 fpurge(stdin);
                 
@@ -655,15 +809,15 @@ int main(int argc, const char * argv[]) {
                     
                     break;
                 else {
-                    NSLog (@"Wrong choice! ");
+                    printf("\nWrong choice! ");
                     continue;
                 }
             } //end of while loop
             
             while ([ns_singleOrMultiMode  isEqual: @"1"]) {
                 // ask use for game level {
-                NSLog (@"1. Level 1: Computer is totally dumb.");
-                NSLog (@"2. Level 2: Computer is smarter.");
+                printf(" \n 1:: Level 1: Computer is totally dumb.");
+                printf(" \n 2:: Level 2: Computer is smarter.\n");
                 scanf ("%s", gameLevel);
                 fpurge(stdin);
                 
@@ -674,15 +828,15 @@ int main(int argc, const char * argv[]) {
                     break;
                 
                 else {
-                    NSLog (@"Wrong choice! ");
+                    printf("\nWrong choice! ");
                     continue;
                 }  // end of if
             } //end of while loop
             
             
             while ([ns_singleOrMultiMode  isEqual: @"2"]) {
-                NSLog (@"1. Level 1: Easy level");
-                NSLog (@"2. Level 2: Loose your turn if you pick up an occupied box");
+                printf("\n 1:: Level 1: Easy level");
+                printf("\n 2:: Level 2: Loose your turn if you pick up an occupied box\n");
                 
                 scanf ("%s", gameLevel);
                 fpurge(stdin);
@@ -694,7 +848,7 @@ int main(int argc, const char * argv[]) {
                     break;
                 }
                 else {
-                    NSLog (@"Wrong choice! ");
+                    printf("\nWrong choice! ");
                     continue;;
                 }  // end of if
                 
@@ -703,7 +857,7 @@ int main(int argc, const char * argv[]) {
             
             if([ns_gridSize isEqual: @"1"]){
                 //display grid numbers for users and instructions for selecting a box on the grid
-                NSLog(@"You have selected the 3x3 grid, good luck.  To select a box on the grid please select its corresponding number on your keyboard");
+                printf("\nYou have selected the 3x3 grid, good luck.  To select a box on the grid please select its corresponding number on your keyboard\n");
                 NSLog (@" 1 | 2 | 3");
                 NSLog (@"-----------");
                 NSLog (@" 4 | 5 | 6");
@@ -714,7 +868,7 @@ int main(int argc, const char * argv[]) {
             
             else if([ns_gridSize isEqual: @"2"]){
                 //display grid numbers for users and instructions for selecting a box on the grid
-                NSLog(@"You have selected the 4x4 grid LoL!! GOOD LUCK.  To select a box on the grid please select its corresponding number on your keyboard");
+                printf("\nYou have selected the 4x4 grid LoL!! GOOD LUCK.  To select a box on the grid please select its corresponding number on your keyboard\n");
                 NSLog (@" 1  |  2  | 3  |  4");
                 NSLog (@"-------------------");
                 NSLog (@" 5  |  6  | 7  | 8");
@@ -728,14 +882,42 @@ int main(int argc, const char * argv[]) {
             
             else if([ns_gridSize isEqual: @"3"]){
                 //display grid numbers for users and instructions for selecting a box on the grid
-                NSLog(@"You have selected the Mega grid, good luck.  To select a box on the grid please select its corresponding number on your keyboard");
-                NSLog (@" 1 | 2 | 3");
-                NSLog (@"-----------");
-                NSLog (@" 4 | 5 | 6");
-                NSLog (@"-----------");
-                NSLog (@" 7 | 8 | 9");
-                NSLog (@"\n");
-            }
+                printf("\nYou have selected the Mega grid, good luck.  To select a box on the grid please select its corresponding number on your keyboard\n");
+                NSLog (@" 1 | 2 | 3    |  1 | Z | 3      |  1 | 2 | 3  ");
+                
+                NSLog (@"-----------   |  -----------    | ------------");
+                
+                NSLog (@" 4 | 5 | 6    |  4 | 5 | 6      |  4 | 5 | 6  ");
+                
+                NSLog (@"-----------   |  -----------    | ------------");
+                
+                NSLog (@" 7 | 8 | 9    |  7 | 8 | 9      |  7 | 8 | 9  ");
+                
+                NSLog (@"----------------------------------------------");
+                
+                NSLog (@" 1 | 2 | 3    |  1 | 2 | 3      |  1 | 2 | 3  ");
+                
+                NSLog (@"-----------   |  -----------    | ------------");
+                
+                NSLog (@" 4 | 5 | 6    |  4 | 5 | 6      |  4 | 5 | 6  ");
+                
+                NSLog (@"-----------   |  ------------   | ------------");
+                
+                NSLog (@" 7 | 8 | 9    |  7 | 8 | 9      |  7 | 8 | 9  ");
+                
+                NSLog (@"----------------------------------------------");
+                
+                NSLog (@" 1 | 2 | 3    |  1 | 2 | 3      |  1 | 2 | 3  ");
+                
+                NSLog (@"-----------   |  -----------    | ------------");
+                
+                NSLog (@" 4 | 5 | 6    |  4 | 5 | 6      |  4 | 5 | 6  ");
+                
+                NSLog (@"-----------   |  -----------    | ------------");
+                
+                NSLog (@" 7 | 8 | 9    |  7 | 8 | 9      |  7 | 8 | 9  ");
+                
+                NSLog (@"----------------------------------------------");             }
             
             
             
@@ -767,7 +949,7 @@ int main(int argc, const char * argv[]) {
             while (true) {
                 char playAgain[0];
                 NSString * ns_playAgain;
-                NSLog(@"Start another game? \n1: YES \n2: NO");
+                printf("\nStart another game? \n1: YES \n2: NO\n");
                 fpurge(stdin);
                 scanf("%s", playAgain);
                 
@@ -776,7 +958,7 @@ int main(int argc, const char * argv[]) {
                 
                 if ([ns_playAgain isEqualToString:@"2"]) {
                     playingAgainRepeat = NO;
-                    NSLog (@"Thank you for playing!! ");
+                    printf("\nThank you for playing!! ");
                     break;
                 }
                 else if ([ns_playAgain isEqualToString:@"1"]) {
@@ -784,7 +966,7 @@ int main(int argc, const char * argv[]) {
                     break;
                 }
                 else{
-                    NSLog (@"Wrong choice! ");
+                    printf("\nWrong choice! ");
                     continue;
                 }
                 
