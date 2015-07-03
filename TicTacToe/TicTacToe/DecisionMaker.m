@@ -77,10 +77,88 @@
         }
     }
     
-    if(!self.twoPlayer && counter%2==0){
+    if(!self.twoPlayer && counter%2==0 && self.hardMode_ish==NO){
         while(YES){
             int rowPC = arc4random_uniform([self.board count]);
             int colPC = arc4random_uniform([self.board count]);
+            NSString *pcString = @"-1";
+            if([[self.board objectAtRow:rowPC column:colPC] isEqualToString:@"0"]){
+                [self.board setObject:pcString atRow:rowPC column:colPC];
+                break;
+            }
+            else{
+                continue;
+            }
+        }
+    }
+    
+    if(!self.twoPlayer && counter%2==0 && self.hardMode_ish==YES){
+        while(YES){
+            //            int rowPC = arc4random_uniform([self.board count]);
+            //            int colPC = arc4random_uniform([self.board count]);
+            int whichRow=-1;
+            int whichCol=-1;
+            int whichDiag=-1;
+            for(int i= 0; i<3; i++){
+                if([self.board rowSum:i]==2){
+                    whichRow =i;
+                    break;
+                }
+                if([self.board columnSum:i]==2){
+                    whichCol =i;
+                    break;
+                }
+                if(i==0 || i==2) {
+                    if([self.board rowSum:i]==2){
+                        whichRow =i;
+                        break;
+                    }
+                }
+            }
+            
+            if(whichRow!=-1){
+                for(int i= 0; i<3; i++){
+                    if([[self.board objectAtRow:whichRow column:i] isEqualTo:@"0"]){
+                        [self.board setObject:@"-1" atRow:whichRow column:i];
+                    }
+                }
+                break;
+            }
+            
+            if(whichCol!=-1){
+                for(int i= 0; i<3; i++){
+                    if([[self.board objectAtRow:i column:whichCol] isEqualToString:@"0"]){
+                        [self.board setObject:@"-1" atRow:i column:whichCol];
+                    }
+                }
+                break;
+            }
+            
+            if(whichDiag!=-1){
+                if(whichDiag==0){
+                    for(int i= 0; i<3; i++){
+                        if([[self.board objectAtRow:i column:i] isEqualToString:@"0"]){
+                            [self.board setObject:@"-1" atRow:i column:i];
+                        }
+                    }
+                    break;
+                }
+                
+                if(whichDiag==2){
+                    
+                    for (int i= 0; i < 3; i++) {
+                        if([[self.board objectAtRow:i column:whichDiag] isEqualToString:@"0"]){
+                            [self.board setObject:@"-1" atRow:i column:whichDiag];
+                        }
+                        whichDiag--;
+                    }
+                    break;
+                }
+            }
+            
+            int rowPC = arc4random_uniform([self.board count]);
+            int colPC = arc4random_uniform([self.board count]);
+            
             NSString *pcString = @"-1";
             if([[self.board objectAtRow:rowPC column:colPC] isEqualToString:@"0"]){
                 [self.board setObject:pcString atRow:rowPC column:colPC];
@@ -116,6 +194,21 @@
     else{
         self.twoPlayer=NO;
     }
+    self.hardMode_ish=NO;
+    
+    if(i==3){
+        printf("hardish mode?\n y/n");
+        char answer[256];
+        memset(answer,'\0',1);
+        scanf("%255[^\n]%*c",answer);
+        fpurge(stdin);
+        if(answer[0]=='y'){
+            self.hardMode_ish=YES;
+        }
+        
+    }
+
+
 }
 
 -(void)printBoard{

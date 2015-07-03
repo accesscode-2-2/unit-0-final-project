@@ -12,6 +12,7 @@
 @interface DecisionMaker : NSObject
 @property (nonatomic)TwoD *board;
 @property (nonatomic) BOOL twoPlayer;
+@property (nonatomic) BOOL hardMode_ish;
 -(BOOL)checker:(int)winVal;
 -(void)makeMove:(int)counter;
 -(void)makeBoard;
