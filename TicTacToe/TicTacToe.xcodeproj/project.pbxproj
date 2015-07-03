@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8D9789E41B3C9A70007CF4CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9789E31B3C9A70007CF4CF /* main.m */; };
+		C74DA2BD1B43A04500D7ABEE /* TwoD.m in Sources */ = {isa = PBXBuildFile; fileRef = C74DA2BC1B43A04500D7ABEE /* TwoD.m */; };
+		C74DA2C01B43A06500D7ABEE /* DecisionMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = C74DA2BF1B43A06500D7ABEE /* DecisionMaker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		8D9789E01B3C9A70007CF4CF /* TicTacToe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TicTacToe; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9789E31B3C9A70007CF4CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C74DA2BB1B43A04500D7ABEE /* TwoD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoD.h; sourceTree = "<group>"; };
+		C74DA2BC1B43A04500D7ABEE /* TwoD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoD.m; sourceTree = "<group>"; };
+		C74DA2BE1B43A06500D7ABEE /* DecisionMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecisionMaker.h; sourceTree = "<group>"; };
+		C74DA2BF1B43A06500D7ABEE /* DecisionMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DecisionMaker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				8D9789E31B3C9A70007CF4CF /* main.m */,
+				C74DA2BB1B43A04500D7ABEE /* TwoD.h */,
+				C74DA2BC1B43A04500D7ABEE /* TwoD.m */,
+				C74DA2BE1B43A06500D7ABEE /* DecisionMaker.h */,
+				C74DA2BF1B43A06500D7ABEE /* DecisionMaker.m */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -119,6 +129,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D9789E41B3C9A70007CF4CF /* main.m in Sources */,
+				C74DA2BD1B43A04500D7ABEE /* TwoD.m in Sources */,
+				C74DA2C01B43A06500D7ABEE /* DecisionMaker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +247,7 @@
 				8D9789E91B3C9A70007CF4CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

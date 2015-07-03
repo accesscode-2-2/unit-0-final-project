@@ -8,10 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ListManager.h"
+#import "List.h"
+#import "ListItem.h"
+
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+        
+        printf("Welcome to your To-do List app!");
+        printf("\n\n*******************************\n");
+        
+        
+        ListManager *lm = [[ListManager alloc]init];
+        
+        [lm run];
     }
     return 0;
 }

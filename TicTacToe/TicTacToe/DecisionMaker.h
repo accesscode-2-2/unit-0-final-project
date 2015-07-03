@@ -1,0 +1,22 @@
+//
+//  DecisionMaker.h
+//  TicTacToe
+//
+//  Created by Varindra Hart on 7/1/15.
+//  Copyright (c) 2015 Mike Kavouras. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "TwoD.h"
+
+@interface DecisionMaker : NSObject
+@property (nonatomic)TwoD *board;
+@property (nonatomic) BOOL twoPlayer;
+@property (nonatomic) BOOL hardMode_ish;
+-(BOOL)checker:(int)winVal;
+-(void)makeMove:(int)counter;
+-(void)makeBoard;
+-(void)printBoard;
+-(void)run;
+-(BOOL)hasNextMove;
+@end
