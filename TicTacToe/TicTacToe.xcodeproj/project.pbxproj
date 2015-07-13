@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		692E08551B533C8300A52FCC /* NSString+isNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 692E08541B533C8300A52FCC /* NSString+isNumeric.m */; };
 		695078051B4C867600735A8D /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 695078041B4C867600735A8D /* Game.m */; };
 		695078081B4C880600735A8D /* NSArray+LineChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 695078071B4C880600735A8D /* NSArray+LineChecker.m */; };
 		6950780B1B4C893600735A8D /* MyTicTacToeGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 6950780A1B4C893600735A8D /* MyTicTacToeGame.m */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		692E08531B533C8300A52FCC /* NSString+isNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+isNumeric.h"; sourceTree = "<group>"; };
+		692E08541B533C8300A52FCC /* NSString+isNumeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+isNumeric.m"; sourceTree = "<group>"; };
 		695078031B4C867600735A8D /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		695078041B4C867600735A8D /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
 		695078061B4C880600735A8D /* NSArray+LineChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+LineChecker.h"; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 				6950780D1B4C97FD00735A8D /* Player.m */,
 				695078031B4C867600735A8D /* Game.h */,
 				695078041B4C867600735A8D /* Game.m */,
+				692E08531B533C8300A52FCC /* NSString+isNumeric.h */,
+				692E08541B533C8300A52FCC /* NSString+isNumeric.m */,
 				696503591B51B1CD00300B68 /* ComputerPlayer.h */,
 				6965035A1B51B1CD00300B68 /* ComputerPlayer.m */,
 				695078091B4C893600735A8D /* MyTicTacToeGame.h */,
@@ -144,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6950780B1B4C893600735A8D /* MyTicTacToeGame.m in Sources */,
+				692E08551B533C8300A52FCC /* NSString+isNumeric.m in Sources */,
 				8D9789E41B3C9A70007CF4CF /* main.m in Sources */,
 				695078081B4C880600735A8D /* NSArray+LineChecker.m in Sources */,
 				6965035B1B51B1CD00300B68 /* ComputerPlayer.m in Sources */,
