@@ -11,6 +11,7 @@
 #import "NSArray+LineChecker.h"
 #import "NSString+isNumeric.h"
 
+
 @implementation Game {
     int _mode;
     
@@ -282,27 +283,28 @@
     return FALSE;
 }
 
-//-(int)returnIndexOfSpaceToBlock:(NSMutableArray*)line{
-//    int xPieceCount = 0;
-//    int spaceCount = 0;
-//    int indexOfSpace = 0;
-//    
-//    for (int j = 0; j < [line count]; j++) {
-//        if ([[line objectAtIndex:j]  isEqual: @"~X"]) {
-//            xPieceCount++;
-//        }
-//        else if ([[line objectAtIndex:j]  isEqual: @"~O"]) {
-//        }
-//        else {
-//            spaceCount++;
-//        }
-//    }
-//    
-//    if ((xPieceCount == _gameSize - 1) && (spaceCount == 1)) {
-//        return indexOfSpace;
-//    }
-//    return 9999;
-//}
+-(int)returnIndexOfSpaceToBlock:(NSMutableArray*)line{
+    int xPieceCount = 0;
+    int spaceCount = 0;
+    int indexOfSpace = 0;
+    
+    for (int j = 0; j < [line count]; j++) {
+        if ([[line objectAtIndex:j]  isEqual: @"~X"]) {
+            xPieceCount++;
+        }
+        else if ([[line objectAtIndex:j]  isEqual: @"~O"]) {
+        }
+        else {
+            spaceCount++;
+        }
+    }
+    
+    if ((xPieceCount == _gameSize - 1) && (spaceCount == 1)) {
+        return indexOfSpace;
+    }
+    return 9999;
+}
+
 
 -(int)winBlocker{ //returns index of gameBoard to block
     NSMutableArray *line = [[NSMutableArray alloc] init]; //array of the line we are checking for a win
@@ -310,6 +312,8 @@
     int xPieceCount = 0;
     int spaceCount = 0;
     int indexOfSpace = 0;
+    
+    NSMutableArray *lines = [[NSMutableArray alloc] init];
     
     //HORIZONAL BLOCK TEST
     for (int i = 0; i < pow(_gameSize, 2); i++) {
@@ -322,7 +326,7 @@
         }
         
         if ([line count] == _gameSize) { //line array reaches the gameSize
-            
+            [lines addObject:line];
             for (int j = 0; j < [line count]; j++) {
                 if ([[line objectAtIndex:j]  isEqual: @"~X"]) {
                     xPieceCount++;
@@ -342,6 +346,8 @@
             xPieceCount = 0; spaceCount = 0; indexOfSpace = 0;
         }
     }
+    
+    return indexOfSpace;
     
     int currentIndex;
     int lastIndex;

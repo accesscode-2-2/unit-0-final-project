@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface Game : NSObject
 
 -(BOOL)checkWin;
@@ -19,7 +20,6 @@
 
 - (NSMutableArray *)getGameBoard;
 
-
 -(void)printBoard;
 -(void)printTutorialBoard;
 
@@ -28,6 +28,8 @@
 
 -(void)setGameSize:(int)size;
 -(int)getGameSize;
+
+- (void)getGameBoard:(NSArray *)gameBoard;
 
 //Easy, Medium, Hard
 -(void)setDifficulty:(int)level;
