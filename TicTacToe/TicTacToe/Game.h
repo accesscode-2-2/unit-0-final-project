@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, PossibleWinner) {
+    PlayerX,
+    PlayerO,
+    ComputerX,
+    ComputerO,
+    noWinNextMove
+};
 
 @interface Game : NSObject
 

@@ -98,7 +98,7 @@ int main(int argc, const char * argv[]) {
         [MyTicTacToeGame printTutorialBoard:ticTacToe];
 
         while (![ticTacToe checkWin] && ![ticTacToe checkDraw]) {
-            NSLog(@"%@", [TicTacToeRowGenerator allLinesForDirection:Horizonal withGame:[ticTacToe getGameBoard]]);
+//            NSLog(@"%@", [TicTacToeRowGenerator allLinesForDirection:Horizonal withGame:[ticTacToe getGameBoard]]);
             [ticTacToe turn];
             [MyTicTacToeGame printBoard:ticTacToe];
         }

@@ -32,7 +32,6 @@
     NSInteger sizeOfGame = sqrt(gameBoard.count);
     NSMutableArray *lines = [[NSMutableArray alloc] init];
     
-        
     // this sucks it's state
     NSMutableArray *line = [[NSMutableArray alloc] init];
     
