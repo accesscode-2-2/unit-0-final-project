@@ -16,6 +16,18 @@ typedef NS_ENUM(NSUInteger, PossibleWinner) {
     noWinNextMove
 };
 
+typedef NS_ENUM(NSUInteger, Difficulty) {
+    Easy = 1,
+    Medium = 2,
+    Hard =3
+};
+
+typedef NS_ENUM(NSUInteger, Mode) {
+    PlayerVsPlayer = 1,
+    PlayerVsComputer = 2,
+    ComputerVsComputer =3
+};
+
 @interface Game : NSObject
 
 -(BOOL)checkWin;

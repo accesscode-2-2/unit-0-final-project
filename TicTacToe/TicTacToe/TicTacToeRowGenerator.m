@@ -50,8 +50,8 @@
 }
 
 + (NSMutableArray *)verticalLinesForGame:(NSArray *)gameBoard {
+   
     NSInteger sizeOfGame = sqrt(gameBoard.count);
-    
     NSMutableArray *lines = [[NSMutableArray alloc] init];
     
     NSInteger currentIndex;
@@ -60,6 +60,7 @@
     for (int i = 0; i < sizeOfGame; i++) {
         currentIndex = i;
         lastIndex = 0;
+        
         NSMutableArray *line = [[NSMutableArray alloc] init];
         for (int i = 0; i < sizeOfGame; i++) {
             [line addObject:[gameBoard objectAtIndex:currentIndex]];
@@ -81,25 +82,26 @@
     NSInteger currentIndex = 0;
     NSInteger lastIndex = 0;
     
-    NSMutableArray *line = [[NSMutableArray alloc] init];
+    NSMutableArray *lineLR = [[NSMutableArray alloc] init];
     for (int i = 0; i < sizeOfGame; i++) {
-        [line addObject:[gameBoard objectAtIndex:currentIndex]];
+        [lineLR addObject:[gameBoard objectAtIndex:currentIndex]];
         lastIndex = currentIndex;
         currentIndex = lastIndex + sizeOfGame + 1;
     }
     
-    [lines addObject:line];
+    [lines addObject:lineLR];
     
     currentIndex = sizeOfGame - 1;
     lastIndex = sizeOfGame - 1;
     
+    NSMutableArray *lineRL = [[NSMutableArray alloc] init];
     for (int i = 0; i < sizeOfGame; i++) {
-        [line addObject:[gameBoard objectAtIndex:currentIndex]];
+        [lineRL addObject:[gameBoard objectAtIndex:currentIndex]];
         lastIndex = currentIndex;
         currentIndex = lastIndex + sizeOfGame - 1;
     }
     
-    [lines addObject:line];
+    [lines addObject:lineRL];
     
     return lines;
 }

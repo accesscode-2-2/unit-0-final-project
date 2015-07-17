@@ -28,16 +28,16 @@ int main(int argc, const char * argv[]) {
             scanf("%d",&userGameMode);
             fpurge(stdin);
             
-            if (userGameMode == 1) {
-                [ticTacToe setMode:1];
+            if (userGameMode == PlayerVsPlayer) {
+                [ticTacToe setMode:PlayerVsPlayer];
                 modeSet = YES;
             }
-            else if (userGameMode == 2){
-                [ticTacToe setMode:2];
+            else if (userGameMode == PlayerVsComputer){
+                [ticTacToe setMode:PlayerVsComputer];
                 modeSet = YES;
             }
-            else if (userGameMode == 3){
-                [ticTacToe setMode:3];
+            else if (userGameMode == ComputerVsComputer){
+                [ticTacToe setMode:ComputerVsComputer];
                 modeSet = YES;
             }
             else {
@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
         }
         
         //set difficulty
-        if ([ticTacToe getMode] == 2) {
+        if ([ticTacToe getMode] == PlayerVsComputer) {
             BOOL difficultySet = NO;
             while (difficultySet == NO && [ticTacToe getMode] != 1) {
                 NSLog(@"Choose a difficulty.");
@@ -57,22 +57,22 @@ int main(int argc, const char * argv[]) {
                 scanf("%d",&userDifficulty);
                 fpurge(stdin);
                 
-                if (userDifficulty == 1) {
-                    [ticTacToe setDifficulty:1];
+                if (userDifficulty == Easy) {
+                    [ticTacToe setDifficulty:Easy];
                     difficultySet = YES;
                 }
-                else if (userDifficulty == 2){
-                    [ticTacToe setDifficulty:2];
+                else if (userDifficulty == Medium){
+                    [ticTacToe setDifficulty:Medium];
                     difficultySet = YES;
                 }
-                else if (userDifficulty == 3){
-                    [ticTacToe setDifficulty:3];
+                else if (userDifficulty == Hard){
+                    [ticTacToe setDifficulty:Hard];
                     difficultySet = YES;
                 }
             }
         }
         //set game size
-        if ([ticTacToe getMode] == 1) {
+        if ([ticTacToe getMode] == PlayerVsPlayer) {
             BOOL gameSizeSet = NO;
             while (gameSizeSet == NO) {
                 NSLog(@"Set a game size from 3-10, fool!:");
@@ -98,7 +98,7 @@ int main(int argc, const char * argv[]) {
         [MyTicTacToeGame printTutorialBoard:ticTacToe];
 
         while (![ticTacToe checkWin] && ![ticTacToe checkDraw]) {
-//            NSLog(@"%@", [TicTacToeRowGenerator allLinesForDirection:Horizonal withGame:[ticTacToe getGameBoard]]);
+//            NSLog(@"%@", [TicTacToeRowGenerator allLinesForDirection:Diagonal withGame:[ticTacToe getGameBoard]]);
             [ticTacToe turn];
             [MyTicTacToeGame printBoard:ticTacToe];
         }

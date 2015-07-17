@@ -12,6 +12,7 @@
 #import "NSString+isNumeric.h"
 #import "TicTacToeRowGenerator.h"
 
+NSString * const PossibleWinnerString = @"PossibleWinnerString";
 
 @implementation Game {
     int _mode;
@@ -93,39 +94,6 @@
     }
 }
 
--(NSString *)makeMove{
-    NSLog(@"Player %d make your move:",_playerTurn);
-    scanf("%d",&_currentMove);
-    fpurge(stdin);
-    
-    NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
-    
-    return stringOfCurrentMove;
-}
-
--(NSString *)computerMakeMove{
-    
-    //Easy Mode computer move
-    if (_difficulty == 1) {
-        _currentMove = arc4random_uniform(_maxIndex + 1);
-        NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
-        return stringOfCurrentMove;
-    }
-    
-    //Medium Mode computer move
-    else if (_difficulty == 2){
-        _currentMove = [self winBlocker];
-        NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
-        
-        if ([stringOfCurrentMove isEqualToString:@"9999"]) { //if win blocker found no blocks to make
-            _currentMove = arc4random_uniform(_maxIndex + 1);
-            stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
-        }
-        return stringOfCurrentMove;
-    }
-    return @"HEHEE";
-}
-
 -(NSString *)getPlayerPiece{
     NSString *playerPiece;
     if (_playerTurn == 2) {
@@ -182,122 +150,122 @@
     }
 }
 
--(BOOL)checkWin{
+-(NSString *)makeMove{
+    NSLog(@"Player %d make your move:",_playerTurn);
+    scanf("%d",&_currentMove);
+    fpurge(stdin);
     
-    NSMutableArray *line = [[NSMutableArray alloc] init]; //array of the line we are checking for a win
+    NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
     
-    //HORIZONAL WIN TEST
-    for (int i = 0; i < pow(_gameSize, 2); i++) {
-        
-        [line addObject:[_gameboard objectAtIndex:i]];
-        
-        if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-            _win = [line areAllObjectsAreIdentical];
-            
-            if (_win == YES) {
-                return YES;
-            }
-            else{
-                [line removeAllObjects]; //empty the line array
-            }
-        }
-    }
-    
-    int currentIndex;
-    int lastIndex;
-    
-    //VERTICAL WIN TEST
-    for (int i = 0; i < _gameSize; i++) {
-        currentIndex = i;
-        lastIndex = 0;
-        
-        for (int i = 0; i < _gameSize; i++) {
-            [line addObject:[_gameboard objectAtIndex:currentIndex]];
-            lastIndex = currentIndex;
-            currentIndex = lastIndex + _gameSize;
-        }
-        
-        if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-            _win = [line areAllObjectsAreIdentical];
-            
-            if (_win == YES) {
-                return YES;
-            }
-            else{
-                [line removeAllObjects]; //empty the line array
-            }
-        }
-    }
-    
-    //DIAGONAL WIN TEST
-    
-    // |X| | |
-    // | |X| |
-    // | | |X|
-    currentIndex = 0;
-    lastIndex = 0;
-    for (int i = 0; i < _gameSize; i++) {
-        [line addObject:[_gameboard objectAtIndex:currentIndex]];
-        lastIndex = currentIndex;
-        currentIndex = lastIndex + _gameSize + 1;
-    }
-    
-    if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-        _win = [line areAllObjectsAreIdentical];
-        
-        if (_win == YES) {
-            return YES;
-        }
-        else{
-            [line removeAllObjects]; //empty the line array
-        }
-    }
-    
-    // | | |X|
-    // | |X| |
-    // |X| | |
-    currentIndex = _gameSize - 1;
-    lastIndex = _gameSize - 1;
-    for (int i = 0; i < _gameSize; i++) {
-        [line addObject:[_gameboard objectAtIndex:currentIndex]];
-        lastIndex = currentIndex;
-        currentIndex = lastIndex + _gameSize - 1;
-    }
-    
-    if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-        _win = [line areAllObjectsAreIdentical];
-        
-        if (_win == YES) {
-            return YES;
-        }
-        else{
-            [line removeAllObjects]; //empty the line array
-        }
-    }
-    return NO;
+    return stringOfCurrentMove;
 }
 
--(BOOL)checkDraw{
-    if ((_win == NO) && (_turnCount == (_maxIndex + 2))){
-        return TRUE;
+-(NSString *)computerMakeMove{
+    
+    //Easy Mode computer move
+    if (_difficulty == Easy) {
+        _currentMove = arc4random_uniform(_maxIndex + 1);
+        NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
+        return stringOfCurrentMove;
     }
-    return FALSE;
+    
+    //Medium Mode computer move
+    else if (_difficulty == Medium){
+        
+        NSString *stringOfCurrentMove = [NSString stringWithString:[self makeWinMove]];
+        
+        if ([stringOfCurrentMove isEqualToString:@"none"]) { //if no win move to make
+            
+            stringOfCurrentMove = [self makeBlockMove];
+            
+            if ([stringOfCurrentMove isEqualToString:@"none"]) { //if no block move to make
+                
+                _currentMove = arc4random_uniform(_maxIndex + 1);
+                stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove]; //random move
+            }
+        }
+        
+        _currentMove = [stringOfCurrentMove intValue];
+        return stringOfCurrentMove;
+    }
+    
+    return @"HEHEE";
+}
+
+-(NSString *)makeBlockMove{
+    
+    NSDictionary *possibleWinnerAndWinningMove = [self whoCanWinOnNextMove];
+    
+    if ([[possibleWinnerAndWinningMove objectForKey:@"PossibleWinner"] isEqualToString:@"PlayerX"] ) {
+        return [possibleWinnerAndWinningMove objectForKey:@"WinningMove"];
+    }
+    return @"none";
+}
+
+-(NSString *)makeWinMove{
+    
+    NSDictionary *possibleWinnerAndWinningMove = [self whoCanWinOnNextMove];
+    
+    if ([[possibleWinnerAndWinningMove objectForKey:@"PossibleWinner"] isEqualToString:@"PlayerO"] ) {
+        return [possibleWinnerAndWinningMove objectForKey:@"WinningMove"];
+    }
+    return @"none";
+}
+
+-(NSDictionary *) whoCanWinOnNextMove {
+    
+    NSArray *allLines = [self makeAllLines];
+    
+    for (int i = 0; i< allLines.count; i++) {
+        
+        for (int j = 0; j < [[allLines objectAtIndex:i] count]; j++){
+            
+            NSDictionary *countsForElementsInLine = [self lineInspect:[[allLines objectAtIndex:i] objectAtIndex:j]];
+            
+            if (([[countsForElementsInLine valueForKey:@"xPieceCount"] intValue] == _gameSize - 1) && ([[countsForElementsInLine valueForKey: @"IndicesOfSpaces"] count] == 1)) {
+                NSDictionary *possibleWinnerAndWinningMove = [NSDictionary dictionaryWithObjectsAndKeys:[[countsForElementsInLine valueForKey: @"IndicesOfSpaces"]objectAtIndex:0] , @"WinningMove", @"PlayerX", @"PossibleWinner", nil];
+                return possibleWinnerAndWinningMove; //returns PlayerX and WinningMove
+            }
+            else if (([[countsForElementsInLine valueForKey:@"oPieceCount"] intValue] == _gameSize - 1) && ([[countsForElementsInLine valueForKey: @"IndicesOfSpaces"] count] == 1)) {
+                NSDictionary *possibleWinnerAndWinningMove = [NSDictionary dictionaryWithObjectsAndKeys:[[countsForElementsInLine valueForKey: @"IndicesOfSpaces"] objectAtIndex:0] , @"WinningMove", @"PlayerO", @"PossibleWinner", nil]; //returns PlayerO and WinningMove
+                return possibleWinnerAndWinningMove;
+                
+            }
+        }
+    }
+    
+    NSDictionary *noWinner = @{
+                               @"WinningMove" : @"none",
+                               @"PossibleWinner":@"none"
+                               };
+    
+    return noWinner;
+}
+
+-(NSArray *)makeAllLines{
+    NSArray *horizontals = [TicTacToeRowGenerator allLinesForDirection:Horizonal withGame:_gameboard];
+    NSArray *verticals = [TicTacToeRowGenerator allLinesForDirection:Vertical withGame:_gameboard];
+    NSArray *diagonals = [TicTacToeRowGenerator allLinesForDirection:Diagonal withGame:_gameboard];
+    NSArray *allLines = [NSArray arrayWithObjects:horizontals,verticals,diagonals, nil];
+    
+    return allLines;
 }
 
 -(NSDictionary *)lineInspect:(NSMutableArray*)line{
-    NSNumber *xPieceCount = 0;
-    NSNumber *oPieceCount = 0;
-    NSNumber *spaceCount = 0;
+    NSNumber *xPieceCount = [NSNumber numberWithInt:0];
+    NSNumber *oPieceCount = [NSNumber numberWithInt:0];
+    NSNumber *spaceCount = [NSNumber numberWithInt:0];
     NSMutableArray *IndicesOfSpaces = [[NSMutableArray alloc] init];
     
     for (int j = 0; j < [line count]; j++) {
         if ([[line objectAtIndex:j]  isEqual: @"~X"]) {
-             xPieceCount = [NSNumber numberWithInt: [xPieceCount intValue] + 1 ];
+            xPieceCount = [NSNumber numberWithInt: [xPieceCount intValue] + 1 ];
         }
         else if ([[line objectAtIndex:j]  isEqual: @"~O"]) {
             oPieceCount = [NSNumber numberWithInt: [oPieceCount intValue] + 1 ];
         }
         else {
+            [IndicesOfSpaces addObject:[line objectAtIndex:j]];
             spaceCount = [NSNumber numberWithInt: [spaceCount intValue] + 1 ];
         }
     }
@@ -309,139 +277,35 @@
     return countsForElementsInLine;
 }
 
--(PossibleWinner) whoCanWinOnNextMove {
+-(BOOL)checkWin{
     
-    NSArray *horizontals = [TicTacToeRowGenerator allLinesForDirection:Horizonal withGame:_gameboard];
-    NSArray *verticals = [TicTacToeRowGenerator allLinesForDirection:Vertical withGame:_gameboard];
-    NSArray *diagonals = [TicTacToeRowGenerator allLinesForDirection:Diagonal withGame:_gameboard];
+    NSArray *allLines = [self makeAllLines];
     
-    for (int i = 0; i< horizontals.count; i++) {
+    for (int i = 0; i< allLines.count; i++) {
         
-        NSDictionary *countsForElementsInLine = [self lineInspect:[horizontals objectAtIndex:i]];
-        
-        if (([[countsForElementsInLine valueForKey:@"xPieceCount"] intValue] == _gameSize - 1) && ([[countsForElementsInLine valueForKey: @"IndicesOfSpaces"] length] == 1)) {
-            <#statements#>
+        for (int j = 0; j < [[allLines objectAtIndex:i] count]; j++){
+            
+            NSDictionary *countsForElementsInLine = [self lineInspect:[[allLines objectAtIndex:i] objectAtIndex:j]];
+            
+            if ([[countsForElementsInLine valueForKey:@"xPieceCount"] intValue] == _gameSize) {
+                _win = TRUE;
+                return TRUE;
+            }
+            else if ([[countsForElementsInLine valueForKey:@"oPieceCount"] intValue] == _gameSize) {
+                _win = TRUE;
+                return TRUE;
+            }
         }
     }
-    
+    return FALSE;
+}
+
+-(BOOL)checkDraw{
+    if ((_win == NO) && (_turnCount == (_maxIndex + 2))){
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
-//-(int)winBlocker{ //returns index of gameBoard to block
-//    NSMutableArray *line = [[NSMutableArray alloc] init]; //array of the line we are checking for a win
-//    NSMutableString *stringOfLineObject = [[NSMutableString alloc] init];
-//    int xPieceCount = 0;
-//    int spaceCount = 0;
-//    int indexOfSpace = 0;
-//    
-//    NSMutableArray *lines = [[NSMutableArray alloc] init];
-//    
-//    //HORIZONAL BLOCK TEST
-//    for (int i = 0; i < pow(_gameSize, 2); i++) {
-//        
-//        stringOfLineObject = [_gameboard objectAtIndex:i];
-//        [line addObject:stringOfLineObject];
-//        
-//        if ([stringOfLineObject isNumeric]) {
-//            indexOfSpace = i;
-//        }
-//        
-//        if ([line count] == _gameSize) { //line array reaches the gameSize
-//            [lines addObject:line];
-//            for (int j = 0; j < [line count]; j++) {
-//                if ([[line objectAtIndex:j]  isEqual: @"~X"]) {
-//                    xPieceCount++;
-//                }
-//                else if ([[line objectAtIndex:j]  isEqual: @"~O"]) {
-//                }
-//                else {
-//                    spaceCount++;
-//                }
-//            }
-//            
-//            if ((xPieceCount == _gameSize - 1) && (spaceCount == 1)) {
-//                return indexOfSpace;
-//            }
-//            
-//            [line removeAllObjects]; //empty the line array
-//            xPieceCount = 0; spaceCount = 0; indexOfSpace = 0;
-//        }
-//    }
-//    
-//    return indexOfSpace;
-//    
-//    int currentIndex;
-//    int lastIndex;
-//    
-//    //VERTICAL WIN TEST
-//    for (int i = 0; i < _gameSize; i++) {
-//        currentIndex = i;
-//        lastIndex = 0;
-//        
-//        for (int i = 0; i < _gameSize; i++) {
-//            [line addObject:[_gameboard objectAtIndex:currentIndex]];
-//            lastIndex = currentIndex;
-//            currentIndex = lastIndex + _gameSize;
-//        }
-//        
-//        if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-//            _win = [line areAllObjectsAreIdentical];
-//            
-//            if (_win == YES) {
-//                return YES;
-//            }
-//            else{
-//                [line removeAllObjects]; //empty the line array
-//            }
-//        }
-//    }
-//    
-//    //DIAGONAL WIN TEST
-//    
-//    // |X| | |
-//    // | |X| |
-//    // | | |X|
-//    currentIndex = 0;
-//    lastIndex = 0;
-//    for (int i = 0; i < _gameSize; i++) {
-//        [line addObject:[_gameboard objectAtIndex:currentIndex]];
-//        lastIndex = currentIndex;
-//        currentIndex = lastIndex + _gameSize + 1;
-//    }
-//    
-//    if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-//        _win = [line areAllObjectsAreIdentical];
-//        
-//        if (_win == YES) {
-//            return YES;
-//        }
-//        else{
-//            [line removeAllObjects]; //empty the line array
-//        }
-//    }
-//    
-//    // | | |X|
-//    // | |X| |
-//    // |X| | |
-//    currentIndex = _gameSize - 1;
-//    lastIndex = _gameSize - 1;
-//    for (int i = 0; i < _gameSize; i++) {
-//        [line addObject:[_gameboard objectAtIndex:currentIndex]];
-//        lastIndex = currentIndex;
-//        currentIndex = lastIndex + _gameSize - 1;
-//    }
-//    
-//    if ([line count] == _gameSize) { //check if all objects in line are identical when line array reaches the gameSize
-//        _win = [line areAllObjectsAreIdentical];
-//        
-//        if (_win == YES) {
-//            return YES;
-//        }
-//        else{
-//            [line removeAllObjects]; //empty the line array
-//        }
-//    }
-//    return 9999;
-//}
-//
 @end
