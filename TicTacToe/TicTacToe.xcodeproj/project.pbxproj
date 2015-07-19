@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		692E08551B533C8300A52FCC /* NSString+isNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 692E08541B533C8300A52FCC /* NSString+isNumeric.m */; };
+		695078051B4C867600735A8D /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 695078041B4C867600735A8D /* Game.m */; };
+		695078081B4C880600735A8D /* NSArray+LineChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 695078071B4C880600735A8D /* NSArray+LineChecker.m */; };
+		6950780B1B4C893600735A8D /* MyTicTacToeGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 6950780A1B4C893600735A8D /* MyTicTacToeGame.m */; };
+		6950780E1B4C97FD00735A8D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 6950780D1B4C97FD00735A8D /* Player.m */; };
+		6965035B1B51B1CD00300B68 /* ComputerPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6965035A1B51B1CD00300B68 /* ComputerPlayer.m */; };
+		698005621B547295008F3E8A /* TicTacToeRowGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 698005611B547295008F3E8A /* TicTacToeRowGenerator.m */; };
 		8D9789E41B3C9A70007CF4CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9789E31B3C9A70007CF4CF /* main.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +30,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		692E08531B533C8300A52FCC /* NSString+isNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+isNumeric.h"; sourceTree = "<group>"; };
+		692E08541B533C8300A52FCC /* NSString+isNumeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+isNumeric.m"; sourceTree = "<group>"; };
+		695078031B4C867600735A8D /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		695078041B4C867600735A8D /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		695078061B4C880600735A8D /* NSArray+LineChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+LineChecker.h"; sourceTree = "<group>"; };
+		695078071B4C880600735A8D /* NSArray+LineChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+LineChecker.m"; sourceTree = "<group>"; };
+		695078091B4C893600735A8D /* MyTicTacToeGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTicTacToeGame.h; sourceTree = "<group>"; };
+		6950780A1B4C893600735A8D /* MyTicTacToeGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTicTacToeGame.m; sourceTree = "<group>"; };
+		6950780C1B4C97FD00735A8D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		6950780D1B4C97FD00735A8D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		696503591B51B1CD00300B68 /* ComputerPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputerPlayer.h; sourceTree = "<group>"; };
+		6965035A1B51B1CD00300B68 /* ComputerPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComputerPlayer.m; sourceTree = "<group>"; };
+		698005601B547295008F3E8A /* TicTacToeRowGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicTacToeRowGenerator.h; sourceTree = "<group>"; };
+		698005611B547295008F3E8A /* TicTacToeRowGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicTacToeRowGenerator.m; sourceTree = "<group>"; };
 		8D9789E01B3C9A70007CF4CF /* TicTacToe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TicTacToe; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9789E31B3C9A70007CF4CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +79,20 @@
 			isa = PBXGroup;
 			children = (
 				8D9789E31B3C9A70007CF4CF /* main.m */,
+				6950780C1B4C97FD00735A8D /* Player.h */,
+				6950780D1B4C97FD00735A8D /* Player.m */,
+				695078031B4C867600735A8D /* Game.h */,
+				695078041B4C867600735A8D /* Game.m */,
+				696503591B51B1CD00300B68 /* ComputerPlayer.h */,
+				6965035A1B51B1CD00300B68 /* ComputerPlayer.m */,
+				695078091B4C893600735A8D /* MyTicTacToeGame.h */,
+				6950780A1B4C893600735A8D /* MyTicTacToeGame.m */,
+				698005601B547295008F3E8A /* TicTacToeRowGenerator.h */,
+				698005611B547295008F3E8A /* TicTacToeRowGenerator.m */,
+				695078061B4C880600735A8D /* NSArray+LineChecker.h */,
+				695078071B4C880600735A8D /* NSArray+LineChecker.m */,
+				692E08531B533C8300A52FCC /* NSString+isNumeric.h */,
+				692E08541B533C8300A52FCC /* NSString+isNumeric.m */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -118,7 +153,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6950780B1B4C893600735A8D /* MyTicTacToeGame.m in Sources */,
+				698005621B547295008F3E8A /* TicTacToeRowGenerator.m in Sources */,
+				692E08551B533C8300A52FCC /* NSString+isNumeric.m in Sources */,
 				8D9789E41B3C9A70007CF4CF /* main.m in Sources */,
+				695078081B4C880600735A8D /* NSArray+LineChecker.m in Sources */,
+				6965035B1B51B1CD00300B68 /* ComputerPlayer.m in Sources */,
+				695078051B4C867600735A8D /* Game.m in Sources */,
+				6950780E1B4C97FD00735A8D /* Player.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +277,7 @@
 				8D9789E91B3C9A70007CF4CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
