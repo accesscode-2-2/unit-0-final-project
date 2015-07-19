@@ -162,35 +162,62 @@ NSString * const PossibleWinnerString = @"PossibleWinnerString";
 
 -(NSString *)computerMakeMove{
     
-    //Easy Mode computer move
+    NSString *stringOfCurrentMove = [[NSString alloc] init];
+    
     if (_difficulty == Easy) {
         _currentMove = arc4random_uniform(_maxIndex + 1);
-        NSString *stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
+        stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove];
         return stringOfCurrentMove;
     }
     
-    //Medium Mode computer move
     else if (_difficulty == Medium){
         
-        NSString *stringOfCurrentMove = [NSString stringWithString:[self makeWinMove]];
+        stringOfCurrentMove = [NSString stringWithString:[self makeWinMove]];
         
         if ([stringOfCurrentMove isEqualToString:@"none"]) { //if no win move to make
             
             stringOfCurrentMove = [self makeBlockMove];
+        }
+        
+        if ([stringOfCurrentMove isEqualToString:@"none"]) { //if no block move to make
             
-            if ([stringOfCurrentMove isEqualToString:@"none"]) { //if no block move to make
-                
-                _currentMove = arc4random_uniform(_maxIndex + 1);
-                stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove]; //random move
-            }
+            _currentMove = arc4random_uniform(_maxIndex + 1);
+            stringOfCurrentMove = [NSString stringWithFormat:@"%02d",_currentMove]; //random move
         }
         
         _currentMove = [stringOfCurrentMove intValue];
         return stringOfCurrentMove;
     }
     
-    return @"HEHEE";
+    else if (_difficulty == Hard){
+        
+    }
+   
+    
+return @"HEHEE";
 }
+
+//-(NSString *)makePowerMove{ //checks board and outputs available move of highest power
+//    NSDictionary * const movePowers = @{
+//                                        @"00" : @300,
+//                                        @"01" : @200,
+//                                        @"02" : @300,
+//                                        @"03" : @200,
+//                                        @"04" : @400,
+//                                        @"05" : @200,
+//                                        @"06" : @300,
+//                                        @"07" : @200,
+//                                        @"08" : @300,
+//                                        };
+//    
+//    NSString *powerMove = [[NSString alloc] init];
+//    for (int i = 0; [_gameboard count]; i++) {
+//        <#statements#>
+//    }
+//    
+//}
+
+
 
 -(NSString *)makeBlockMove{
     
@@ -301,7 +328,7 @@ NSString * const PossibleWinnerString = @"PossibleWinnerString";
 }
 
 -(BOOL)checkDraw{
-    if ((_win == NO) && (_turnCount == (_maxIndex + 2))){
+    if ((_win == NO) && (_turnCount == (_maxIndex + 1))){
         return TRUE;
     }
     return FALSE;
